@@ -49,6 +49,7 @@ class UiTailwindServiceProvider extends ServiceProvider
         Blade::component('ui-tailwind::components.segmented-toggle', 'ui-segmented-toggle');
         Blade::component('ui-tailwind::components.info-banner', 'ui-info-banner');
         Blade::component('ui-tailwind::components.team-members-list', 'ui-team-members-list');
+        Blade::component('ui-tailwind::components.project-list', 'ui-project-list');
 
         // Form Inputs
         Blade::component('ui-tailwind::components.form.input-text', 'ui-input-text');
