@@ -54,6 +54,7 @@ class UiTailwindServiceProvider extends ServiceProvider
         Blade::component('ui-tailwind::components.stats-grid', 'ui-stats-grid');
         Blade::component('ui-tailwind::components.detail-stats-grid', 'ui-detail-stats-grid');
         Blade::component('ui-tailwind::components.panel', 'ui-panel');
+        Blade::component('ui-tailwind::components.form-grid', 'ui-form-grid');
 
         // Form Inputs
         Blade::component('ui-tailwind::components.form.input-text', 'ui-input-text');
