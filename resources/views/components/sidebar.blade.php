@@ -2,13 +2,13 @@
     <aside 
         x-cloak
         :class="collapsed ? 'w-16' : 'w-72'" 
-        class="relative shrink-0 h-full bg-black border-r border-[color:var(--ui-border)] transition-all duration-300 flex flex-col"
+        class="shrink-0 h-screen bg-black border-r border-[color:var(--ui-border)] transition-all duration-300 flex flex-col overflow-y-auto"
     >
-        <!-- Toggle Button -->
+        <!-- Toggle Button (sticky) -->
         <div class="sticky top-0 z-10 bg-black border-b border-[color:var(--ui-border)] p-2">
             <button 
                 @click="toggle()" 
-                class="flex items-center justify-center transition bg-black hover:bg-[rgba(255,255,255,0.06)]"
+                class="flex items-center justify-center transition bg-black hover:bg-[rgba(255,255,255,0.06)] w-full"
                 :class="collapsed ? 'w-12' : 'w-full'"
                 title="Sidebar umschalten"
             >
@@ -52,7 +52,7 @@
             </div>
         </div>
 
-        <!-- Navigation -->
+        <!-- Navigation (eigener Scroll falls lang) -->
         <nav class="flex-1 overflow-y-auto p-2 flex flex-col gap-2">
             {{ $slot ?? '' }}
         </nav>
@@ -65,10 +65,7 @@ function sidebarState() {
         collapsed: false,
         init() {
             this.collapsed = localStorage.getItem('sidebar-collapsed') === 'true';
-            // Event-Listener für das Grid-Icon
-            this.$el.addEventListener('toggle-sidebar', () => {
-                this.toggle();
-            });
+            this.$el.addEventListener('toggle-sidebar', () => { this.toggle(); });
         },
         toggle() {
             this.collapsed = !this.collapsed;
