@@ -22,7 +22,7 @@
         >
             {{ $tab['label'] }}
             @if($showCounts && isset($tab['count']))
-                <span class="ml-2 px-2 py-0.5 text-xs bg-gray-100 text-gray-600 rounded-full">
+                <span class="ml-2 px-2 py-0.5 text-xs bg-[color:var(--ui-muted-5)] text-[color:var(--ui-body-color)] rounded-full">
                     {{ $tab['count'] }}
                 </span>
             @endif

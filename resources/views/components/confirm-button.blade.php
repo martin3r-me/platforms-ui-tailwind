@@ -1,19 +1,18 @@
 {{-- resources/views/components/ui/confirm-button.blade.php --}}
 @props([
-    'action' => '', // Wire-Methode, z. B. deleteTask
-    'value' => null, // NEU: Wert der an die Methode übergeben wird
+    'action' => '',
+    'value' => null,
     'text' => 'Löschen',
     'confirmText' => 'Wirklich löschen?',
     'class' => '',
     'variant' => 'muted',
-    'icon' => null, // NEU: Icon für den Button
+    'icon' => null,
 ])
 
 <x-ui-button
     :variant="$variant"
     size="md"
-    :class="'hover:bg-danger-80 hover:text-on-danger w-full d-flex '.$class"
-    x-data="{ confirm: false }"
+    :class="'hover:bg-[color:var(--ui-danger-80)] hover:text-[color:var(--ui-on-danger)] w-full flex '.$class"
     x-data="{ confirm: false }"
     x-on:click="
         if (!confirm) {
@@ -25,7 +24,7 @@
         }
     "
 >
-    <div class="d-flex gap-2">
+    <div class="flex gap-2 items-center">
         @if($icon)
             {!! $icon !!}
         @endif

@@ -5,7 +5,7 @@
     'compact' => false,
 ])
 
-<div class="bg-surface rounded-lg border border-muted overflow-hidden shadow-sm">
+<div class="bg-[color:var(--ui-surface)] rounded-lg border border-[color:var(--ui-border)] overflow-hidden shadow-sm">
     <table class="w-full border-collapse">
         {{ $slot }}
     </table>

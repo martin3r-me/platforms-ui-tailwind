@@ -12,6 +12,6 @@
     };
 @endphp
 
-<td class="{{ $paddingClass }} {{ $alignClass }} text-body border-right-1 border-right-muted border-right-solid">
+<td class="{{ $paddingClass }} {{ $alignClass }} text-[color:var(--ui-body-color)] border-r border-[color:var(--ui-border)]">
     {{ $slot }}
 </td>

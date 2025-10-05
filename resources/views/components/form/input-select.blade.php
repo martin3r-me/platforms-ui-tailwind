@@ -18,15 +18,12 @@
 @php
     $errorKey = $errorKey ?: $name;
     $sizeClass = match($size) {
-        'xs' => 'input-xs',
-        'sm' => 'input-sm',
-        'lg' => 'input-lg',
-        'xl' => 'input-xl',
-        default => '',
+        'xs' => 'h-8 text-xs pl-2 pr-8',
+        'sm' => 'h-9 text-sm pl-3 pr-8',
+        'lg' => 'h-11 text-lg pl-4 pr-8',
+        'xl' => 'h-12 text-xl pl-5 pr-8',
+        default => 'h-10 text-base pl-4 pr-8',
     };
-    $variantClass = "border-{$variant} focus:border-{$variant}";
-
-    // Optionen normalisieren
     $normalized = [];
 
     if ($options instanceof \Illuminate\Support\Collection) {
@@ -54,7 +51,7 @@
     $selected = old($name, $value ?? $attributes->get('value'));
 @endphp
 
-<div class="form-group">
+<div>
     @if($label)
         <x-ui-label 
             :text="$label" 
@@ -66,21 +63,19 @@
         />
     @endif
 
-    <div class="position-relative">
+    <div class="relative">
         <select
             id="{{ $name }}"
             name="{{ $name }}"
             @if($required) required @endif
             @if($disabled) disabled @endif
             @if($autocomplete) autocomplete="{{ $autocomplete }}" @endif
-            {{ $attributes->merge([
-                'class' => implode(' ', [
-                    'form-control',
-                    $sizeClass,
-                    $variantClass,
-                    'pr-8', // Platz rechts für das Icon!
-                ])
-            ]) }}
+            {{ $attributes->merge(['class' => implode(' ', [
+                'block w-full rounded-md bg-white text-[color:var(--ui-body-color)]',
+                'border border-[color:var(--ui-border)]',
+                "focus:outline-none focus:ring-2 focus:ring-[color:rgba(var(--ui-{$variant}-rgb),0.2)] focus:border-[color:rgb(var(--ui-{$variant}-rgb))]",
+                $sizeClass,
+            ])]) }}
         >
             @if($nullable)
                 <option value="">{{ $nullLabel }}</option>
@@ -91,18 +86,15 @@
                 </option>
             @endforeach
         </select>
-        {{-- Dropdown-Icon --}}
-        <div class="position-absolute top-0 right-0 h-full d-flex items-center pr-3 pointer-events-none">
-            {{-- Heroicon oder SVG --}}
-            <svg class="w-4 h-4 text-muted" fill="none" stroke="currentColor" stroke-width="2"
+        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+            <svg class="w-4 h-4 text-[color:var(--ui-muted)]" fill="none" stroke="currentColor" stroke-width="2"
                 viewBox="0 0 24 24" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
             </svg>
-            {{-- Alternativ: <x-heroicon-m-chevron-down class="w-4 h-4 text-muted" /> --}}
         </div>
     </div>
 
     @error($errorKey)
-        <span class="form-error mt-1">{{ $message }}</span>
+        <span class="mt-1 text-[color:var(--ui-danger)] text-sm">{{ $message }}</span>
     @enderror
 </div>

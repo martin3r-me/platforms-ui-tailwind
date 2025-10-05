@@ -1,19 +1,16 @@
 @props([
-    'variant'    => 'primary',      // Farbe
-    'size'       => 'md',           // xs, sm, md, lg
-    'icon'       => null,           // Icon-Component/Slot
-    'iconOnly'   => false,          // true = nur Icon, kein Text
-    'counter'    => null,           // Counter-Zahl oder null
-    'pill'       => true,           // Pill-Shape oder square
-    'as'         => 'span',         // z.B. 'a' oder 'button' oder 'span'
-    'href'       => null,           // Wenn as='a'
+    'variant'    => 'primary',
+    'size'       => 'md',
+    'icon'       => null,
+    'iconOnly'   => false,
+    'counter'    => null,
+    'pill'       => true,
+    'as'         => 'span',
+    'href'       => null,
     'class'      => '',
 ])
 
-
-
 @php
-    // Größenklassen für Text und Padding
     $sizeClasses = [
         'xs' => 'text-xs px-2 py-1',
         'sm' => 'text-sm px-3 py-1',
@@ -27,17 +24,7 @@
         'lg' => 'w-6 h-6',
     ][$size] ?? 'w-4 h-4';
 
-    // Farbvarianten (Tailwind-like oder eigene CSS)
-    $variantClasses = [
-        'primary'   => 'bg-primary-10 text-primary border-primary-20',
-        'secondary' => 'bg-secondary-10 text-secondary border-secondary-20',
-        'success'   => 'bg-success-10 text-success border-success-20',
-        'danger'    => 'bg-danger-10 text-danger border-danger-20',
-        'warning'   => 'bg-warning-10 text-warning border-warning-20',
-        'info'      => 'bg-info-10 text-info border-info-20',
-        'neutral'   => 'bg-muted-10 text-muted border-muted-20',
-    ][$variant] ?? 'bg-primary-10 text-primary border-primary-20';
-
+    $variantClasses = "bg-[color:var(--ui-{$variant}-10)] text-[color:var(--ui-{$variant})] border-[color:var(--ui-{$variant}-20)]";
     $rounded = $pill ? 'rounded-full' : 'rounded-md';
     $base = implode(' ', [
         'inline-flex items-center gap-2 border font-medium select-none',
@@ -70,7 +57,7 @@
     @unless($iconOnly)
         <span>{{ $slot }}</span>
         @if($counter !== null)
-            <span class="ml-1 bg-white text-xxs font-semibold px-2 rounded-full min-w-4 text-center leading-none">
+            <span class="ml-1 bg-white text-[10px] font-semibold px-2 rounded-full min-w-4 text-center leading-none">
                 {{ $counter }}
             </span>
         @endif

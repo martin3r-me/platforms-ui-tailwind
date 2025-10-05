@@ -4,7 +4,7 @@
     'text' => null,
     'variant' => 'primary',
     'required' => false,
-    'size' => 'md', // xs, sm, md, lg, xl
+    'size' => 'md',
     'class' => '',
 ])
 
@@ -14,16 +14,17 @@
         'sm' => 'text-sm',
         'lg' => 'text-lg',
         'xl' => 'text-xl',
-        default => 'text-md',
+        default => 'text-base',
     };
+    $colorClass = "text-[color:var(--ui-{$variant})]";
 @endphp
 
 <label
     @if($for) for="{{ $for }}" @endif
-    class="{{ $sizeClass }} font-medium mb-1 d-block text-{{ $variant }} {{ $class }}"
+    class="{{ $sizeClass }} font-medium mb-1 block {{ $colorClass }} {{ $class }}"
 >
     {{ $text }}
     @if($required)
-        <span class="text-danger">*</span>
+        <span class="text-[color:var(--ui-danger)]">*</span>
     @endif
 </label>

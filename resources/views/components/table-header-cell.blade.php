@@ -4,7 +4,7 @@
     'sortField' => null,
     'currentSort' => null,
     'sortDirection' => 'asc',
-    'align' => 'left', // left, center, right
+    'align' => 'left',
 ])
 
 @php
@@ -14,18 +14,17 @@
         'right' => 'text-right',
         default => 'text-left',
     };
-    
     $sortClasses = '';
     if ($sortable && $currentSort === $sortField) {
-        $sortClasses = 'text-primary font-bold';
+        $sortClasses = 'text-[color:var(--ui-primary)] font-bold';
     }
 @endphp
 
-<th class="{{ $paddingClass }} {{ $alignClass }} font-semibold text-secondary border-bottom-1 border-bottom-muted border-bottom-solid border-right-1 border-right-muted border-right-solid bg-muted-5 {{ $sortClasses }}">
+<th class="{{ $paddingClass }} {{ $alignClass }} font-semibold text-[color:var(--ui-body-color)] border-b border-[color:var(--ui-border)] bg-[color:var(--ui-muted-5)] {{ $sortClasses }}">
     @if($sortable)
         <button 
             type="button" 
-            class="d-flex items-center gap-1 hover:text-primary transition-colors"
+            class="flex items-center gap-1 hover:text-[color:var(--ui-primary)] transition-colors"
             wire:click="sortBy('{{ $sortField }}')"
         >
             {{ $slot }}
@@ -36,7 +35,7 @@
                     @svg('heroicon-o-chevron-down', 'w-4 h-4')
                 @endif
             @else
-                @svg('heroicon-o-chevron-up-down', 'w-4 h-4 text-muted')
+                @svg('heroicon-o-chevron-up-down', 'w-4 h-4 text-[color:var(--ui-muted)]')
             @endif
         </button>
     @else

@@ -7,16 +7,13 @@
 ])
 
 @php
-    $classes = ['border-bottom-1', 'border-bottom-muted', 'border-bottom-solid'];
-    
+    $classes = ['border-b', 'border-[color:var(--ui-border)]'];
     if ($hover) {
-        $classes[] = 'hover:bg-primary-5 transition-colors';
+        $classes[] = 'hover:bg-[color:var(--ui-primary-5)] transition-colors';
     }
-    
     if ($striped) {
-        $classes[] = 'even:bg-muted-5';
+        $classes[] = 'even:bg-[color:var(--ui-muted-5)]';
     }
-    
     if ($clickable) {
         $classes[] = 'cursor-pointer';
     }
