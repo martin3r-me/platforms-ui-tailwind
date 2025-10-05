@@ -1,0 +1,22 @@
+{
+  "name": "martin3r/platform-ui-tailwind",
+  "description": "Wiederverwendbare UI-Bausteine für Laravel (Buttons, Modals, Sidebars, Navbars)",
+  "type": "library",
+  "license": "MIT",
+  
+  "autoload": {
+    "psr-4": {
+      "Platform\\UiTailwind\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Platform\\UiTailwind\\UiTailwindServiceProvider"
+      ]
+    }
+  },
+  "require": {
+    "blade-ui-kit/blade-heroicons": "^2.6"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "platform-ui-tailwind",
+  "private": true,
+  "devDependencies": {
+    "sass": "^1.69.0"
+  },
+  "scripts": {
+    "build": "npm run build:expanded && npm run build:min",
+    "build:expanded": "sass resources/assets/scss/ui.scss resources/assets/css/ui.css --no-source-map --style=expanded",
+    "build:min": "sass resources/assets/scss/ui.scss resources/assets/css/ui.min.css --no-source-map --style=compressed"
+  }
+}
