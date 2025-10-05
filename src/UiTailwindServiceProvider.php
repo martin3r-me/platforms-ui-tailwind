@@ -46,6 +46,7 @@ class UiTailwindServiceProvider extends ServiceProvider
         Blade::component('ui-tailwind::components.grouped-list-item', 'ui-grouped-list-item');
         Blade::component('ui-tailwind::components.toast', 'ui-toast');
         Blade::component('ui-tailwind::components.dashboard-tile', 'ui-dashboard-tile');
+        Blade::component('ui-tailwind::components.segmented-toggle', 'ui-segmented-toggle');
 
         // Form Inputs
         Blade::component('ui-tailwind::components.form.input-text', 'ui-input-text');
