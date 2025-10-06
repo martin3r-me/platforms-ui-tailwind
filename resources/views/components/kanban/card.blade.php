@@ -1,5 +1,5 @@
 @props([
-    'title' => 'Card-Titel',
+    'title' => null,
     'footer' => null,
     'sortableId' => null,
     'href' => null,
@@ -34,9 +34,11 @@
 
 <div {{ $mergedAttributes }}>
     <!-- Header (nie klickbar) -->
-    <div class="px-1.5 py-1 flex">
-        <h4 class="text-xs text-[color:var(--ui-secondary)] font-medium m-0">{{ $title }}</h4>
-    </div>
+    @if(!is_null($title) && $title !== '')
+        <div class="px-1.5 py-1 flex">
+            <h4 class="text-xs text-[color:var(--ui-secondary)] font-medium m-0">{{ $title }}</h4>
+        </div>
+    @endif
 
     <!-- Body -->
     <div class="px-1.5 text-xs text-[color:var(--ui-muted)]">
