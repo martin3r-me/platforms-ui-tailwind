@@ -26,15 +26,15 @@
         $borderClass = "border border-solid border-[rgb(var(--ui-{$baseVariant}-rgb))]";
         $hoverClass = "hover:bg-[rgb(var(--ui-{$baseVariant}-rgb))] hover:text-[var(--ui-on-{$baseVariant})]";
     } elseif ($isSoft) {
-        $bgClass = "bg-[rgba(var(--ui-{$baseVariant}-rgb),0.1)]";
+        $bgClass = "bg-[rgba(var(--ui-{$baseVariant}-rgb),0.10)]";
         $textClass = "text-[var(--ui-{$baseVariant})]";
-        $borderClass = "border border-transparent";
-        $hoverClass = "hover:bg-[rgba(var(--ui-{$baseVariant}-rgb),0.18)]";
+        $borderClass = "border border-[rgba(var(--ui-{$baseVariant}-rgb),0.25)]";
+        $hoverClass = "hover:bg-[rgba(var(--ui-{$baseVariant}-rgb),0.16)] hover:border-[rgba(var(--ui-{$baseVariant}-rgb),0.35)]";
     } elseif ($isGhost) {
         $bgClass = 'bg-transparent';
         $textClass = "text-[var(--ui-{$baseVariant})]";
         $borderClass = "border border-transparent";
-        $hoverClass = "hover:bg-[rgba(var(--ui-{$baseVariant}-rgb),0.08)]";
+        $hoverClass = "hover:bg-[rgba(var(--ui-{$baseVariant}-rgb),0.08)] hover:border-[rgba(var(--ui-{$baseVariant}-rgb),0.20)]";
     } else {
         // solid
         $bgClass = "bg-[rgb(var(--ui-{$baseVariant}-rgb))]";
