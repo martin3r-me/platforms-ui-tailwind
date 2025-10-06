@@ -8,17 +8,41 @@
 ])
 
 @php
+    // Varianten erkennen: solid (default), outline, soft, ghost
     $isOutline = str_contains($variant, '-outline');
-    $baseVariant = $isOutline ? str_replace('-outline', '', $variant) : $variant;
+    $isSoft = str_contains($variant, '-soft');
+    $isGhost = str_contains($variant, '-ghost');
+    $baseVariant = $variant;
+    foreach (['-outline', '-soft', '-ghost'] as $suffix) {
+        if (str_contains($baseVariant, $suffix)) {
+            $baseVariant = str_replace($suffix, '', $baseVariant);
+        }
+    }
 
-    // Farbkonstrukte über CSS-Variablen; keine festen Farben
-    $bgClass = $isOutline ? 'bg-transparent' : "bg-[rgb(var(--ui-{$baseVariant}-rgb))]";
-    $textClass = $isOutline ? "text-[color:var(--ui-{$baseVariant})]" : "text-[color:var(--ui-on-{$baseVariant})]";
-    $borderClass = $isOutline ? "border border-solid border-[color:rgb(var(--ui-{$baseVariant}-rgb))]" : '';
-    $hoverClass = $isOutline
-        ? "hover:bg-[rgb(var(--ui-{$baseVariant}-rgb))] hover:text-[color:var(--ui-on-{$baseVariant})]"
-        : "hover:opacity-90";
-    $focusRing = "focus:outline-none focus:ring-2 focus:ring-[color:rgba(var(--ui-{$baseVariant}-rgb),0.2)]";
+    // Farbkonstrukte über CSS-Variablen; korrekte Tailwind Arbitrary Values
+    if ($isOutline) {
+        $bgClass = 'bg-transparent';
+        $textClass = "text-[var(--ui-{$baseVariant})]";
+        $borderClass = "border border-solid border-[rgb(var(--ui-{$baseVariant}-rgb))]";
+        $hoverClass = "hover:bg-[rgb(var(--ui-{$baseVariant}-rgb))] hover:text-[var(--ui-on-{$baseVariant})]";
+    } elseif ($isSoft) {
+        $bgClass = "bg-[rgba(var(--ui-{$baseVariant}-rgb),0.1)]";
+        $textClass = "text-[var(--ui-{$baseVariant})]";
+        $borderClass = "border border-transparent";
+        $hoverClass = "hover:bg-[rgba(var(--ui-{$baseVariant}-rgb),0.18)]";
+    } elseif ($isGhost) {
+        $bgClass = 'bg-transparent';
+        $textClass = "text-[var(--ui-{$baseVariant})]";
+        $borderClass = "border border-transparent";
+        $hoverClass = "hover:bg-[rgba(var(--ui-{$baseVariant}-rgb),0.08)]";
+    } else {
+        // solid
+        $bgClass = "bg-[rgb(var(--ui-{$baseVariant}-rgb))]";
+        $textClass = "text-[var(--ui-on-{$baseVariant})]";
+        $borderClass = '';
+        $hoverClass = "hover:opacity-90";
+    }
+    $focusRing = "focus:outline-none focus:ring-2 focus:ring-[rgba(var(--ui-{$baseVariant}-rgb),0.28)] focus:ring-offset-1 focus:ring-offset-[var(--ui-surface)]";
 
     // Größen & Icon-Skalierung
     if ($iconOnly) {
