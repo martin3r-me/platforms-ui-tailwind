@@ -6,6 +6,7 @@
     'iconOnly' => false,
     'href' => null,
     'useVars' => true,          // wenn false: feste Tailwind-Farben für Diagnose/Fail-Safe
+    'simple' => false,          // wenn true: stark vereinfachter Stil (türkiser Button über Variablen)
 ])
 
 @php
@@ -20,7 +21,17 @@
         }
     }
 
-    // Farb-Setup: wahlweise via CSS-Variablen (normal) oder feste Tailwind-Farben (Diagnose)
+    // Einfacher Modus: Ein einheitlicher, schöner Button auf Basis der Primärfarbe
+    $isSimple = filter_var($simple, FILTER_VALIDATE_BOOLEAN);
+    if ($isSimple) {
+        // Flacher, variablenfreier Button (Indigo-Farben), kompatibel mit jedem Setup
+        $bgClass = 'bg-indigo-600';
+        $textClass = 'text-white';
+        $borderClass = 'border border-transparent';
+        $hoverClass = 'hover:bg-indigo-500';
+        $focusRing = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600';
+    } else {
+        // Farb-Setup: wahlweise via CSS-Variablen (normal) oder feste Tailwind-Farben (Diagnose)
     $useVarsBool = filter_var($useVars, FILTER_VALIDATE_BOOLEAN);
     if ($useVarsBool) {
         if ($isOutline) {
@@ -82,6 +93,7 @@
             $focusRing = "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-{$c}-600";
         }
     }
+    }
 
     // Größen & Icon-Skalierung
     if ($iconOnly) {
@@ -93,11 +105,20 @@
         $sizeClass = "$btnSize $padding";
         $roundedClass = 'rounded-full';
     } else {
-        $sizeClass = match($size) {
-            'sm' => 'h-8 text-sm px-3',
-            'lg' => 'h-12 text-lg px-6',
-            default => 'h-10 text-base px-4',
-        };
+        if ($isSimple) {
+            // Größen wie im Beispiel (ohne fixe Höhe)
+            $sizeClass = match($size) {
+                'sm' => 'px-2.5 py-1 text-sm',
+                'lg' => 'px-4 py-2.5 text-sm',
+                default => 'px-3.5 py-2 text-sm', // md
+            };
+        } else {
+            $sizeClass = match($size) {
+                'sm' => 'h-8 text-sm px-3',
+                'lg' => 'h-12 text-lg px-6',
+                default => 'h-10 text-base px-4',
+            };
+        }
         $iconSize = '';
         $roundedClass = $rounded === 'none' ? 'rounded-none' : "rounded-{$rounded}";
     }
