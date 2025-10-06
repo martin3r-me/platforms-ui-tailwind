@@ -21,7 +21,7 @@
         ]
         : [];
 
-    $classes = 'rounded-lg p-1 shadow-md bg-white border border-[color:var(--ui-border)] mb-1';
+    $classes = 'rounded-lg p-2 shadow-sm bg-white border border-[color:var(--ui-border)]/60 mb-2 hover:shadow-md transition-shadow';
 
     $mergedAttributes = $attributes->merge(
         array_merge(
@@ -34,12 +34,12 @@
 
 <div {{ $mergedAttributes }}>
     <!-- Header (nie klickbar) -->
-    <div class="px-2 py-1 flex">
-        <h4 class="text-xs text-[color:var(--ui-muted)] font-semibold m-0">{{ $title }}</h4>
+    <div class="px-1.5 py-1 flex">
+        <h4 class="text-xs text-[color:var(--ui-secondary)] font-medium m-0">{{ $title }}</h4>
     </div>
 
     <!-- Body -->
-    <div class="px-2 text-sm">
+    <div class="px-1.5 text-xs text-[color:var(--ui-muted)]">
         {{ $slot }}
     </div>
 
@@ -49,7 +49,7 @@
 
     <!-- Footer (nie klickbar) -->
     @if($footer)
-        <div class="px-2 flex justify-between items-center">
+        <div class="px-1.5 flex justify-between items-center text-xs">
             {{ $footer }}
         </div>
     @endif
