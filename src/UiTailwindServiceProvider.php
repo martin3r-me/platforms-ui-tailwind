@@ -69,6 +69,28 @@ class UiTailwindServiceProvider extends ServiceProvider
         Blade::component('ui-tailwind::components.kanban.board', 'ui-kanban-board');
         Blade::component('ui-tailwind::components.kanban.column', 'ui-kanban-column');
         Blade::component('ui-tailwind::components.kanban.card', 'ui-kanban-card');
+
+        // Debug: Alias-Registrierung prüfen (nur temporär, hilft bei Deployment-Problemen)
+        try {
+            $aliases = \Illuminate\Support\Facades\Blade::getClassComponentAliases();
+            @file_put_contents(
+                storage_path('logs/ui-tailwind-provider-debug.txt'),
+                now()." ui-tailwind aliases: ".json_encode($aliases)."\n",
+                FILE_APPEND
+            );
+            $viewExists = view()->exists('ui-tailwind::components.button');
+            @file_put_contents(
+                storage_path('logs/ui-tailwind-provider-debug.txt'),
+                now()." ui-tailwind button view exists: ".($viewExists ? 'YES' : 'NO')."\n",
+                FILE_APPEND
+            );
+        } catch (\Throwable $e) {
+            @file_put_contents(
+                storage_path('logs/ui-tailwind-provider-debug.txt'),
+                now()." ui-tailwind debug error: ".$e->getMessage()."\n",
+                FILE_APPEND
+            );
+        }
     }
 
     public function register(): void
