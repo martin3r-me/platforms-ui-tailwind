@@ -32,7 +32,7 @@
         <!-- Collapsed Title -->
         <div x-show="!open" class="flex-1 flex items-center justify-center">
             @if($title)
-                <div class="text-[var(--ui-muted)] text-[10px] tracking-wide rotate-90 origin-center select-none whitespace-nowrap">
+                <div class="text-[var(--ui-muted)] text-sm font-semibold tracking-wide -rotate-90 origin-center select-none whitespace-nowrap">
                     {{ strtoupper($title) }}
                 </div>
             @endif
