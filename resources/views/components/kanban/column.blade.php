@@ -13,10 +13,10 @@
     @endif
     {{ $attributes->merge(['class' => 'shrink-0 h-full w-80 flex flex-col']) }}
 >
-    <div class="flex flex-col h-full rounded-lg border border-[color:var(--ui-border)]/60 shadow-sm {{ $muted ? 'bg-[var(--ui-muted-5)]' : 'bg-[var(--ui-surface)]' }}">
+    <div class="flex flex-col h-full rounded-lg border {{ $muted ? 'border-[color:var(--ui-border)]/40 bg-[var(--ui-muted-5)]' : 'border-[color:var(--ui-border)]/60 bg-[var(--ui-surface)]' }} shadow-sm">
         <!-- Header -->
-        <div class="p-3 text-xs font-semibold tracking-wide flex justify-between items-center gap-2 sticky top-0 z-10 rounded-t-lg border-b border-[color:var(--ui-border)]/60 {{ $muted ? 'bg-[var(--ui-muted-5)]/90' : 'bg-[var(--ui-surface)]/90' }} backdrop-blur">
-            <span class="uppercase text-[color:var(--ui-secondary)] flex-1 truncate">{{ $title }}</span>
+        <div class="p-3 text-xs font-semibold tracking-wide flex justify-between items-center gap-2 sticky top-0 z-10 rounded-t-lg border-b {{ $muted ? 'border-[color:var(--ui-border)]/40 bg-[var(--ui-muted-5)]/90' : 'border-[color:var(--ui-border)]/60 bg-[var(--ui-surface)]/90' }} backdrop-blur">
+            <span class="uppercase {{ $muted ? 'text-[color:var(--ui-muted)]' : 'text-[color:var(--ui-secondary)]' }} flex-1 truncate">{{ $title }}</span>
             
             @isset($headerActions)
                 <div class="flex items-center gap-1">
