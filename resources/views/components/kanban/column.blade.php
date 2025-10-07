@@ -17,11 +17,13 @@
         <!-- Header -->
         <div class="p-3 text-xs font-semibold tracking-wide flex justify-between items-center sticky top-0 z-10 rounded-t-lg border-b border-[color:var(--ui-border)]/60 {{ $muted ? 'bg-[var(--ui-muted-5)]/90' : 'bg-[var(--ui-surface)]/90' }} backdrop-blur">
             <span class="uppercase text-[color:var(--ui-secondary)]">{{ $title }}</span>
-            <button wire:sortable.handle class="text-[color:var(--ui-primary)]" title="Spalte verschieben" style="cursor: grab;">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16" />
-                </svg>
-            </button>
+            @unless($muted)
+                <button wire:sortable.handle class="text-[color:var(--ui-primary)]" title="Spalte verschieben" style="cursor: grab;">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16" />
+                    </svg>
+                </button>
+            @endunless
         </div>
 
         @isset($extra)
