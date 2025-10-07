@@ -51,6 +51,7 @@ class UiTailwindServiceProvider extends ServiceProvider
         Blade::component('ui-tailwind::components.team-members-list', 'ui-team-members-list');
         Blade::component('ui-tailwind::components.project-list', 'ui-project-list');
         Blade::component('ui-tailwind::components.page-header', 'ui-page-header');
+        Blade::component('ui-tailwind::components.page-navbar', 'ui-page-navbar');
         Blade::component('ui-tailwind::components.stats-grid', 'ui-stats-grid');
         Blade::component('ui-tailwind::components.detail-stats-grid', 'ui-detail-stats-grid');
         Blade::component('ui-tailwind::components.panel', 'ui-panel');
