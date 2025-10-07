@@ -33,9 +33,18 @@
         </div>
 
         <!-- Modul-spezifische Sidebar-Inhalte -->
-        <nav class="flex-1 overflow-y-auto p-3 flex flex-col gap-2">
-            {{ $slot ?? '' }}
-        </nav>
+        <template x-if="!collapsed">
+            <nav class="flex-1 overflow-y-auto p-3 flex flex-col gap-2">
+                {{ $slot ?? '' }}
+            </nav>
+        </template>
+        <template x-if="collapsed">
+            <div class="flex-1 flex items-center justify-center">
+                <div class="text-[var(--ui-muted)] text-[10px] tracking-wide rotate-90 origin-center select-none whitespace-nowrap">
+                    {{ strtoupper(explode('.', request()->route()?->getName())[0] ?? 'APP') }}
+                </div>
+            </div>
+        </template>
     </aside>
 </div>
 
