@@ -12,4 +12,3 @@
         {{ $slot }}
     </x-ui-kanban-board>
 </div>
-
