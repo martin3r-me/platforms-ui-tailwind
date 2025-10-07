@@ -12,7 +12,7 @@
             {{ $sidebar }}
         @endisset
 
-        <div class="flex-1 min-h-0">
+        <div class="flex-1 min-h-0 h-full overflow-hidden flex">
             {{ $slot }}
         </div>
     </div>
