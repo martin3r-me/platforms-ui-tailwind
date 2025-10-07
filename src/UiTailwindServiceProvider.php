@@ -30,6 +30,8 @@ class UiTailwindServiceProvider extends ServiceProvider
         Blade::component('ui-tailwind::components.right-sidebar', 'ui-right-sidebar');
         Blade::component('ui-tailwind::components.sidebar-module-header', 'sidebar-module-header');
         Blade::component('ui-tailwind::components.task-layout', 'ui-task-layout');
+        Blade::component('ui-tailwind::components.sidebar-list', 'ui-sidebar-list');
+        Blade::component('ui-tailwind::components.sidebar-item', 'ui-sidebar-item');
 
         Blade::component('ui-tailwind::components.modal', 'ui-modal');
         Blade::component('ui-tailwind::components.confirm-button', 'ui-confirm-button');
