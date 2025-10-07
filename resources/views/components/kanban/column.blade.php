@@ -15,7 +15,7 @@
 >
     <div class="flex flex-col h-full rounded-lg border {{ $muted ? 'border-[color:var(--ui-border)]/40 bg-[var(--ui-muted-5)]' : 'border-[color:var(--ui-border)]/60 bg-[var(--ui-surface)]' }} shadow-sm">
         <!-- Header -->
-        <div class="p-3 text-xs font-semibold tracking-wide flex justify-between items-center gap-2 sticky top-0 z-10 rounded-t-lg border-b {{ $muted ? 'border-[color:var(--ui-border)]/40 bg-[var(--ui-muted-5)]/90' : 'border-[color:var(--ui-border)]/60 bg-[var(--ui-surface)]/90' }} backdrop-blur">
+        <div class="p-3 text-xs font-semibold tracking-wide flex justify-between items-center gap-2 sticky top-0 z-10 rounded-t-lg border-b {{ $muted ? 'border-[color:var(--ui-border)]/40 bg-[var(--ui-muted-5)]' : 'border-[color:var(--ui-border)]/60 bg-[var(--ui-surface)]/90 backdrop-blur' }}">
             <span class="uppercase {{ $muted ? 'text-[color:var(--ui-muted)]' : 'text-[color:var(--ui-secondary)]' }} flex-1 truncate">{{ $title }}</span>
             
             @isset($headerActions)
@@ -24,17 +24,17 @@
                 </div>
             @endisset
             
-            @unless($muted)
+            @if($sortableId && !$muted)
                 <button wire:sortable.handle class="text-[color:var(--ui-primary)] flex-shrink-0" title="Spalte verschieben" style="cursor: grab;">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16" />
                     </svg>
                 </button>
-            @endunless
+            @endif
         </div>
 
         <!-- Body -->
-        <div wire:sortable-group.item-group="{{ $sortableId }}" class="flex-1 min-h-0 px-3 py-3 gap-3 flex flex-col {{ $scrollable ? 'overflow-y-auto' : '' }}">
+        <div wire:sortable-group.item-group="{{ $sortableId }}" class="flex-1 min-h-0 px-3 py-3 gap-3 flex flex-col {{ $scrollable ? 'overflow-y-auto' : '' }} {{ $muted ? 'bg-[var(--ui-muted-5)]/50' : '' }}">
             {{ $slot }}
         </div>
 
