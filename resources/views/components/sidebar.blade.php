@@ -23,10 +23,10 @@
                     :title="collapsed ? 'Sidebar ausklappen' : 'Sidebar einklappen'"
                 >
                     <template x-if="collapsed">
-                        @svg('heroicon-o-chevron-double-right', 'w-6 h-6')
+                        @svg('heroicon-o-chevron-double-right', 'w-5 h-5')
                     </template>
                     <template x-if="!collapsed">
-                        @svg('heroicon-o-chevron-double-left', 'w-6 h-6')
+                        @svg('heroicon-o-chevron-double-left', 'w-5 h-5')
                     </template>
                 </button>
             </div>
