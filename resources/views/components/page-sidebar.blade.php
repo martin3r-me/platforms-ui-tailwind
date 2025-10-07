@@ -5,8 +5,9 @@
 ])
 
 <div 
-    x-data="{ open: {{ $defaultOpen ? 'true' : 'false' }} }"
-    :class="open ? '{{ $width }}' : 'w-16'"
+    x-data="{ open: Alpine?.store('page') ? Alpine.store('page').sidebarOpen : ({{ $defaultOpen ? 'true' : 'false' }}) }"
+    x-init="$watch('open', v => Alpine?.store('page') && (Alpine.store('page').sidebarOpen = v))"
+    :class="open ? '{{ $width }}' : 'w-0'"
     class="relative flex-shrink-0 h-full border-r border-[var(--ui-border)] bg-[var(--ui-surface)] transition-all duration-300"
     {{ $attributes }}
 >
@@ -30,7 +31,7 @@
         </button>
 
         <!-- Collapsed Title -->
-        <div x-show="!open" class="flex-1 flex items-center justify-center">
+        <div x-show="!open" class="flex-1 flex items-center justify-center" x-cloak>
             @if($title)
                 <div class="text-[var(--ui-muted)] text-sm font-semibold tracking-wide -rotate-90 origin-center select-none whitespace-nowrap">
                     {{ strtoupper($title) }}
