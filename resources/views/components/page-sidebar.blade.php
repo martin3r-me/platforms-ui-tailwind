@@ -9,8 +9,8 @@
         get open(){ return Alpine?.store('page') ? Alpine.store('page').sidebarOpen : ({{ $defaultOpen ? 'true' : 'false' }}) },
         set open(v){ Alpine?.store('page') && (Alpine.store('page').sidebarOpen = v) }
     }"
-    :class="open ? '{{ $width }}' : 'w-0'"
-    class="relative flex-shrink-0 h-full border-r border-[var(--ui-border)] bg-[var(--ui-surface)] transition-all duration-300"
+    :class="open ? '{{ $width }} border-r' : 'w-0 border-0'"
+    class="relative flex-shrink-0 h-full border-[var(--ui-border)] bg-[var(--ui-surface)] transition-all duration-300"
     {{ $attributes }}
 >
     <!-- Toggle Button Area (immer sichtbar) -->
