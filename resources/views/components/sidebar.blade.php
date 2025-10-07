@@ -19,7 +19,7 @@
                 <!-- Sidebar ein-/ausklappen -->
                 <button 
                     @click="toggle()" 
-                    class="flex items-center justify-center h-14 text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)] transition-colors"
+                    class="flex items-center justify-center h-14 border-b border-[var(--ui-border)]/60 text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)] transition-colors"
                     :title="collapsed ? 'Sidebar ausklappen' : 'Sidebar einklappen'"
                 >
                     <template x-if="collapsed">

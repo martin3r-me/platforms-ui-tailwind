@@ -8,7 +8,7 @@
         {{-- Titel-Bereich (links) --}}
         <div class="flex items-center gap-2 min-w-0">
             @if($icon)
-                @svg($icon, 'w-5 h-5 text-[color:var(--ui-primary)]')
+                @svg($icon, 'w-6 h-6 flex-shrink-0 text-[color:var(--ui-primary)]')
             @endif
             <h1 class="m-0 truncate text-[color:var(--ui-secondary)] font-semibold tracking-tight text-base md:text-lg">
                 {{ $title }}
