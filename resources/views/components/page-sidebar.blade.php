@@ -15,31 +15,8 @@
 >
     <!-- Toggle Button Area (immer sichtbar) -->
     <div class="h-full flex flex-col">
-        <button type="button"
-            @click="open = !open"
-            class="flex items-center justify-center h-14 border-b border-[var(--ui-border)] text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)] transition-colors"
-            :title="open ? 'Sidebar schließen' : 'Sidebar öffnen'"
-        >
-            <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                class="w-5 h-5 transition-transform duration-300" 
-                :class="{ 'rotate-180': !open }"
-                fill="none" 
-                viewBox="0 0 24 24" 
-                stroke="currentColor"
-            >
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
-            </svg>
-        </button>
 
-        <!-- Collapsed Title -->
-        <div x-show="!open" class="flex-1 flex items-center justify-center" x-cloak>
-            @if($title)
-                <div class="text-[var(--ui-muted)] text-sm font-semibold tracking-wide -rotate-90 origin-center select-none whitespace-nowrap">
-                    {{ strtoupper($title) }}
-                </div>
-            @endif
-        </div>
+        <!-- Collapsed Title (deaktiviert) -->
 
         <!-- Sidebar Content -->
         <div 
