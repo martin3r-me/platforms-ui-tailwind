@@ -98,10 +98,10 @@
                 </div>
             @else
                 <!-- Regular Modal -->
-                <div class="max-h-[90vh] flex flex-col">
+                <div class="h-[90vh] flex flex-col">
                     <!-- Header -->
                     @if (trim($header ?? ''))
-                        <div class="px-6 py-4 border-b border-[var(--ui-border)]/60 flex items-center justify-between">
+                        <div class="px-6 py-4 border-b border-[var(--ui-border)]/60 flex items-center justify-between flex-shrink-0">
                             <h2 class="text-lg font-semibold text-[var(--ui-secondary)] m-0">
                                 {{ $header }}
                             </h2>
@@ -116,17 +116,17 @@
                     @endif
 
                     <!-- Body -->
-                    <div class="flex-1 overflow-y-auto p-6">
+                    <div class="flex-1 overflow-y-auto p-6 min-h-0">
                         {{ $slot }}
                     </div>
 
                     <!-- Footer -->
                     @if (isset($footer))
-                        <div class="px-6 py-4 border-t border-[var(--ui-border)]/60 flex justify-end gap-3">
+                        <div class="px-6 py-4 border-t border-[var(--ui-border)]/60 flex justify-end gap-3 flex-shrink-0">
                             {{ $footer }}
                         </div>
                     @else
-                        <div class="px-6 py-4 border-t border-[var(--ui-border)]/60 flex justify-end gap-3">
+                        <div class="px-6 py-4 border-t border-[var(--ui-border)]/60 flex justify-end gap-3 flex-shrink-0">
                             <x-ui-button variant="secondary-outline" size="sm" @click="modalShow = false">
                                 Abbrechen
                             </x-ui-button>
