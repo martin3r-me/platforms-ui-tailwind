@@ -32,27 +32,21 @@
     x-data="{ modalShow: $wire.entangle('{{ $model }}') }"
     x-show="modalShow"
     x-cloak
-    x-transition:enter="transition ease-out duration-300"
-    x-transition:enter-start="opacity-0"
-    x-transition:enter-end="opacity-100"
-    x-transition:leave="transition ease-in duration-200"
-    x-transition:leave-start="opacity-100"
-    x-transition:leave-end="opacity-0"
 >
     <div
         class="fixed inset-0 z-[100] flex items-center justify-center p-4"
         @keydown.window.escape="{{ $canCloseByEsc ? 'modalShow = false' : '' }}"
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
     >
         <!-- Overlay -->
         <div 
             class="absolute inset-0 backdrop-blur-md bg-black/50 z-[90]"
             @click="{{ $canCloseByBackdrop ? 'modalShow = false' : '' }}"
-            x-transition:enter="transition ease-out duration-300"
-            x-transition:enter-start="opacity-0"
-            x-transition:enter-end="opacity-100"
-            x-transition:leave="transition ease-in duration-200"
-            x-transition:leave-start="opacity-100"
-            x-transition:leave-end="opacity-0"
         ></div>
 
         <!-- Modal -->
