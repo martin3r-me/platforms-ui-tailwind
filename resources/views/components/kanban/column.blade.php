@@ -18,13 +18,21 @@
         <div class="p-3 text-xs font-semibold uppercase tracking-wide flex justify-between items-center border-b border-gray-200">
             <span class="text-gray-700 flex-1 truncate">{{ $title }}</span>
             
-            @if($sortableId)
-                <button wire:sortable.handle class="text-blue-600 cursor-grab" title="Spalte verschieben">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16" />
-                    </svg>
-                </button>
-            @endif
+            <div class="flex items-center gap-2">
+                @isset($headerActions)
+                    <div class="flex items-center gap-1">
+                        {{ $headerActions }}
+                    </div>
+                @endisset
+                
+                @if($sortableId)
+                    <button wire:sortable.handle class="text-blue-600 cursor-grab" title="Spalte verschieben">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16" />
+                        </svg>
+                    </button>
+                @endif
+            </div>
         </div>
 
         <!-- Body -->
