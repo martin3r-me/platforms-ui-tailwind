@@ -3,7 +3,7 @@
     'sortableGroup' => null,
 ])
 
-<div class="flex-1 min-h-0 h-full overflow-hidden relative" x-data="{ view: 'board', toggleView() { this.view = this.view === 'board' ? 'list' : 'board'; Alpine.store('kanbanView', this.view); } }" x-init="this.view = Alpine.store('kanbanView') || 'board';">
+<div class="flex-1 min-h-0 h-full overflow-hidden relative" x-data="{ view: 'board', toggleView() { this.view = this.view === 'board' ? 'list' : 'board'; localStorage.setItem('kanbanView', this.view); } }" x-init="this.view = localStorage.getItem('kanbanView') || 'board';">
     <!-- Schwebt über dem Board -->
     <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-10">
         <button 
