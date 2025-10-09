@@ -16,9 +16,10 @@
                         this.view = this.view === 'board' ? 'list' : 'board';
                         // Update Alpine Store für alle Komponenten
                         Alpine.store('kanbanView', this.view);
+                        Alpine.store('plannerKanbanView', this.view);
                     }
                 }"
-                x-init="Alpine.store('kanbanView', '{{ $view }}')"
+                x-init="Alpine.store('kanbanView', '{{ $view }}'); Alpine.store('plannerKanbanView', '{{ $view }}')"
                 @click="toggleView()"
                 class="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-medium rounded-md border transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
                 :class="view === 'board' 

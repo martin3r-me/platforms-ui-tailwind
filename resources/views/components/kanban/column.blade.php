@@ -9,7 +9,7 @@
 
 {{-- Board View --}}
 <div 
-    x-show="Alpine.store('kanbanView') === 'board'"
+    x-show="Alpine.store('plannerKanbanView') === 'board'"
     x-cloak
     @if($sortableId)
         wire:sortable.item="{{ $sortableId }}"
@@ -53,13 +53,13 @@
 
 {{-- List View --}}
 <div 
-    x-show="Alpine.store('kanbanView') === 'list'"
+    x-show="Alpine.store('plannerKanbanView') === 'list'"
     x-cloak
     @if($sortableId)
         wire:sortable.item="{{ $sortableId }}"
         wire:key="list-column-{{ $sortableId }}"
     @endif
-    {{ $attributes->merge(['class' => 'w-full mb-4']) }}
+    {{ $attributes->merge(['class' => 'w-full mb-6']) }}
 >
     <div class="rounded-lg border {{ $muted ? 'border-[color:var(--ui-border)]/40 bg-[var(--ui-muted-5)]' : 'border-[color:var(--ui-border)]/60 bg-[var(--ui-surface)]' }} shadow-sm">
         <!-- Header -->

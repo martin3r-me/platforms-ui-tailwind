@@ -47,7 +47,7 @@
 
     {{-- List View --}}
     <div 
-        x-show="view === 'list'"
+        x-show="Alpine.store('plannerKanbanView') === 'list'"
         x-cloak
         class="h-full min-h-0 w-full space-y-4 px-4 py-3 overflow-y-auto"
     >
