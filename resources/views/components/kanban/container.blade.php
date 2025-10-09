@@ -7,7 +7,8 @@
     view: localStorage.getItem('kanbanView') || 'board',
     toggleView() { 
         this.view = this.view === 'board' ? 'list' : 'board'; 
-        localStorage.setItem('kanbanView', this.view); 
+        localStorage.setItem('kanbanView', this.view);
+        window.dispatchEvent(new Event('storage-change'));
     } 
 }">
     <!-- Schwebt über dem Board -->

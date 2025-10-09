@@ -12,6 +12,8 @@
     @endif
     {{ $attributes->merge(['class' => 'flex-shrink-0 h-full w-80 flex flex-col']) }}
     x-data="{ isList: localStorage.getItem('kanbanView') === 'list' }"
+    x-init="this.isList = localStorage.getItem('kanbanView') === 'list'"
+    @storage-change.window="isList = localStorage.getItem('kanbanView') === 'list'"
     :class="{ 'w-full max-w-none': isList, 'w-80': !isList }"
 >
     <div class="flex flex-col h-full bg-white border border-gray-200 rounded-lg shadow-sm">
