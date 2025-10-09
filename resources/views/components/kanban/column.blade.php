@@ -81,9 +81,11 @@
             @endif
         </div>
 
-        <!-- Body - Liste statt Spalte -->
-        <div wire:sortable-group.item-group="{{ $sortableId }}" class="p-3 space-y-2 {{ $muted ? 'bg-[var(--ui-muted-5)]/50' : '' }}">
-            {{ $slot }}
+        <!-- Body - Echte Liste -->
+        <div wire:sortable-group.item-group="{{ $sortableId }}" class="p-3 {{ $muted ? 'bg-[var(--ui-muted-5)]/50' : '' }}">
+            <div class="space-y-2">
+                {{ $slot }}
+            </div>
         </div>
 
         <!-- Footer -->

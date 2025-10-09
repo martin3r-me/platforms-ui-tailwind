@@ -22,9 +22,7 @@
         ]
         : [];
 
-    $classes = $view === 'list' 
-        ? 'rounded-lg p-3 bg-[var(--ui-surface)] border border-[color:var(--ui-border)]/60 mb-2 shadow-sm hover:shadow-md transition-shadow flex items-center gap-3'
-        : 'rounded-lg p-2 bg-[var(--ui-surface)] border border-[color:var(--ui-border)]/60 mb-2 shadow-sm hover:shadow-md transition-shadow';
+    $classes = 'rounded-lg p-3 bg-[var(--ui-surface)] border border-[color:var(--ui-border)]/60 mb-2 shadow-sm hover:shadow-md transition-shadow';
 
     $mergedAttributes = $attributes->merge(
         array_merge(
@@ -69,7 +67,7 @@
 <div 
     x-show="Alpine.store('plannerKanbanView') === 'list'"
     x-cloak
-    {{ $mergedAttributes }}
+    class="flex items-center gap-3 p-3 bg-[var(--ui-surface)] border border-[color:var(--ui-border)]/60 mb-2 shadow-sm hover:shadow-md transition-shadow rounded-lg"
 >
     <!-- Drag Handle -->
     @if($sortableId)
