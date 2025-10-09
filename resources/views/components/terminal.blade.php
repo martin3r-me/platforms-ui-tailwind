@@ -1,0 +1,48 @@
+<div
+    x-data="{ get open(){ return Alpine?.store('page')?.terminalOpen ?? false }, toggle(){ Alpine?.store('page') && (Alpine.store('page').terminalOpen = !Alpine.store('page').terminalOpen) } }"
+    x-on:toggle-terminal.window="toggle()"
+    class="w-full"
+>
+    <div
+        x-show="open"
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0 translate-y-4"
+        x-transition:enter-end="opacity-100 translate-y-0"
+        x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="opacity-100 translate-y-0"
+        x-transition:leave-end="opacity-0 translate-y-4"
+        class="sticky bottom-0 z-[5] w-full border-t border-[var(--ui-border)]/60 bg-[var(--ui-surface)]/95 backdrop-blur"
+    >
+        <!-- Header -->
+        <div class="h-10 px-3 flex items-center justify-between text-xs border-b border-[var(--ui-border)]/60">
+            <div class="flex items-center gap-2 text-[var(--ui-muted)]">
+                @svg('heroicon-o-command-line', 'w-4 h-4')
+                <span>Terminal</span>
+            </div>
+            <div class="flex items-center gap-1">
+                <button @click="toggle()" class="inline-flex items-center justify-center w-7 h-7 rounded-md text-[var(--ui-muted)] hover:text-[var(--ui-danger)] hover:bg-[var(--ui-danger-5)] transition">
+                    @svg('heroicon-o-x-mark','w-4 h-4')
+                </button>
+            </div>
+        </div>
+
+        <!-- Body -->
+        <div class="max-h-72 h-56 overflow-y-auto px-3 py-2 text-xs font-mono text-[var(--ui-secondary)]">
+            <div class="text-[var(--ui-muted)]">Tippe "help" für verfügbare Befehle…</div>
+            <div class="mt-2 space-y-1">
+                <div>$ help</div>
+                <div>- kpi            Zeigt Team-KPIs</div>
+                <div>- tasks --mine   Eigene Aufgaben</div>
+            </div>
+        </div>
+
+        <!-- Prompt -->
+        <div class="h-10 px-3 flex items-center gap-2 border-t border-[var(--ui-border)]/60">
+            <span class="text-[var(--ui-muted)] text-xs font-mono">$</span>
+            <input type="text" class="flex-1 bg-transparent outline-none text-sm text-[var(--ui-secondary)] placeholder-[var(--ui-muted)]" placeholder="Befehl eingeben… (nur Demo)" />
+            <button class="inline-flex items-center justify-center h-8 px-3 rounded-md border border-[var(--ui-border)]/60 text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)] transition">Ausführen</button>
+        </div>
+    </div>
+</div>
+
+

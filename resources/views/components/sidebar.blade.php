@@ -55,6 +55,13 @@
             >
                 @svg('heroicon-o-paper-airplane', 'w-5 h-5')
             </button>
+            <button
+                @click="window.dispatchEvent(new CustomEvent('toggle-terminal'))"
+                class="w-full flex items-center justify-center h-14 text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)] transition-colors border-t border-[var(--ui-border)]/60"
+                title="Terminal"
+            >
+                @svg('heroicon-o-command-line', 'w-5 h-5')
+            </button>
         </div>
     </aside>
 </div>
