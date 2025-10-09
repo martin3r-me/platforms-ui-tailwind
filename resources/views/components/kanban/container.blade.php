@@ -35,8 +35,11 @@
     <!-- List View -->
     <div x-show="view === 'list'" class="h-full w-full overflow-y-auto p-4" wire:sortable="{{ $sortable }}" wire:sortable-group="{{ $sortableGroup }}">
         <div class="space-y-6 w-full">
+            hhhhhh
             <div class="w-full">
-                {{ $slot }}
+                <div class="w-full">
+                    {{ $slot }}
+                </div>
             </div>
         </div>
     </div>
