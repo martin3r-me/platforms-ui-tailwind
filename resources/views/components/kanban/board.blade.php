@@ -49,8 +49,10 @@
     <div 
         x-show="Alpine.store('plannerKanbanView') === 'list'"
         x-cloak
-        class="h-full min-h-0 w-full space-y-4 px-4 py-3 overflow-y-auto"
+        class="h-full min-h-0 w-full px-4 py-3 overflow-y-auto"
     >
-        {{ $slot }}
+        <div class="space-y-6">
+            {{ $slot }}
+        </div>
     </div>
 </div>

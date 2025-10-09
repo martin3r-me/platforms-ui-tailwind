@@ -67,7 +67,7 @@
 <div 
     x-show="Alpine.store('plannerKanbanView') === 'list'"
     x-cloak
-    class="flex items-center gap-3 p-3 bg-[var(--ui-surface)] border border-[color:var(--ui-border)]/60 mb-2 shadow-sm hover:shadow-md transition-shadow rounded-lg"
+    class="flex items-center gap-3 p-3 bg-[var(--ui-surface)] border border-[color:var(--ui-border)]/60 rounded-lg hover:shadow-sm transition-shadow"
 >
     <!-- Drag Handle -->
     @if($sortableId)
@@ -81,10 +81,10 @@
     <!-- Content -->
     <div class="flex-1 min-w-0">
         @if(!is_null($title) && $title !== '')
-            <h4 class="text-sm text-[color:var(--ui-secondary)] font-semibold leading-snug m-0 mb-1">{{ $title }}</h4>
+            <div class="text-sm font-medium text-[color:var(--ui-secondary)] mb-1">{{ $title }}</div>
         @endif
         
-        <div class="text-sm text-[color:var(--ui-muted)]">
+        <div class="text-xs text-[color:var(--ui-muted)]">
             {{ $slot }}
         </div>
     </div>
@@ -95,7 +95,7 @@
 
     <!-- Footer -->
     @if($footer)
-        <div class="flex-shrink-0 text-xs">
+        <div class="flex-shrink-0 text-xs text-[color:var(--ui-muted)]">
             {{ $footer }}
         </div>
     @endif
