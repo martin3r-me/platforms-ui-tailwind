@@ -22,11 +22,13 @@
                     }
                 }"
                 x-init="
-                    // Lade aus Local Storage oder verwende Standard
-                    const savedView = localStorage.getItem('plannerKanbanView') || '{{ $view }}';
-                    this.view = savedView;
-                    Alpine.store('kanbanView', savedView);
-                    Alpine.store('plannerKanbanView', savedView);
+                    (() => {
+                        // Lade aus Local Storage oder verwende Standard
+                        const savedView = localStorage.getItem('plannerKanbanView') || '{{ $view }}';
+                        this.view = savedView;
+                        Alpine.store('kanbanView', savedView);
+                        Alpine.store('plannerKanbanView', savedView);
+                    })()
                 "
                 @click="toggleView()"
                 class="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-medium rounded-md border transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"

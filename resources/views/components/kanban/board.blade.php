@@ -16,11 +16,13 @@
         }
     }"
     x-init="
-        // Lade aus Local Storage oder verwende Standard
-        const savedView = localStorage.getItem('plannerKanbanView') || '{{ $view }}';
-        this.view = savedView;
-        Alpine.store('kanbanView', savedView);
-        Alpine.store('plannerKanbanView', savedView);
+        (() => {
+            // Lade aus Local Storage oder verwende Standard
+            const savedView = localStorage.getItem('plannerKanbanView') || '{{ $view }}';
+            this.view = savedView;
+            Alpine.store('kanbanView', savedView);
+            Alpine.store('plannerKanbanView', savedView);
+        })()
     "
     {{ $attributes->merge(['class' => 'h-full w-full']) }}
 >
