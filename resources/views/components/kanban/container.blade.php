@@ -28,22 +28,12 @@
     </div>
 
     <!-- Board View -->
-    <x-ui-kanban-board-view 
-        x-show="view === 'board'"
-        wire:sortable="{{ $sortable }}"
-        wire:sortable-group="{{ $sortableGroup }}"
-        class="h-full"
-    >
+    <div x-show="view === 'board'" class="h-full w-full flex gap-4 overflow-x-auto overflow-y-hidden p-2">
         {{ $slot }}
-    </x-ui-kanban-board-view>
+    </div>
 
     <!-- List View -->
-    <x-ui-kanban-list-view 
-        x-show="view === 'list'"
-        wire:sortable="{{ $sortable }}"
-        wire:sortable-group="{{ $sortableGroup }}"
-        class="h-full"
-    >
+    <div x-show="view === 'list'" class="h-full w-full space-y-6 overflow-y-auto p-2">
         {{ $slot }}
-    </x-ui-kanban-list-view>
+    </div>
 </div>
