@@ -26,6 +26,11 @@
             <h1 class="m-0 truncate text-[color:var(--ui-secondary)] font-semibold tracking-tight text-base md:text-lg">
                 {{ $title }}
             </h1>
+            @isset($titleActions)
+                <div class="flex items-center gap-2 ml-2">
+                    {{ $titleActions }}
+                </div>
+            @endisset
         </div>
 
         {{-- Rechts: Aktionen + Sidebar-Toggles --}}
