@@ -75,7 +75,7 @@ class UiTailwindServiceProvider extends ServiceProvider
         Blade::component('ui-tailwind::components.form.input-number', 'ui-input-number');
 
         // Kanban
-        Blade::component('ui-tailwind::components.kanban-container', 'ui-kanban-container');
+        Blade::component('ui-tailwind::components.kanban.container', 'ui-kanban-container');
         Blade::component('ui-tailwind::components.kanban.board', 'ui-kanban-board');
         Blade::component('ui-tailwind::components.kanban.column', 'ui-kanban-column');
         Blade::component('ui-tailwind::components.kanban.card', 'ui-kanban-card');
