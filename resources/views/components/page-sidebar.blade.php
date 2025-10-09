@@ -13,7 +13,7 @@
             }"
             :class="open ? (`${'{{ $width }}'} ` + ( '{{ $side }}' === 'right' ? 'border-l' : 'border-r')) : 'w-0 border-0'"
             class="relative flex-shrink-0 h-full bg-white transition-all duration-300"
-            :class="open ? ( '{{ $side }}' === 'right' ? 'border-l border-[var(--ui-border)]/30' : 'border-r border-[var(--ui-border)]/30' ) : ''"
+            :class="open ? ( '{{ $side }}' === 'right' ? 'border-l border-[var(--ui-border)]/60' : 'border-r border-[var(--ui-border)]/60' ) : ''"
             {{ $attributes }}
         >
     <!-- Toggle Button Area (immer sichtbar) -->
@@ -33,7 +33,7 @@
             class="flex-1 overflow-hidden flex flex-col"
         >
                 @if($title)
-                    <div class="px-6 h-14 flex items-center border-b border-[var(--ui-border)]/30 bg-[var(--ui-surface)]/90 backdrop-blur">
+                    <div class="px-6 h-14 flex items-center border-b border-[var(--ui-border)]/60 bg-[var(--ui-surface)]/90 backdrop-blur">
                         <h2 class="text-sm font-semibold text-[var(--ui-secondary)] m-0 tracking-wide uppercase">{{ $title }}</h2>
                     </div>
                 @endif
