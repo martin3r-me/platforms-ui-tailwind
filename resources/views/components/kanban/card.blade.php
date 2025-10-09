@@ -26,13 +26,13 @@
         array_merge(
             ['class' => $classes],
             $sortableAttributes,
-            $interactiveAttributes,
-            ['x-data' => '{ isList: localStorage.getItem(\'kanbanView\') === \'list\' }']
+            $interactiveAttributes
         )
     );
 @endphp
 
 <div {{ $mergedAttributes }} 
+    x-data="{ isList: localStorage.getItem('kanbanView') === 'list' }"
     :class="{ 'px-3 py-2 border-b border-gray-100 last:border-b-0': isList, 'rounded-lg p-3 shadow-sm border border-gray-200 mb-2': !isList }">
     @if(!is_null($title) && $title !== '')
         <div class="mb-2">
