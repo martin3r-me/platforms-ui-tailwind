@@ -3,6 +3,7 @@
     'width' => 'w-80', // default width when expanded
     'defaultOpen' => true,
     'storeKey' => 'sidebarOpen', // für Aktivitäten explizit "activityOpen" setzen
+    'side' => 'left', // 'left' | 'right'
 ])
 
 <div 
@@ -10,7 +11,7 @@
         get open(){ return Alpine?.store('page') ? Alpine.store('page')[ '{{ $storeKey }}' ] : ({{ $defaultOpen ? 'true' : 'false' }}) },
         set open(v){ Alpine?.store('page') && (Alpine.store('page')[ '{{ $storeKey }}' ] = v) }
     }"
-    :class="open ? '{{ $width }} border-r' : 'w-0 border-0'"
+    :class="open ? (`${'{{ $width }}'} ` + ( '{{ $side }}' === 'right' ? 'border-l' : 'border-r')) : 'w-0 border-0'"
     class="relative flex-shrink-0 h-full border-[var(--ui-border)] bg-[var(--ui-surface)] transition-all duration-300"
     {{ $attributes }}
 >
