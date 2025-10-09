@@ -59,7 +59,7 @@
         wire:sortable.item="{{ $sortableId }}"
         wire:key="list-column-{{ $sortableId }}"
     @endif
-    {{ $attributes->merge(['class' => 'w-full']) }}
+    {{ $attributes->merge(['class' => 'w-full max-w-none']) }}
 >
     <!-- Spalten-Header -->
     <div class="mb-3">

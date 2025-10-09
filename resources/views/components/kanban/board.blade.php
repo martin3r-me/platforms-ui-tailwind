@@ -51,7 +51,7 @@
         x-cloak
         class="h-full min-h-0 w-full px-4 py-3 overflow-y-auto"
     >
-        <div class="space-y-6">
+        <div class="space-y-8">
             {{ $slot }}
         </div>
     </div>
