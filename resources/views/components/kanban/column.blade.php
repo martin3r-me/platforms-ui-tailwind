@@ -62,10 +62,10 @@
     {{ $attributes->merge(['class' => 'w-full max-w-none']) }}
 >
     <!-- Spalten-Header -->
-    <div class="mb-3">
+    <div class="mb-4 pb-2 border-b border-[color:var(--ui-border)]/30">
         <h3 class="text-sm font-semibold text-[color:var(--ui-secondary)] uppercase tracking-wide flex items-center gap-2">
             @if($sortableId && !$muted)
-                <button wire:sortable.handle class="text-[color:var(--ui-muted)] cursor-grab" title="Spalte verschieben">
+                <button wire:sortable.handle class="text-[color:var(--ui-muted)] cursor-grab hover:text-[color:var(--ui-primary)] transition-colors" title="Spalte verschieben">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16" />
                     </svg>

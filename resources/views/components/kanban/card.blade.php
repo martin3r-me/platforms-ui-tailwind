@@ -71,11 +71,11 @@
         wire:sortable-group.item="{{ $sortableId }}"
         wire:key="list-card-{{ $sortableId }}"
     @endif
-    class="flex items-center gap-3 p-3 bg-[var(--ui-surface)] border border-[color:var(--ui-border)]/60 rounded-lg hover:shadow-sm transition-shadow"
+    class="flex items-center gap-3 p-4 bg-[var(--ui-surface)] border border-[color:var(--ui-border)]/40 rounded-lg hover:shadow-sm hover:border-[color:var(--ui-border)]/60 transition-all duration-200"
 >
     <!-- Drag Handle -->
     @if($sortableId)
-        <div wire:sortable-group.handle class="flex-shrink-0 text-[color:var(--ui-muted)] cursor-grab">
+        <div wire:sortable-group.handle class="flex-shrink-0 text-[color:var(--ui-muted)] cursor-grab hover:text-[color:var(--ui-primary)] transition-colors p-1 rounded hover:bg-[var(--ui-muted-5)]">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16" />
             </svg>
@@ -85,10 +85,10 @@
     <!-- Content -->
     <div class="flex-1 min-w-0">
         @if(!is_null($title) && $title !== '')
-            <div class="text-sm font-medium text-[color:var(--ui-secondary)] mb-1">{{ $title }}</div>
+            <div class="text-sm font-semibold text-[color:var(--ui-secondary)] mb-1 line-clamp-1">{{ $title }}</div>
         @endif
         
-        <div class="text-xs text-[color:var(--ui-muted)]">
+        <div class="text-sm text-[color:var(--ui-muted)] line-clamp-2">
             {{ $slot }}
         </div>
     </div>
@@ -99,7 +99,7 @@
 
     <!-- Footer -->
     @if($footer)
-        <div class="flex-shrink-0 text-xs text-[color:var(--ui-muted)]">
+        <div class="flex-shrink-0 text-xs text-[color:var(--ui-muted)] flex items-center gap-2">
             {{ $footer }}
         </div>
     @endif
