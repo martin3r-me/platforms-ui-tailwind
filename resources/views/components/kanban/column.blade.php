@@ -19,7 +19,10 @@
     <div class="flex flex-col h-full bg-white border border-gray-200 rounded-lg shadow-sm">
         
         <!-- Header -->
-        <div class="px-3 py-2 text-xs font-semibold uppercase tracking-wide flex justify-between items-center border-b border-gray-200 bg-gray-50">
+        <div 
+            class="px-3 py-2 text-xs font-semibold uppercase tracking-wide flex justify-between items-center border-b border-gray-200"
+            :class="{ 'bg-gray-50': isList, 'bg-white': !isList }"
+        >
             <span class="text-gray-700 flex-1 truncate">{{ $title }}</span>
             
             <div class="flex items-center gap-2">
@@ -42,7 +45,8 @@
         <!-- Body -->
         <div 
             wire:sortable-group.item-group="{{ $sortableId }}" 
-            class="flex-1 min-h-0 {{ $scrollable ? 'overflow-y-auto' : '' }}"
+            class="flex-1 min-h-0"
+            :class="{ '': isList, 'px-3 py-3 space-y-2': !isList, 'overflow-y-auto': $scrollable }"
         >
             {{ $slot }}
         </div>

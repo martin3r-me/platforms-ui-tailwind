@@ -15,7 +15,6 @@
 
     $interactiveAttributes = $href
         ? [
-            'x-data' => true,
             '@click' => '$refs.navlink.click()',
             'style' => 'cursor: pointer;',
         ]
@@ -27,12 +26,14 @@
         array_merge(
             ['class' => $classes],
             $sortableAttributes,
-            $interactiveAttributes
+            $interactiveAttributes,
+            ['x-data' => '{ isList: localStorage.getItem(\'kanbanView\') === \'list\' }']
         )
     );
 @endphp
 
-<div {{ $mergedAttributes }}>
+<div {{ $mergedAttributes }} 
+    :class="{ 'px-3 py-2 border-b border-gray-100 last:border-b-0': isList, 'rounded-lg p-3 shadow-sm border border-gray-200 mb-2': !isList }">
     @if(!is_null($title) && $title !== '')
         <div class="mb-2">
             <h4 class="text-sm font-semibold text-gray-900 m-0">{{ $title }}</h4>
