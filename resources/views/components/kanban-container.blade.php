@@ -45,13 +45,11 @@
         </div>
     @endif
     <x-ui-kanban-board 
-        {{ $attributes->merge([
-            'class' => 'h-full',
-            'wire:sortable' => $sortable,
-            'wire:sortable-group' => $sortableGroup,
-            'show-toggle' => $showToggle,
-            'view' => $view,
-        ]) }}
+        wire:sortable="{{ $sortable }}"
+        wire:sortable-group="{{ $sortableGroup }}"
+        show-toggle="{{ $showToggle }}"
+        view="{{ $view }}"
+        class="h-full"
     >
         {{ $slot }}
     </x-ui-kanban-board>

@@ -49,9 +49,9 @@
     <div 
         x-show="Alpine.store('plannerKanbanView') === 'board'"
         x-cloak
-        {{ $attributes->only(['wire:sortable', 'wire:sortable-group'])->merge([
-            'class' => 'h-full min-h-0 w-full flex gap-4 px-4 py-3 overflow-x-auto'
-        ]) }}
+        wire:sortable="{{ $attributes->get('wire:sortable') }}"
+        wire:sortable-group="{{ $attributes->get('wire:sortable-group') }}"
+        class="h-full min-h-0 w-full flex gap-4 px-4 py-3 overflow-x-auto"
     >
         {{ $slot }}
     </div>
@@ -60,9 +60,9 @@
     <div 
         x-show="Alpine.store('plannerKanbanView') === 'list'"
         x-cloak
-        {{ $attributes->only(['wire:sortable', 'wire:sortable-group'])->merge([
-            'class' => 'h-full min-h-0 w-full px-4 py-3 overflow-y-auto'
-        ]) }}
+        wire:sortable="{{ $attributes->get('wire:sortable') }}"
+        wire:sortable-group="{{ $attributes->get('wire:sortable-group') }}"
+        class="h-full min-h-0 w-full px-4 py-3 overflow-y-auto"
     >
         {{ $slot }}
     </div>
