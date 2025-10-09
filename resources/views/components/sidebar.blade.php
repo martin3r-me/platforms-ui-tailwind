@@ -45,6 +45,17 @@
                 </div>
             </div>
         </template>
+
+        <!-- Bottom Actions -->
+        <div class="mt-auto sticky bottom-0 z-10 bg-[var(--ui-surface)]/90 backdrop-blur border-t border-[var(--ui-border)]/60">
+            <button
+                @click="$dispatch('open-modal-comms')"
+                class="w-full flex items-center justify-center h-14 text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)] transition-colors"
+                title="Kommunikation"
+            >
+                @svg('heroicon-o-paper-airplane', 'w-5 h-5')
+            </button>
+        </div>
     </aside>
 </div>
 

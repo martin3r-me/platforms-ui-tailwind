@@ -70,10 +70,10 @@
                             </h2>
                             <button
                                 @click="modalShow = false"
-                                class="p-2 text-[var(--ui-muted)] hover:text-[var(--ui-danger)] hover:bg-[var(--ui-muted-5)] rounded-lg transition-colors"
+                                class="p-2 text-[var(--ui-muted)] hover:text-[var(--ui-danger)] hover:bg-[var(--ui-danger-5)] rounded-lg transition-all duration-200 group"
                                 aria-label="Schließen"
                             >
-                                @svg('heroicon-o-x-mark', 'w-5 h-5')
+                                @svg('heroicon-o-x-mark', 'w-5 h-5 group-hover:scale-110 transition-transform')
                             </button>
                         </div>
                     @endif
@@ -101,10 +101,10 @@
                             </h2>
                             <button
                                 @click="modalShow = false"
-                                class="p-2 text-[var(--ui-muted)] hover:text-[var(--ui-danger)] hover:bg-[var(--ui-muted-5)] rounded-lg transition-colors"
+                                class="p-2 text-[var(--ui-muted)] hover:text-[var(--ui-danger)] hover:bg-[var(--ui-danger-5)] rounded-lg transition-all duration-200 group"
                                 aria-label="Schließen"
                             >
-                                @svg('heroicon-o-x-mark', 'w-5 h-5')
+                                @svg('heroicon-o-x-mark', 'w-5 h-5 group-hover:scale-110 transition-transform')
                             </button>
                         </div>
                     @endif
