@@ -27,11 +27,23 @@
         </button>
     </div>
 
-    <x-ui-kanban-board 
+    <!-- Board View -->
+    <x-ui-kanban-board-view 
+        x-show="view === 'board'"
         wire:sortable="{{ $sortable }}"
         wire:sortable-group="{{ $sortableGroup }}"
         class="h-full"
     >
         {{ $slot }}
-    </x-ui-kanban-board>
+    </x-ui-kanban-board-view>
+
+    <!-- List View -->
+    <x-ui-kanban-list-view 
+        x-show="view === 'list'"
+        wire:sortable="{{ $sortable }}"
+        wire:sortable-group="{{ $sortableGroup }}"
+        class="h-full"
+    >
+        {{ $slot }}
+    </x-ui-kanban-list-view>
 </div>

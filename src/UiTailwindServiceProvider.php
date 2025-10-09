@@ -79,6 +79,9 @@ class UiTailwindServiceProvider extends ServiceProvider
         Blade::component('ui-tailwind::components.kanban.board', 'ui-kanban-board');
         Blade::component('ui-tailwind::components.kanban.column', 'ui-kanban-column');
         Blade::component('ui-tailwind::components.kanban.card', 'ui-kanban-card');
+        Blade::component('ui-tailwind::components.kanban.board-view', 'ui-kanban-board-view');
+        Blade::component('ui-tailwind::components.kanban.list-view', 'ui-kanban-list-view');
+        Blade::component('ui-tailwind::components.kanban.list-column', 'ui-kanban-list-column');
 
         // Debug: Alias-Registrierung prüfen (nur temporär, hilft bei Deployment-Problemen)
         try {
