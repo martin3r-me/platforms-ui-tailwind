@@ -37,7 +37,7 @@
 
 {{-- Board View --}}
 <div 
-    x-show="view === 'board'"
+    x-show="$parent.view === 'board'"
     x-cloak
     {{ $mergedAttributes }}
 >
@@ -67,7 +67,7 @@
 
 {{-- List View --}}
 <div 
-    x-show="view === 'list'"
+    x-show="$parent.view === 'list'"
     x-cloak
     {{ $mergedAttributes }}
 >

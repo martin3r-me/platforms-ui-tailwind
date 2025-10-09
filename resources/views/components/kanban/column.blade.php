@@ -9,7 +9,7 @@
 
 {{-- Board View --}}
 <div 
-    x-show="view === 'board'"
+    x-show="$parent.view === 'board'"
     x-cloak
     @if($sortableId)
         wire:sortable.item="{{ $sortableId }}"
@@ -53,7 +53,7 @@
 
 {{-- List View --}}
 <div 
-    x-show="view === 'list'"
+    x-show="$parent.view === 'list'"
     x-cloak
     @if($sortableId)
         wire:sortable.item="{{ $sortableId }}"
