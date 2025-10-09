@@ -13,7 +13,7 @@
             }"
             :class="open ? (`${'{{ $width }}'} ` + ( '{{ $side }}' === 'right' ? 'border-l' : 'border-r')) : 'w-0 border-0'"
             class="relative flex-shrink-0 h-full bg-white transition-all duration-300"
-            :class="open ? ( '{{ $side }}' === 'right' ? 'border-l border-gray-200' : 'border-r border-gray-200' ) : ''"
+            :class="open ? ( '{{ $side }}' === 'right' ? 'border-l border-gray-100' : 'border-r border-gray-100' ) : ''"
             {{ $attributes }}
         >
     <!-- Toggle Button Area (immer sichtbar) -->
@@ -33,8 +33,8 @@
             class="flex-1 overflow-hidden flex flex-col"
         >
                 @if($title)
-                    <div class="px-4 py-3 border-b border-gray-200 bg-gray-50">
-                        <h2 class="text-sm font-semibold text-gray-900 m-0">{{ $title }}</h2>
+                    <div class="px-6 py-4 border-b border-gray-100 bg-gray-50/50">
+                        <h2 class="text-sm font-semibold text-gray-800 m-0 tracking-wide uppercase">{{ $title }}</h2>
                     </div>
                 @endif
 
