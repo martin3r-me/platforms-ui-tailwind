@@ -11,9 +11,17 @@
             // Update Alpine Store für alle Komponenten
             Alpine.store('kanbanView', this.view);
             Alpine.store('plannerKanbanView', this.view);
+            // Speichere im Local Storage
+            localStorage.setItem('plannerKanbanView', this.view);
         }
     }"
-    x-init="Alpine.store('kanbanView', '{{ $view }}'); Alpine.store('plannerKanbanView', '{{ $view }}')"
+    x-init="
+        // Lade aus Local Storage oder verwende Standard
+        const savedView = localStorage.getItem('plannerKanbanView') || '{{ $view }}';
+        this.view = savedView;
+        Alpine.store('kanbanView', savedView);
+        Alpine.store('plannerKanbanView', savedView);
+    "
     {{ $attributes->merge(['class' => 'h-full w-full']) }}
 >
     @if($showToggle)
