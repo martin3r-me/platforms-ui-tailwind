@@ -37,7 +37,7 @@
 
 {{-- Board View --}}
 <div 
-    x-show="$parent.view === 'board'"
+    x-show="Alpine.store('kanbanView') === 'board'"
     x-cloak
     {{ $mergedAttributes }}
 >
@@ -67,7 +67,7 @@
 
 {{-- List View --}}
 <div 
-    x-show="$parent.view === 'list'"
+    x-show="Alpine.store('kanbanView') === 'list'"
     x-cloak
     {{ $mergedAttributes }}
 >

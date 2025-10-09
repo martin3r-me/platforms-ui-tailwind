@@ -9,7 +9,7 @@
 
 {{-- Board View --}}
 <div 
-    x-show="$parent.view === 'board'"
+    x-show="Alpine.store('kanbanView') === 'board'"
     x-cloak
     @if($sortableId)
         wire:sortable.item="{{ $sortableId }}"
@@ -53,7 +53,7 @@
 
 {{-- List View --}}
 <div 
-    x-show="$parent.view === 'list'"
+    x-show="Alpine.store('kanbanView') === 'list'"
     x-cloak
     @if($sortableId)
         wire:sortable.item="{{ $sortableId }}"

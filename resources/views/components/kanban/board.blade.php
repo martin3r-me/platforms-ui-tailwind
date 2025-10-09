@@ -8,9 +8,11 @@
         view: '{{ $view }}',
         toggleView() {
             this.view = this.view === 'board' ? 'list' : 'board';
-            // Kein Livewire Event - nur lokaler State
+            // Update Alpine Store für alle Komponenten
+            Alpine.store('kanbanView', this.view);
         }
     }"
+    x-init="Alpine.store('kanbanView', '{{ $view }}')"
     {{ $attributes->merge(['class' => 'h-full w-full']) }}
 >
     @if($showToggle)

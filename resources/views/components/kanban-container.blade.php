@@ -14,9 +14,11 @@
                     view: '{{ $view }}',
                     toggleView() {
                         this.view = this.view === 'board' ? 'list' : 'board';
-                        // Kein Livewire Event - nur lokaler State
+                        // Update Alpine Store für alle Komponenten
+                        Alpine.store('kanbanView', this.view);
                     }
                 }"
+                x-init="Alpine.store('kanbanView', '{{ $view }}')"
                 @click="toggleView()"
                 class="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-medium rounded-md border transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
                 :class="view === 'board' 
