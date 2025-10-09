@@ -33,7 +33,7 @@
             class="flex-1 overflow-hidden flex flex-col"
         >
                 @if($title)
-                    <div class="px-6 py-4 border-b border-[var(--ui-border)]/60 bg-[var(--ui-muted-5)]">
+                    <div class="px-6 h-14 flex items-center border-b border-[var(--ui-border)]/60 bg-[var(--ui-surface)]/90 backdrop-blur">
                         <h2 class="text-sm font-semibold text-[var(--ui-secondary)] m-0 tracking-wide uppercase">{{ $title }}</h2>
                     </div>
                 @endif
