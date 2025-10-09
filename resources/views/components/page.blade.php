@@ -8,10 +8,12 @@
         Alpine.store('page', {
             sidebarOpen: JSON.parse(localStorage.getItem('page.sidebarOpen') ?? 'true'),
             activityOpen: JSON.parse(localStorage.getItem('page.activityOpen') ?? 'false'),
+            terminalOpen: JSON.parse(localStorage.getItem('page.terminalOpen') ?? 'false'),
         });
     }
     $watch(() => Alpine.store('page').sidebarOpen, v => localStorage.setItem('page.sidebarOpen', JSON.stringify(v)))
     $watch(() => Alpine.store('page').activityOpen, v => localStorage.setItem('page.activityOpen', JSON.stringify(v)))
+    $watch(() => Alpine.store('page').terminalOpen, v => localStorage.setItem('page.terminalOpen', JSON.stringify(v)))
 ">
     @isset($navbar)
         {{ $navbar }}
