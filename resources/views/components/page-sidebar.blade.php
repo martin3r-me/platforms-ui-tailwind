@@ -11,9 +11,8 @@
                 get open(){ return Alpine?.store('page') ? Alpine.store('page')[ '{{ $storeKey }}' ] : ({{ $defaultOpen ? 'true' : 'false' }}) },
                 set open(v){ Alpine?.store('page') && (Alpine.store('page')[ '{{ $storeKey }}' ] = v) }
             }"
-            :class="open ? (`${'{{ $width }}'} ` + ( '{{ $side }}' === 'right' ? 'border-l' : 'border-r')) : 'w-0 border-0'"
+            :class="open ? (`${'{{ $width }}'} ` + ( '{{ $side }}' === 'right' ? 'border-l border-[var(--ui-border)]/60' : 'border-r border-[var(--ui-border)]/60')) : 'w-0 border-0'"
             class="relative flex-shrink-0 h-full bg-white transition-all duration-300"
-            :class="open ? ( '{{ $side }}' === 'right' ? 'border-l border-[var(--ui-border)]/60' : 'border-r border-[var(--ui-border)]/60' ) : ''"
             {{ $attributes }}
         >
     <!-- Toggle Button Area (immer sichtbar) -->
