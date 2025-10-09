@@ -55,6 +55,25 @@
             >
                 @svg('heroicon-o-paper-airplane', 'w-5 h-5')
             </button>
+            <!-- Team Trigger -->
+            <button
+                @click="$dispatch('open-modal-team')"
+                class="w-full flex items-center justify-center h-14 rounded-none border-t border-[var(--ui-border)]/60 text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)] transition-colors"
+                title="Team verwalten"
+            >
+                @svg('heroicon-o-users', 'w-5 h-5')
+            </button>
+
+            <!-- User Trigger -->
+            <button
+                @click="$dispatch('open-modal-user')"
+                class="w-full flex items-center justify-center h-14 rounded-none border-t border-[var(--ui-border)]/60 text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)] transition-colors"
+                title="Benutzer-Einstellungen"
+            >
+                @svg('heroicon-o-user', 'w-5 h-5')
+            </button>
+
+            <!-- Terminal Trigger -->
             <button
                 @click="window.dispatchEvent(new CustomEvent('toggle-terminal'))"
                 class="w-full flex items-center justify-center h-14 rounded-none border-t border-[var(--ui-border)]/60 transition-colors"
