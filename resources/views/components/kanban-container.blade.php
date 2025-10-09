@@ -47,7 +47,6 @@
     <x-ui-kanban-board 
         wire:sortable="{{ $sortable }}"
         wire:sortable-group="{{ $sortableGroup }}"
-        show-toggle="{{ $showToggle }}"
         view="{{ $view }}"
         class="h-full"
     >
