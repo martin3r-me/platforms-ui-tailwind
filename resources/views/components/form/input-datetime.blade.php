@@ -89,12 +89,10 @@
             const time = this.selectedTime || '{{ $showTime ? '12:00' : '00:00' }}';
             const datetime = this.selectedDate + ' ' + time;
             this.displayValue = new Date(datetime).toLocaleDateString('de-DE') + ' ' + new Date(datetime).toLocaleTimeString('de-DE', {hour: '2-digit', minute: '2-digit'});
-            this.updateInput();
         } else {
             this.displayValue = '';
-            this.updateInput();
         }
-        this.closeModal();
+        this.saveAndClose();
     },
     
     updateInput() {
@@ -106,9 +104,18 @@
         } else {
             input.value = '';
         }
-        // Livewire Event für wire:model.live
+        // Nur beim Schließen des Modals speichern, nicht live
+        // input.dispatchEvent(new Event('input', { bubbles: true }));
+        // input.dispatchEvent(new Event('change', { bubbles: true }));
+    },
+    
+    saveAndClose() {
+        this.updateInput();
+        // Jetzt erst das Livewire Event dispatchen
+        const input = document.getElementById('{{ $name }}');
         input.dispatchEvent(new Event('input', { bubbles: true }));
         input.dispatchEvent(new Event('change', { bubbles: true }));
+        this.closeModal();
     }
 }">
     @if($label)
