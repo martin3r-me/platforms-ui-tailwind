@@ -62,6 +62,13 @@
     selectedTime: '{{ $timeValue }}',
     displayValue: '{{ $displayValue }}',
     
+    init() {
+        // Initialisierung beim Laden
+        if (this.selectedDate && this.selectedTime) {
+            this.displayValue = new Date(this.selectedDate + ' ' + this.selectedTime).toLocaleDateString('de-DE') + ' ' + new Date(this.selectedDate + ' ' + this.selectedTime).toLocaleTimeString('de-DE', {hour: '2-digit', minute: '2-digit'});
+        }
+    },
+    
     openModal() {
         this.showModal = true;
     },
@@ -83,6 +90,9 @@
             const datetime = this.selectedDate + ' ' + time;
             this.displayValue = new Date(datetime).toLocaleDateString('de-DE') + ' ' + new Date(datetime).toLocaleTimeString('de-DE', {hour: '2-digit', minute: '2-digit'});
             this.updateInput();
+        } else {
+            this.displayValue = '';
+            this.updateInput();
         }
         this.closeModal();
     },
@@ -96,7 +106,9 @@
         } else {
             input.value = '';
         }
-        input.dispatchEvent(new Event('input'));
+        // Livewire Event für wire:model.live
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+        input.dispatchEvent(new Event('change', { bubbles: true }));
     }
 }">
     @if($label)

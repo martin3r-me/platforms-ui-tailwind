@@ -32,8 +32,13 @@
     if ($value) {
         if (is_string($value)) {
             try {
-                $date = \Carbon\Carbon::parse($value);
-                $formattedValue = $date->format('Y-m-d');
+                // Prüfe ob es nur ein Jahr ist (z.B. "2025")
+                if (preg_match('/^\d{4}$/', $value)) {
+                    $formattedValue = null; // Ungültiges Format ignorieren
+                } else {
+                    $date = \Carbon\Carbon::parse($value);
+                    $formattedValue = $date->format('Y-m-d');
+                }
             } catch (\Exception $e) {
                 $formattedValue = null;
             }
