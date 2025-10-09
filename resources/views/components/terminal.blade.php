@@ -11,7 +11,7 @@
         x-transition:leave="transition ease-in duration-200"
         x-transition:leave-start="opacity-100 translate-y-0"
         x-transition:leave-end="opacity-0 translate-y-4"
-        class="sticky bottom-0 z-[5] w-full border-t border-[var(--ui-border)]/60 bg-[var(--ui-surface)]/95 backdrop-blur"
+        class="w-full border-t border-[var(--ui-border)]/60 bg-[var(--ui-surface)]/95 backdrop-blur"
     >
         <!-- Header -->
         <div class="h-10 px-3 flex items-center justify-between text-xs border-b border-[var(--ui-border)]/60">
