@@ -67,11 +67,15 @@
 <div 
     x-show="Alpine.store('plannerKanbanView') === 'list'"
     x-cloak
+    @if($sortableId)
+        wire:sortable-group.item="{{ $sortableId }}"
+        wire:key="list-card-{{ $sortableId }}"
+    @endif
     class="flex items-center gap-3 p-3 bg-[var(--ui-surface)] border border-[color:var(--ui-border)]/60 rounded-lg hover:shadow-sm transition-shadow"
 >
     <!-- Drag Handle -->
     @if($sortableId)
-        <div class="flex-shrink-0 text-[color:var(--ui-muted)] cursor-grab">
+        <div wire:sortable-group.handle class="flex-shrink-0 text-[color:var(--ui-muted)] cursor-grab">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16" />
             </svg>
