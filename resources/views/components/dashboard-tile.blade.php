@@ -49,7 +49,7 @@
         'text' => "text-[color:var(--ui-{$variant})]",
         'hover' => "hover:bg-[color:var(--ui-{$variant}-10)]",
         'icon' => "text-[color:var(--ui-{$variant})]",
-        'count' => "text-[color:var(--ui-{$variant})]",
+        'count' => "text-[color:var(--ui-muted)]", // Immer gemutet
     ];
 
     $trendClasses = match($trend) {
