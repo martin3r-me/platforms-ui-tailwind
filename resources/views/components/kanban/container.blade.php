@@ -3,7 +3,7 @@
     'sortableGroup' => null,
 ])
 
-<div class="flex-1 min-h-0 h-full p-4 overflow-hidden">
+<div class="flex-1 min-h-0 h-full overflow-hidden">
     <x-ui-kanban-board 
         wire:sortable="{{ $sortable }}"
         wire:sortable-group="{{ $sortableGroup }}"
