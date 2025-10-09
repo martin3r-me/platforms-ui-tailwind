@@ -6,11 +6,11 @@
     <div
         x-show="open"
         x-transition:enter="transition ease-out duration-300"
-        x-transition:enter-start="opacity-0 translate-y-4"
-        x-transition:enter-end="opacity-100 translate-y-0"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
         x-transition:leave="transition ease-in duration-200"
-        x-transition:leave-start="opacity-100 translate-y-0"
-        x-transition:leave-end="opacity-0 translate-y-4"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
         class="w-full border-t border-[var(--ui-border)]/60 bg-[var(--ui-surface)]/95 backdrop-blur"
     >
         <!-- Header -->
@@ -27,7 +27,7 @@
         </div>
 
         <!-- Body -->
-        <div class="max-h-72 h-56 overflow-y-auto px-3 py-2 text-xs font-mono text-[var(--ui-secondary)]">
+        <div class="max-h-64 h-44 overflow-y-auto px-3 py-2 text-xs font-mono text-[var(--ui-secondary)]">
             <div class="text-[var(--ui-muted)]">Tippe "help" für verfügbare Befehle…</div>
             <div class="mt-2 space-y-1">
                 <div>$ help</div>

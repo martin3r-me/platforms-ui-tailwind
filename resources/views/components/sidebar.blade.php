@@ -57,7 +57,8 @@
             </button>
             <button
                 @click="window.dispatchEvent(new CustomEvent('toggle-terminal'))"
-                class="w-full flex items-center justify-center h-14 text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)] transition-colors border-t border-[var(--ui-border)]/60"
+                class="w-full flex items-center justify-center h-14 rounded-none border-t border-[var(--ui-border)]/60 transition-colors"
+                :class="Alpine.store('page')?.terminalOpen ? 'text-[var(--ui-primary)] bg-[var(--ui-muted-5)]' : 'text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)]'"
                 title="Terminal"
             >
                 @svg('heroicon-o-command-line', 'w-5 h-5')
