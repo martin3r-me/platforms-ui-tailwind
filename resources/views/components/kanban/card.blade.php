@@ -35,7 +35,7 @@
     x-data="{ isList: localStorage.getItem('kanbanView') === 'list' }"
     x-init="this.isList = localStorage.getItem('kanbanView') === 'list'"
     @storage-change.window="isList = localStorage.getItem('kanbanView') === 'list'"
-    :class="{ 'px-3 py-2 border-b border-gray-100 last:border-b-0': isList, 'rounded-lg p-4 shadow-md border border-gray-200 mb-3 mx-2': !isList }">
+    :class="{ 'px-3 py-2 border-b border-gray-100 last:border-b-0': isList, 'rounded-lg p-4 shadow-md border border-gray-200 my-2 mx-2': !isList }">
     @if(!is_null($title) && $title !== '')
         <div class="mb-2">
             <h4 class="text-sm font-semibold text-gray-900 m-0">{{ $title }}</h4>
