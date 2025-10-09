@@ -78,10 +78,13 @@
             @if($autocomplete) autocomplete="{{ $autocomplete }}" @endif
             @if($hint) aria-describedby="{{ $name }}-hint" @endif
             {{ $attributes->merge(['class' => implode(' ', [
-                'block w-full rounded-md bg-white text-[color:var(--ui-body-color)]',
+                'block w-full appearance-none rounded-md',
+                'bg-[var(--ui-surface)] text-[color:var(--ui-secondary)]',
                 'outline-1 -outline-offset-1 outline-[color:var(--ui-border)] border border-transparent',
+                'transition-colors',
                 "focus:outline-2 focus:-outline-offset-2 focus:outline-[color:rgb(var(--ui-{$variant}-rgb))]",
                 $sizeClass,
+                'pr-10',
             ])]) }}
         >
             @if($nullable)
