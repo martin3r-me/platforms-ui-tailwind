@@ -21,7 +21,7 @@
         ]
         : [];
 
-    $classes = 'rounded-lg p-3 bg-white border border-gray-200 shadow-sm hover:shadow-md transition-shadow';
+    $classes = 'p-4 bg-white hover:bg-gray-50 transition-colors border-b border-gray-100 last:border-b-0';
 
     $mergedAttributes = $attributes->merge(
         array_merge(
