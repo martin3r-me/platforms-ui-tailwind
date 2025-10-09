@@ -1,5 +1,5 @@
 <div {{ $attributes->only(['wire:sortable', 'wire:sortable-group'])->merge([
-    'class' => 'h-full w-full flex gap-4 overflow-x-auto'
+    'class' => 'h-full w-full flex gap-4 overflow-x-auto overflow-y-hidden'
 ]) }}>
     {{ $slot }}
 </div>
