@@ -1,13 +1,3 @@
-{{--
-  Component: Kanban Column (Molecule)
-  Zweck: Einzelne Spalte im Kanban-Board mit Sortier-Funktionalität.
-  Props:
-    - title: string - Spalten-Titel
-    - sortableId: string|null - ID für Sortierung
-    - scrollable: bool - Scrollbar aktivieren
-    - footer: string|null - Footer-Inhalt
---}}
-
 @props([
     'title' => 'Unbenannt',
     'sortableId' => null,
@@ -22,15 +12,14 @@
     @endif
     {{ $attributes->merge(['class' => 'flex-shrink-0 h-full w-80 flex flex-col']) }}
 >
-    <div class="flex flex-col h-full rounded-lg border border-[color:var(--ui-border)]/60 bg-[var(--ui-surface)] shadow-sm">
+    <div class="flex flex-col h-full bg-white border border-gray-200 rounded-lg shadow-sm">
         
         <!-- Header -->
-        <div class="p-3 text-xs font-semibold tracking-wide flex justify-between items-center gap-2 sticky top-0 z-10 rounded-t-lg border-b border-[color:var(--ui-border)]/60 bg-[var(--ui-surface)]/90 backdrop-blur">
-            <span class="uppercase text-[color:var(--ui-secondary)] flex-1 truncate">{{ $title }}</span>
+        <div class="p-3 text-xs font-semibold uppercase tracking-wide flex justify-between items-center border-b border-gray-200">
+            <span class="text-gray-700 flex-1 truncate">{{ $title }}</span>
             
-            <!-- Drag-Handle für die ganze Spalte -->
             @if($sortableId)
-                <button wire:sortable.handle class="text-[color:var(--ui-primary)] flex-shrink-0" title="Spalte verschieben" style="cursor: grab;">
+                <button wire:sortable.handle class="text-blue-600 cursor-grab" title="Spalte verschieben">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16" />
                     </svg>
@@ -38,24 +27,16 @@
             @endif
         </div>
 
-        <!-- Extra Slot (z. B. Buttons, Filter, Menü) -->
-        @isset($extra)
-            <div class="p-2 border-b border-[color:var(--ui-border)]/60 bg-[var(--ui-surface)]">
-                {{ $extra }}
-            </div>
-        @endisset
-
-        <!-- Body: Hier landen die Cards (sortable target) -->
+        <!-- Body -->
         <div 
             wire:sortable-group.item-group="{{ $sortableId }}" 
-            class="flex-1 min-h-0 px-3 py-3 gap-3 flex flex-col {{ $scrollable ? 'overflow-y-auto' : '' }}"
+            class="flex-1 min-h-0 px-3 py-3 space-y-2 {{ $scrollable ? 'overflow-y-auto' : '' }}"
         >
             {{ $slot }}
         </div>
 
-        <!-- Footer (optional) -->
         @if($footer)
-            <div class="px-4 py-3 border-t border-[color:var(--ui-border)]/60 bg-[var(--ui-surface)] rounded-b-lg">
+            <div class="px-4 py-3 border-t border-gray-200 bg-gray-50 rounded-b-lg">
                 {{ $footer }}
             </div>
         @endif
