@@ -1,6 +1,7 @@
 @props([
     'name',
     'label'         => null,
+    'hint'          => null,
     'options'       => [],
     'nullable'      => false,
     'nullLabel'     => '– Kein Wert –',
@@ -18,11 +19,11 @@
 @php
     $errorKey = $errorKey ?: $name;
     $sizeClass = match($size) {
-        'xs' => 'h-8 text-xs pl-2 pr-8',
-        'sm' => 'h-9 text-sm pl-3 pr-8',
-        'lg' => 'h-11 text-lg pl-4 pr-8',
-        'xl' => 'h-12 text-xl pl-5 pr-8',
-        default => 'h-10 text-base pl-4 pr-8',
+        'xs' => 'pl-2 pr-8 py-1 text-xs',
+        'sm' => 'pl-3 pr-8 py-1.5 text-sm',
+        'lg' => 'pl-4 pr-8 py-2 text-lg',
+        'xl' => 'pl-5 pr-8 py-2.5 text-xl',
+        default => 'pl-4 pr-8 py-1.5 text-base sm:text-sm/6',
     };
     $normalized = [];
 
@@ -53,14 +54,19 @@
 
 <div>
     @if($label)
-        <x-ui-label 
-            :text="$label" 
-            :for="$name" 
-            :required="$required" 
-            :variant="$variant" 
-            size="sm" 
-            class="mb-1"
-        />
+        <div class="flex items-center justify-between">
+            <x-ui-label 
+                :text="$label" 
+                :for="$name" 
+                :required="$required" 
+                :variant="$variant" 
+                size="sm" 
+                class="mb-1"
+            />
+            @if($hint)
+                <span id="{{ $name }}-hint" class="text-sm/6 text-[color:var(--ui-muted)]">{{ $hint }}</span>
+            @endif
+        </div>
     @endif
 
     <div class="relative">
@@ -70,10 +76,11 @@
             @if($required) required @endif
             @if($disabled) disabled @endif
             @if($autocomplete) autocomplete="{{ $autocomplete }}" @endif
+            @if($hint) aria-describedby="{{ $name }}-hint" @endif
             {{ $attributes->merge(['class' => implode(' ', [
                 'block w-full rounded-md bg-white text-[color:var(--ui-body-color)]',
-                'border border-[color:var(--ui-border)]',
-                "focus:outline-none focus:ring-2 focus:ring-[color:rgba(var(--ui-{$variant}-rgb),0.2)] focus:border-[color:rgb(var(--ui-{$variant}-rgb))]",
+                'outline-1 -outline-offset-1 outline-[color:var(--ui-border)] border border-transparent',
+                "focus:outline-2 focus:-outline-offset-2 focus:outline-[color:rgb(var(--ui-{$variant}-rgb))]",
                 $sizeClass,
             ])]) }}
         >

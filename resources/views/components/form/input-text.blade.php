@@ -2,6 +2,7 @@
 @props([
     'name',
     'label' => null,
+    'hint' => null, // z.B. "Optional"
     'value' => null,
     'variant' => 'primary',
     'size' => 'md',
@@ -14,25 +15,31 @@
 
 @php
     $errorKey = $errorKey ?: $name;
+    // Größen an Tailwind-Pattern angelehnt (px-3 py-1.5 baseline)
     $sizeClass = match($size) {
-        'xs' => 'h-8 text-xs px-2',
-        'sm' => 'h-9 text-sm px-3',
-        'lg' => 'h-11 text-lg px-4',
-        'xl' => 'h-12 text-xl px-5',
-        default => 'h-10 text-base px-4',
+        'xs' => 'px-2 py-1 text-xs',
+        'sm' => 'px-3 py-1.5 text-sm',
+        'lg' => 'px-4 py-2 text-lg',
+        'xl' => 'px-5 py-2.5 text-xl',
+        default => 'px-3 py-1.5 text-base sm:text-sm/6',
     };
     $baseClasses = [
-        'block w-full rounded-md bg-white text-[color:var(--ui-body-color)] placeholder-gray-400',
-        'border border-[color:var(--ui-border)]',
-        // Focus mit Variablenfarbe
-        "focus:outline-none focus:ring-2 focus:ring-[color:rgba(var(--ui-{$variant}-rgb),0.2)] focus:border-[color:rgb(var(--ui-{$variant}-rgb))]",
+        'block w-full rounded-md bg-white text-[color:var(--ui-body-color)] placeholder-[color:var(--ui-muted)]',
+        'outline-1 -outline-offset-1 outline-[color:var(--ui-border)] border border-transparent',
+        // Focus mit Variablenfarbe (analog Vorlage)
+        "focus:outline-2 focus:-outline-offset-2 focus:outline-[color:rgb(var(--ui-{$variant}-rgb))]",
         $sizeClass,
     ];
 @endphp
 
 <div>
     @if($label)
-        <x-ui-label :for="$name" :text="$label" :variant="$variant" :required="$required" :size="$size" class="mb-1"/>
+        <div class="flex items-center justify-between">
+            <x-ui-label :for="$name" :text="$label" :variant="$variant" :required="$required" :size="$size" class="mb-1"/>
+            @if($hint)
+                <span id="{{ $name }}-hint" class="text-sm/6 text-[color:var(--ui-muted)]">{{ $hint }}</span>
+            @endif
+        </div>
     @endif
 
     <input
@@ -43,6 +50,7 @@
         @if($required) required @endif
         @if($placeholder) placeholder="{{ $placeholder }}" @endif
         @if($autocomplete) autocomplete="{{ $autocomplete }}" @endif
+        @if($hint) aria-describedby="{{ $name }}-hint" @endif
         {{ $attributes->merge(['class' => implode(' ', $baseClasses)]) }}
     />
 
