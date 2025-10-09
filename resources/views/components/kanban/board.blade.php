@@ -8,7 +8,7 @@
         view: '{{ $view }}',
         toggleView() {
             this.view = this.view === 'board' ? 'list' : 'board';
-            this.$wire.set('kanbanView', this.view);
+            // Kein Livewire Event - nur lokaler State
         }
     }"
     {{ $attributes->merge(['class' => 'h-full w-full']) }}
