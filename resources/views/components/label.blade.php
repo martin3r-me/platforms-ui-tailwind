@@ -9,14 +9,15 @@
 ])
 
 @php
+    // Vereinheitlichung mit Formularvorlagen: text-sm/6 als Standard
     $sizeClass = match($size) {
         'xs' => 'text-xs',
-        'sm' => 'text-sm',
+        'sm' => 'text-sm/6',
         'lg' => 'text-lg',
         'xl' => 'text-xl',
-        default => 'text-base',
+        default => 'text-sm/6',
     };
-    $colorClass = "text-[color:var(--ui-{$variant})]";
+    $colorClass = "text-[color:var(--ui-secondary)]";
 @endphp
 
 <label
