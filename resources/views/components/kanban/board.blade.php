@@ -16,16 +16,16 @@
         }
     }"
     x-init="Alpine.store('kanbanView', '{{ $view }}'); Alpine.store('plannerKanbanView', '{{ $view }}')"
-    {{ $attributes->merge(['class' => 'h-full w-full']) }}
+    {{ $attributes->only(['wire:sortable', 'wire:sortable-group'])->merge([
+        'class' => 'h-full w-full'
+    ]) }}
 >
 
     {{-- Board View --}}
     <div 
         x-show="Alpine.store('plannerKanbanView') === 'board'"
         x-cloak
-        {{ $attributes->only(['wire:sortable', 'wire:sortable-group'])->merge([
-            'class' => 'h-full min-h-0 w-full flex gap-4 px-4 py-3 overflow-x-auto'
-        ]) }}
+        class="h-full min-h-0 w-full flex gap-4 px-4 py-3 overflow-x-auto"
     >
         {{ $slot }}
     </div>
@@ -34,9 +34,7 @@
     <div 
         x-show="Alpine.store('plannerKanbanView') === 'list'"
         x-cloak
-        {{ $attributes->only(['wire:sortable', 'wire:sortable-group'])->merge([
-            'class' => 'h-full min-h-0 w-full px-4 py-3 overflow-y-auto'
-        ]) }}
+        class="h-full min-h-0 w-full px-4 py-3 overflow-y-auto"
     >
         <div class="space-y-8">
             {{ $slot }}
