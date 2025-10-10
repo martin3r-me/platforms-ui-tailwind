@@ -83,6 +83,10 @@ class UiTailwindServiceProvider extends ServiceProvider
         Blade::component('ui-tailwind::components.kanban.list-view', 'ui-kanban-list-view');
         Blade::component('ui-tailwind::components.kanban.list-column', 'ui-kanban-list-column');
 
+        // Navigation & Status
+        Blade::component('ui-tailwind::components.breadcrumb', 'ui-breadcrumb');
+        Blade::component('ui-tailwind::components.status-toggle', 'ui-status-toggle');
+
         // Debug: Alias-Registrierung prüfen (nur temporär, hilft bei Deployment-Problemen)
         try {
             $aliases = \Illuminate\Support\Facades\Blade::getClassComponentAliases();
