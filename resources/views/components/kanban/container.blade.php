@@ -4,15 +4,16 @@
 ])
 
 <div class="flex-1 min-h-0 h-full overflow-hidden relative" x-data="{ 
-    view: localStorage.getItem('kanbanView') || 'board',
+    view: (document.body?.dataset?.embedded ? 'list' : (localStorage.getItem('kanbanView') || 'board')),
     toggleView() { 
+        if (document.body?.dataset?.embedded) { return; }
         this.view = this.view === 'board' ? 'list' : 'board'; 
         localStorage.setItem('kanbanView', this.view);
         window.dispatchEvent(new Event('storage-change'));
     } 
 }">
     <!-- Schwebt über dem Board -->
-    <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-10">
+    <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-10" x-show="!document.body?.dataset?.embedded">
         <button 
             @click="toggleView()"
             class="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-medium rounded-md border transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-lg backdrop-blur-sm"
@@ -34,8 +35,8 @@
     </div>
 
     <!-- List View -->
-    <div x-show="view === 'list'" class="h-full w-full overflow-y-auto p-4" wire:sortable="{{ $sortable }}" wire:sortable-group="{{ $sortableGroup }}">
-        <div class="space-y-6 w-full">
+    <div x-show="view === 'list'" class="h-full w-full overflow-y-auto p-2 md:p-4" wire:sortable="{{ $sortable }}" wire:sortable-group="{{ $sortableGroup }}">
+        <div class="space-y-4 md:space-y-6 w-full">
             {{ $slot }}
         </div>
     </div>
