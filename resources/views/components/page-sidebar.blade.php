@@ -4,53 +4,19 @@
     'defaultOpen' => true,
     'storeKey' => 'sidebarOpen', // für Aktivitäten explizit "activityOpen" setzen
     'side' => 'left', // 'left' | 'right'
-    'responsive' => true, // responsive behavior
 ])
 
         <div
             x-data="{
                 get open(){ return Alpine?.store('page') ? Alpine.store('page')[ '{{ $storeKey }}' ] : ({{ $defaultOpen ? 'true' : 'false' }}) },
-                set open(v){ 
-                    if ({{ $responsive ? 'true' : 'false' }}) {
-                        // Responsive: Schließe andere Sidebars wenn eine geöffnet wird
-                        if (v && '{{ $side }}' === 'left') {
-                            Alpine?.store('page') && (Alpine.store('page')['activityOpen'] = false);
-                        } else if (v && '{{ $side }}' === 'right') {
-                            Alpine?.store('page') && (Alpine.store('page')['sidebarOpen'] = false);
-                        }
-                        
-                        // Mobile: Schließe main sidebar wenn page sidebar öffnet
-                        if (v && isMobile) {
-                            // Dispatch event to close main sidebar
-                            window.dispatchEvent(new CustomEvent('page-sidebar-open'));
-                        }
-                    }
-                    Alpine?.store('page') && (Alpine.store('page')[ '{{ $storeKey }}' ] = v) 
-                },
-                get isMobile() { return window.innerWidth < 768; }
+                set open(v){ Alpine?.store('page') && (Alpine.store('page')[ '{{ $storeKey }}' ] = v) }
             }"
-            :class="open ? (
-                (isMobile ? 'fixed inset-0 z-60 w-full' : `${'{{ $width }}'} `) + 
-                ( '{{ $side }}' === 'right' ? ' border-l border-[var(--ui-border)]/60' : ' border-r border-[var(--ui-border)]/60')
-            ) : (isMobile ? 'w-0 overflow-hidden' : 'w-0 border-0')"
+            :class="open ? (`${'{{ $width }}'} ` + ( '{{ $side }}' === 'right' ? 'border-l border-[var(--ui-border)]/60' : 'border-r border-[var(--ui-border)]/60')) : 'w-0 border-0'"
             class="relative flex-shrink-0 h-full bg-[var(--ui-muted-5)] transition-all duration-300"
             {{ $attributes }}
         >
-    <!-- Mobile Overlay -->
-    <div 
-        x-show="open && isMobile" 
-        @click="open = false"
-        class="fixed inset-0 bg-black bg-opacity-50 z-40"
-        x-transition:enter="transition ease-out duration-300"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-200"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0"
-    ></div>
-
     <!-- Toggle Button Area (immer sichtbar) -->
-    <div class="h-full flex flex-col relative z-50">
+    <div class="h-full flex flex-col">
 
         <!-- Collapsed Title (deaktiviert) -->
 
