@@ -34,6 +34,14 @@
                 @if($title)
                     <div class="px-6 h-14 flex items-center border-b border-[var(--ui-border)]/60 bg-[var(--ui-surface)]/90 backdrop-blur">
                         <h2 class="text-sm font-semibold text-[var(--ui-secondary)] m-0 tracking-wide uppercase">{{ $title }}</h2>
+                        <button 
+                            type="button"
+                            @click="open = false"
+                            class="ml-auto inline-flex items-center justify-center rounded-md text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)] transition-colors"
+                            title="Sidebar schließen"
+                        >
+                            @svg('heroicon-o-x-mark', 'w-5 h-5')
+                        </button>
                     </div>
                 @endif
 
