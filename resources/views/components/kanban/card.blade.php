@@ -20,7 +20,7 @@
         ]
         : [];
 
-    $classes = 'px-3 py-2 bg-white hover:bg-gray-50 transition-colors border-b border-gray-100 last:border-b-0';
+    $classes = 'px-3 py-2 bg-[var(--ui-muted-5)] hover:bg-[var(--ui-muted-4)] transition-colors border-b border-[var(--ui-border)]/40 last:border-b-0';
 
     $mergedAttributes = $attributes->merge(
         array_merge(
@@ -35,14 +35,14 @@
     x-data="{ isList: localStorage.getItem('kanbanView') === 'list' }"
     x-init="this.isList = localStorage.getItem('kanbanView') === 'list'"
     @storage-change.window="isList = localStorage.getItem('kanbanView') === 'list'"
-    :class="{ 'px-3 py-2 border-b border-gray-100 last:border-b-0': isList, 'rounded-lg p-4 shadow-md border border-gray-200 my-2 mx-2': !isList }">
+    :class="{ 'px-3 py-2 border-b border-[var(--ui-border)]/40 last:border-b-0': isList, 'rounded-lg p-4 shadow-sm border border-[var(--ui-border)]/60 my-2 mx-2 bg-[var(--ui-muted-5)] hover:bg-[var(--ui-muted-4)]': !isList }">
     @if(!is_null($title) && $title !== '')
         <div class="mb-2">
-            <h4 class="text-sm font-semibold text-gray-900 m-0">{{ $title }}</h4>
+            <h4 class="text-sm font-semibold text-[var(--ui-secondary)] m-0">{{ $title }}</h4>
         </div>
     @endif
 
-    <div class="text-sm text-gray-600">
+    <div class="text-sm text-[var(--ui-muted)]">
         {{ $slot }}
     </div>
 
@@ -56,7 +56,7 @@
     @endif
 
     @if($footer)
-        <div class="mt-2 pt-2 border-t border-gray-100 flex justify-between items-center text-xs text-gray-500">
+        <div class="mt-2 pt-2 border-t border-[var(--ui-border)]/40 flex justify-between items-center text-xs text-[var(--ui-muted)]">
             {{ $footer }}
         </div>
     @endif
