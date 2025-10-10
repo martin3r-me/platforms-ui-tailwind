@@ -1,7 +1,20 @@
 <div x-data="sidebarState()" x-init="init()" class="flex">
+    <!-- Mobile Overlay -->
+    <div 
+        x-show="!collapsed && isMobile" 
+        @click="collapsed = true"
+        class="fixed inset-0 bg-black bg-opacity-50 z-40"
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+    ></div>
+
     <aside 
         x-cloak
-        :class="collapsed ? 'w-16' : 'w-72'" 
+        :class="collapsed ? (isMobile ? 'w-0' : 'w-16') : (isMobile ? 'fixed inset-y-0 left-0 w-80 z-50' : 'w-72')" 
         class="shrink-0 h-screen border-r border-[var(--ui-border)]/60 bg-[var(--ui-surface)] transition-all duration-300 flex flex-col"
     >
         <!-- Toggle/Header-Bereich (immer sichtbar) -->
@@ -103,9 +116,20 @@
 function sidebarState() {
     return {
         collapsed: false,
+        isMobile: false,
         init() {
             this.collapsed = localStorage.getItem('sidebar-collapsed') === 'true';
+            this.isMobile = window.innerWidth < 768;
             this.$el.addEventListener('toggle-sidebar', () => { this.toggle(); });
+            
+            // Responsive handling
+            window.addEventListener('resize', () => {
+                this.isMobile = window.innerWidth < 768;
+                // Auto-collapse on mobile
+                if (this.isMobile && !this.collapsed) {
+                    this.collapsed = true;
+                }
+            });
         },
         toggle() {
             this.collapsed = !this.collapsed;

@@ -18,6 +18,12 @@
                         } else if (v && '{{ $side }}' === 'right') {
                             Alpine?.store('page') && (Alpine.store('page')['sidebarOpen'] = false);
                         }
+                        
+                        // Mobile: Schließe main sidebar wenn page sidebar öffnet
+                        if (v && isMobile) {
+                            // Dispatch event to close main sidebar
+                            window.dispatchEvent(new CustomEvent('toggle-sidebar'));
+                        }
                     }
                     Alpine?.store('page') && (Alpine.store('page')[ '{{ $storeKey }}' ] = v) 
                 },
