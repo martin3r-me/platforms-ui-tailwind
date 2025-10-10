@@ -11,7 +11,7 @@
         wire:key="column-{{ $sortableId }}"
     @endif
     {{ $attributes->merge(['class' => 'flex-shrink-0 h-full w-80 flex flex-col']) }}
-    x-data="{ isList: localStorage.getItem('kanbanView') === 'list' }"
+    x-data="{ isList: localStorage.getItem('kanbanView') === 'list', scrollable: {{ $scrollable ? 'true' : 'false' }} }"
     x-init="this.isList = localStorage.getItem('kanbanView') === 'list'"
     @storage-change.window="isList = localStorage.getItem('kanbanView') === 'list'"
     :class="{ 'w-full': isList, 'w-80': !isList }"

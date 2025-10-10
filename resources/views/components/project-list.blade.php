@@ -9,7 +9,9 @@
       $href = $projectRoute ? route($projectRoute, ['plannerProject' => $project['id'] ?? null]) : null;
     @endphp
     <a @if($href) href="{{ $href }}" @endif class="flex items-center gap-3 p-3 rounded-md border border-[var(--ui-border)] bg-white hover:bg-[var(--ui-muted-5)] transition">
-      <img src="{{ $project['avatar'] ?? asset('project.png') }}" alt="Icon" class="w-8 h-8 rounded object-cover"/>
+      <div class="w-8 h-8 bg-[var(--ui-primary)] text-[var(--ui-on-primary)] rounded flex items-center justify-center">
+        @svg('heroicon-o-folder', 'w-5 h-5')
+      </div>
       <div class="flex-1 min-w-0">
         <div class="font-medium truncate">{{ $project['name'] ?? 'Projekt' }}</div>
         <div class="text-xs text-[var(--ui-muted)] truncate">{{ $project['subtitle'] ?? '' }}</div>
