@@ -22,7 +22,7 @@
                         // Mobile: Schließe main sidebar wenn page sidebar öffnet
                         if (v && isMobile) {
                             // Dispatch event to close main sidebar
-                            window.dispatchEvent(new CustomEvent('toggle-sidebar'));
+                            window.dispatchEvent(new CustomEvent('page-sidebar-open'));
                         }
                     }
                     Alpine?.store('page') && (Alpine.store('page')[ '{{ $storeKey }}' ] = v) 
@@ -30,9 +30,9 @@
                 get isMobile() { return window.innerWidth < 768; }
             }"
             :class="open ? (
-                (isMobile ? 'fixed inset-0 z-50 w-full' : `${'{{ $width }}'} `) + 
+                (isMobile ? 'fixed inset-0 z-60 w-full' : `${'{{ $width }}'} `) + 
                 ( '{{ $side }}' === 'right' ? ' border-l border-[var(--ui-border)]/60' : ' border-r border-[var(--ui-border)]/60')
-            ) : 'w-0 border-0'"
+            ) : (isMobile ? 'w-0 overflow-hidden' : 'w-0 border-0')"
             class="relative flex-shrink-0 h-full bg-[var(--ui-muted-5)] transition-all duration-300"
             {{ $attributes }}
         >
