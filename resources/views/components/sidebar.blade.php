@@ -39,11 +39,15 @@
             </nav>
         </template>
         <template x-if="collapsed">
-            <div class="flex-1 flex items-center justify-center">
+            <button 
+                @click="toggle()"
+                class="flex-1 w-full flex items-center justify-center hover:bg-[var(--ui-muted-5)]"
+                title="Sidebar ausklappen"
+            >
                 <div class="text-[var(--ui-muted)] text-sm font-semibold tracking-wide -rotate-90 origin-center select-none whitespace-nowrap">
                     {{ strtoupper(explode('.', request()->route()?->getName())[0] ?? 'APP') }}
                 </div>
-            </div>
+            </button>
         </template>
 
         <!-- Bottom Actions -->
