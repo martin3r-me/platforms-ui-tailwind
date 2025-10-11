@@ -109,7 +109,7 @@
                     :class="collapsed ? 'justify-center' : 'justify-start px-4 gap-3'"
                     title="Täglicher Check-in"
                 >
-                    @svg('heroicon-o-bullseye', 'w-5 h-5')
+                    @svg('heroicon-o-flag', 'w-5 h-5')
                     <span x-show="!collapsed" class="text-sm font-medium">Check-in</span>
                 </button>
             </div>
