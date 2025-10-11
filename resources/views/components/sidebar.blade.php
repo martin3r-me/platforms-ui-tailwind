@@ -90,10 +90,30 @@
                 @click="$dispatch('open-modal-checkin')"
                 class="w-full flex items-center h-14 rounded-none border-t border-[var(--ui-border)]/60 text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)] transition-colors"
                 :class="collapsed ? 'justify-center' : 'justify-start px-4 gap-3'"
-                title="Check-in"
+                title="Täglicher Check-in"
             >
-                @svg('heroicon-o-clock', 'w-5 h-5')
-                <span x-show="!collapsed" class="text-sm font-medium">Check-in</span>
+                <div class="relative">
+                    @svg('heroicon-o-eye', 'w-5 h-5')
+                    <span x-show="!collapsed" class="text-sm font-medium ml-3">Check-in</span>
+                    <!-- Badge für offene Aufgaben -->
+                    <div x-data="{ 
+                        openTodos: 0,
+                        init() {
+                            this.loadOpenTodos();
+                            setInterval(() => this.loadOpenTodos(), 30000); // Update alle 30 Sekunden
+                            this.$el.addEventListener('checkin-updated', () => this.loadOpenTodos());
+                        },
+                        async loadOpenTodos() {
+                            try {
+                                const response = await fetch('/api/checkin/open-todos');
+                                const data = await response.json();
+                                this.openTodos = data.count || 0;
+                            } catch (error) {
+                                console.log('Could not load open todos');
+                            }
+                        }
+                    }" x-show="openTodos > 0" class="absolute -top-1 -right-1 bg-[var(--ui-danger)] text-[var(--ui-on-danger)] text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center animate-pulse" x-text="openTodos"></div>
+                </div>
             </button>
 
             <!-- Terminal Trigger -->
