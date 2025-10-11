@@ -43,14 +43,72 @@
         ],
     };
 
-    $variantClasses = [
-        'bg' => "bg-[color:var(--ui-{$variant}-5)]",
-        'border' => "border-[color:var(--ui-{$variant}-20)]",
-        'text' => "text-[color:var(--ui-{$variant})]",
-        'hover' => "hover:bg-[color:var(--ui-{$variant}-10)]",
-        'icon' => "text-[color:var(--ui-{$variant})]",
-        'count' => "text-[color:var(--ui-muted)]", // Immer gemutet
-    ];
+    $variantClasses = match($variant) {
+        'primary' => [
+            'bg' => 'bg-[color:var(--ui-primary-5)]',
+            'border' => 'border-[color:var(--ui-primary-20)]',
+            'text' => 'text-[color:var(--ui-primary)]',
+            'hover' => 'hover:bg-[color:var(--ui-primary-10)]',
+            'icon' => 'text-[color:var(--ui-primary)]',
+            'count' => 'text-[color:var(--ui-muted)]',
+        ],
+        'secondary' => [
+            'bg' => 'bg-[color:var(--ui-secondary-5)]',
+            'border' => 'border-[color:var(--ui-secondary-20)]',
+            'text' => 'text-[color:var(--ui-secondary)]',
+            'hover' => 'hover:bg-[color:var(--ui-secondary-10)]',
+            'icon' => 'text-[color:var(--ui-secondary)]',
+            'count' => 'text-[color:var(--ui-muted)]',
+        ],
+        'success' => [
+            'bg' => 'bg-[color:var(--ui-success-5)]',
+            'border' => 'border-[color:var(--ui-success-20)]',
+            'text' => 'text-[color:var(--ui-success)]',
+            'hover' => 'hover:bg-[color:var(--ui-success-10)]',
+            'icon' => 'text-[color:var(--ui-success)]',
+            'count' => 'text-[color:var(--ui-muted)]',
+        ],
+        'danger' => [
+            'bg' => 'bg-[color:var(--ui-danger-5)]',
+            'border' => 'border-[color:var(--ui-danger-20)]',
+            'text' => 'text-[color:var(--ui-danger)]',
+            'hover' => 'hover:bg-[color:var(--ui-danger-10)]',
+            'icon' => 'text-[color:var(--ui-danger)]',
+            'count' => 'text-[color:var(--ui-muted)]',
+        ],
+        'warning' => [
+            'bg' => 'bg-[color:var(--ui-warning-5)]',
+            'border' => 'border-[color:var(--ui-warning-20)]',
+            'text' => 'text-[color:var(--ui-warning)]',
+            'hover' => 'hover:bg-[color:var(--ui-warning-10)]',
+            'icon' => 'text-[color:var(--ui-warning)]',
+            'count' => 'text-[color:var(--ui-muted)]',
+        ],
+        'info' => [
+            'bg' => 'bg-[color:var(--ui-info-5)]',
+            'border' => 'border-[color:var(--ui-info-20)]',
+            'text' => 'text-[color:var(--ui-info)]',
+            'hover' => 'hover:bg-[color:var(--ui-info-10)]',
+            'icon' => 'text-[color:var(--ui-info)]',
+            'count' => 'text-[color:var(--ui-muted)]',
+        ],
+        'muted' => [
+            'bg' => 'bg-[color:var(--ui-muted-5)]',
+            'border' => 'border-[color:var(--ui-muted-20)]',
+            'text' => 'text-[color:var(--ui-muted)]',
+            'hover' => 'hover:bg-[color:var(--ui-muted-10)]',
+            'icon' => 'text-[color:var(--ui-muted)]',
+            'count' => 'text-[color:var(--ui-muted)]',
+        ],
+        default => [
+            'bg' => 'bg-[color:var(--ui-secondary-5)]',
+            'border' => 'border-[color:var(--ui-secondary-20)]',
+            'text' => 'text-[color:var(--ui-secondary)]',
+            'hover' => 'hover:bg-[color:var(--ui-secondary-10)]',
+            'icon' => 'text-[color:var(--ui-secondary)]',
+            'count' => 'text-[color:var(--ui-muted)]',
+        ]
+    };
 
     $trendClasses = match($trend) {
         'up' => 'text-[color:var(--ui-success)]',
