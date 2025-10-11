@@ -105,9 +105,8 @@
             }">
                 <button
                     @click="$dispatch('open-modal-checkin')"
-                    class="w-full flex items-center h-14 rounded-none border-t border-[var(--ui-border)]/60 transition-colors"
+                    class="w-full flex items-center h-14 rounded-none border-t border-[var(--ui-border)]/60 text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)] transition-colors"
                     :class="collapsed ? 'justify-center' : 'justify-start px-4 gap-3'"
-                    :class="openTodos > 0 ? 'text-[var(--ui-primary)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)]' : 'text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)]'"
                     title="Täglicher Check-in"
                 >
                     @svg('heroicon-o-eye', 'w-5 h-5')
