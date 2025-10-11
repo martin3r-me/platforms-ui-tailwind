@@ -85,6 +85,17 @@
                 <span x-show="!collapsed" class="text-sm font-medium">Benutzer</span>
             </button>
 
+            <!-- Check-in Trigger -->
+            <button
+                @click="$dispatch('open-modal-checkin')"
+                class="w-full flex items-center h-14 rounded-none border-t border-[var(--ui-border)]/60 text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)] transition-colors"
+                :class="collapsed ? 'justify-center' : 'justify-start px-4 gap-3'"
+                title="Check-in"
+            >
+                @svg('heroicon-o-clock', 'w-5 h-5')
+                <span x-show="!collapsed" class="text-sm font-medium">Check-in</span>
+            </button>
+
             <!-- Terminal Trigger -->
             <button
                 @click="window.dispatchEvent(new CustomEvent('toggle-terminal'))"
