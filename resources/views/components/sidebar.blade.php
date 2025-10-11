@@ -98,7 +98,6 @@
                         const response = await fetch('/api/checkin/open-todos');
                         const data = await response.json();
                         this.openTodos = data.count || 0;
-                        console.log('Open todos loaded:', this.openTodos);
                     } catch (error) {
                         console.log('Could not load open todos:', error);
                     }
@@ -106,16 +105,13 @@
             }">
                 <button
                     @click="$dispatch('open-modal-checkin')"
-                    class="w-full flex items-center h-14 rounded-none border-t border-[var(--ui-border)]/60 text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)] transition-colors"
+                    class="w-full flex items-center h-14 rounded-none border-t border-[var(--ui-border)]/60 hover:bg-[var(--ui-muted-5)] transition-colors"
                     :class="collapsed ? 'justify-center' : 'justify-start px-4 gap-3'"
+                    :class="openTodos > 0 ? 'text-[var(--ui-primary)]' : 'text-[var(--ui-muted)] hover:text-[var(--ui-primary)]'"
                     title="Täglicher Check-in"
                 >
-                    <div class="relative">
-                        @svg('heroicon-o-eye', 'w-5 h-5')
-                        <span x-show="!collapsed" class="text-sm font-medium ml-3">Check-in</span>
-                        <!-- Badge für offene Aufgaben -->
-                        <div x-show="openTodos > 0" class="absolute -top-1 -right-1 bg-[var(--ui-danger)] text-[var(--ui-on-danger)] text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center animate-pulse" x-text="openTodos"></div>
-                    </div>
+                    @svg('heroicon-o-eye', 'w-5 h-5')
+                    <span x-show="!collapsed" class="text-sm font-medium ml-3">Check-in</span>
                 </button>
             </div>
 
