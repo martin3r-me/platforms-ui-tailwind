@@ -98,8 +98,9 @@
                         const response = await fetch('/api/checkin/open-todos');
                         const data = await response.json();
                         this.openTodos = data.count || 0;
+                        console.log('Open todos loaded:', this.openTodos);
                     } catch (error) {
-                        console.log('Could not load open todos');
+                        console.log('Could not load open todos:', error);
                     }
                 }
             }">
