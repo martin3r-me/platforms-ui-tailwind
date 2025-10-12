@@ -1,4 +1,5 @@
 <div x-data="sidebarState()" x-init="init()" class="flex">
+    <livewire:core.sidebar-data />
     <aside 
         x-cloak
         :class="collapsed ? 'w-16' : 'w-72'" 
@@ -93,20 +94,73 @@
                     :class="collapsed ? 'justify-center' : 'justify-start px-4 gap-3'"
                     title="Täglicher Check-in"
                 >
-                    <!-- Icon: Flag when expanded, Timer when collapsed -->
+                    <!-- Icon: Flag when expanded, Timer when collapsed (only if active) -->
                     <div x-show="!collapsed">
                         @svg('heroicon-o-flag', 'w-5 h-5')
                     </div>
                     <div x-show="collapsed" class="relative">
-                        <livewire:core.sidebar-timer />
+                        <!-- Show timer if active, otherwise show flag -->
+                        <div x-data="sidebarTimer()" x-init="init()">
+                            <div x-show="isActive" class="text-xs text-[var(--ui-primary)] font-medium">
+                                <span x-text="formatTime(timeLeft)"></span>
+                            </div>
+                            <div x-show="!isActive">
+                                @svg('heroicon-o-flag', 'w-5 h-5')
+                            </div>
+                        </div>
                     </div>
                     <span x-show="!collapsed" class="text-sm font-medium">Check-in</span>
                 </button>
                 
-                <!-- Timer Status (only when expanded) -->
-                <div x-show="!collapsed">
-                    <livewire:core.sidebar-timer />
-                </div>
+            <!-- Timer Status (only when expanded) -->
+            <div x-show="!collapsed">
+                <livewire:core.sidebar-timer />
+            </div>
+        </div>
+
+        <script>
+        function sidebarTimer() {
+            return {
+                timeLeft: 0,
+                isActive: false,
+                
+                init() {
+                    this.loadFromServer();
+                    
+                    // Listen for Livewire updates
+                    this.$el.addEventListener('livewire:updated', () => {
+                        this.loadFromServer();
+                    });
+                    
+                    // Listen for timer expiration
+                    this.$el.addEventListener('timer-expired', () => {
+                        this.isActive = false;
+                    });
+                },
+                
+                loadFromServer() {
+                    // Get data from sidebar-data component
+                    const sidebarDataEl = document.querySelector('[x-data*="sidebarData"]');
+                    if (sidebarDataEl && sidebarDataEl._x_dataStack) {
+                        const sidebarData = sidebarDataEl._x_dataStack[0];
+                        if (sidebarData && sidebarData.pomodoroSession) {
+                            this.timeLeft = (sidebarData.pomodoroSession.remaining_minutes || 0) * 60;
+                            this.isActive = sidebarData.pomodoroSession.is_active && this.timeLeft > 0;
+                        } else {
+                            this.isActive = false;
+                        }
+                    } else {
+                        this.isActive = false;
+                    }
+                },
+                
+                formatTime(seconds) {
+                    const minutes = Math.ceil(seconds / 60);
+                    return `${minutes}m`;
+                }
+            }
+        }
+        </script>
             </div>
 
             <!-- Terminal Trigger -->
