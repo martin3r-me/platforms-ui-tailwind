@@ -93,12 +93,20 @@
                     :class="collapsed ? 'justify-center' : 'justify-start px-4 gap-3'"
                     title="Täglicher Check-in"
                 >
-                    @svg('heroicon-o-flag', 'w-5 h-5')
+                    <!-- Icon: Flag when expanded, Timer when collapsed -->
+                    <div x-show="!collapsed">
+                        @svg('heroicon-o-flag', 'w-5 h-5')
+                    </div>
+                    <div x-show="collapsed" class="relative">
+                        <livewire:core.sidebar-timer />
+                    </div>
                     <span x-show="!collapsed" class="text-sm font-medium">Check-in</span>
                 </button>
                 
-                <!-- Timer Status -->
-                <livewire:core.sidebar-timer />
+                <!-- Timer Status (only when expanded) -->
+                <div x-show="!collapsed">
+                    <livewire:core.sidebar-timer />
+                </div>
             </div>
 
             <!-- Terminal Trigger -->
