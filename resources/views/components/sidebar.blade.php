@@ -95,7 +95,6 @@
                 @svg('heroicon-o-flag', 'w-5 h-5')
                 <span x-show="!collapsed" class="text-sm font-medium">Check-in</span>
             </button>
-            </div>
 
             <!-- Terminal Trigger -->
             <button
