@@ -12,7 +12,7 @@
                 set open(v){ Alpine?.store('page') && (Alpine.store('page')[ '{{ $storeKey }}' ] = v) }
             }"
             :class="open ? (`${'{{ $width }}'} ` + ( '{{ $side }}' === 'right' ? 'border-l border-[var(--ui-border)]/60' : 'border-r border-[var(--ui-border)]/60')) : 'w-0 border-0'"
-            class="relative flex-shrink-0 h-full bg-[var(--ui-muted-5)] transition-all duration-300"
+            class="relative flex-shrink-0 h-full bg-[var(--ui-muted-5)] transition-all duration-300 overflow-x-hidden"
             {{ $attributes }}
         >
     <!-- Toggle Button Area (immer sichtbar) -->
@@ -29,7 +29,7 @@
             x-transition:leave="transition ease-in duration-200"
             x-transition:leave-start="opacity-100"
             x-transition:leave-end="opacity-0"
-            class="flex-1 overflow-hidden flex flex-col"
+            class="flex-1 overflow-hidden overflow-x-hidden flex flex-col"
         >
                 @if($title)
                     <div class="px-6 h-14 flex items-center border-b border-[var(--ui-border)]/60 bg-[var(--ui-surface)]/90 backdrop-blur">
@@ -45,7 +45,7 @@
                     </div>
                 @endif
 
-            <div class="flex-1 overflow-y-auto">
+            <div class="flex-1 overflow-y-auto overflow-x-hidden">
                 {{ $slot }}
             </div>
         </div>

@@ -4,7 +4,7 @@
     'background' => 'bg-gray-50/30',
 ])
 
-<div class="flex-1 overflow-y-auto {{ $background }}">
+<div class="flex-1 overflow-y-auto overflow-x-hidden {{ $background }}">
     <div class="{{ $padding }} {{ $spacing }}">
         {{ $slot }}
     </div>
