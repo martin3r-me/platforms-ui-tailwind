@@ -19,12 +19,12 @@
         {{ $navbar }}
     @endisset
 
-    <div class="flex-1 min-h-0 flex">
+    <div class="flex-1 min-h-0 min-w-0 flex">
         @isset($sidebar)
             {{ $sidebar }}
         @endisset
 
-        <div class="flex-1 min-h-0 h-full overflow-hidden flex">
+        <div class="flex-1 min-h-0 min-w-0 h-full overflow-hidden flex">
             {{ $slot }}
         </div>
 
