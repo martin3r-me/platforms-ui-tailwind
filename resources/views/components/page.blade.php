@@ -2,7 +2,7 @@
     // Container für eine Seite mit optionaler Navbar und Sidebar
 ])
 
-<div class="h-full flex flex-col" x-data x-init="
+<div class="h-full flex flex-col overflow-x-hidden" x-data x-init="
     if (!window.Alpine) return;
     if (!Alpine.store('page')) {
         Alpine.store('page', {
