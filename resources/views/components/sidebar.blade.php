@@ -14,7 +14,11 @@
                     :class="collapsed ? 'justify-center' : 'justify-start px-4 gap-3'"
                     title="Module öffnen"
                 >
-                    @svg('heroicon-o-squares-2x2', 'w-6 h-6')
+                    @if (file_exists(public_path('logo_square.png')))
+                        <img src="{{ asset('logo_square.png') }}" alt="Logo" class="w-6 h-6 rounded-md" />
+                    @else
+                        @svg('heroicon-o-squares-2x2', 'w-6 h-6')
+                    @endif
                     <span x-show="!collapsed" class="text-sm font-medium">Module</span>
                 </button>
 
