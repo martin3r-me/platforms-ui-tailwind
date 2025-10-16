@@ -35,7 +35,7 @@
             </h1>
             @if($__teamName)
                 <span class="inline-flex items-center gap-1 max-w-[16rem] ml-1 px-2 h-6 rounded-full border border-[var(--ui-border)]/60 bg-[var(--ui-muted-5)] text-[color:var(--ui-muted)] text-xs">
-                    @svg('heroicons.user-group', 'w-4 h-4 opacity-70')
+                    @svg('heroicon-o-user-group', 'w-4 h-4 opacity-70')
                     <span class="truncate" title="{{ $__teamName }}">
                         {{ $__teamName }}
                     </span>
