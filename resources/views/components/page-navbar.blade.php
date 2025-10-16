@@ -1,7 +1,14 @@
 @props([
     'title' => '',
     'icon' => null,
+    'team' => null, // Optional: String oder Objekt mit name-Eigenschaft; wenn null, wird currentTeam genutzt
 ])
+
+@php
+    $__teamName = is_string($team)
+        ? $team
+        : ($team->name ?? (auth()->user()?->currentTeam?->name ?? null));
+@endphp
 
 <div class="sticky top-0 z-10 px-4 h-14 bg-[var(--ui-surface)]/90 border-b border-[var(--ui-border)]/60 backdrop-blur">
     <div class="h-full flex items-center justify-between gap-3">
@@ -26,6 +33,14 @@
             <h1 class="m-0 truncate text-[color:var(--ui-secondary)] font-semibold tracking-tight text-base md:text-lg">
                 {{ $title }}
             </h1>
+            @if($__teamName)
+                <span class="inline-flex items-center gap-1 max-w-[16rem] ml-1 px-2 h-6 rounded-full border border-[var(--ui-border)]/60 bg-[var(--ui-muted-5)] text-[color:var(--ui-muted)] text-xs">
+                    @svg('heroicons.user-group', 'w-4 h-4 opacity-70')
+                    <span class="truncate" title="{{ $__teamName }}">
+                        {{ $__teamName }}
+                    </span>
+                </span>
+            @endif
             @isset($titleActions)
                 <div class="flex items-center gap-2 ml-2">
                     {{ $titleActions }}
