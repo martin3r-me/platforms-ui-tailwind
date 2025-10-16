@@ -26,6 +26,7 @@
 
     $canCloseByBackdrop = !$persistent && $backdropClosable;
     $canCloseByEsc = !$persistent && $escClosable;
+    $logoSquare = file_exists(public_path('logo_square.png')) ? asset('logo_square.png') : null;
 @endphp
 
 <div 
@@ -65,9 +66,14 @@
                     <!-- Header -->
                     @if (trim($header ?? ''))
                         <div class="px-6 py-4 border-b border-[var(--ui-border)]/60 bg-[var(--ui-surface)]/90 backdrop-blur flex items-center justify-between">
-                            <h2 class="text-xl font-semibold text-[var(--ui-secondary)] m-0">
-                                {{ $header }}
-                            </h2>
+                            <div class="flex items-center gap-2 min-w-0">
+                                @if($logoSquare)
+                                    <img src="{{ $logoSquare }}" alt="Logo" class="w-6 h-6 rounded-md flex-shrink-0" />
+                                @endif
+                                <h2 class="text-xl font-semibold text-[var(--ui-secondary)] m-0 truncate">
+                                    {{ $header }}
+                                </h2>
+                            </div>
                             <button
                                 @click="modalShow = false"
                                 class="p-2 text-[var(--ui-muted)] hover:text-[var(--ui-danger)] hover:bg-[var(--ui-danger-5)] rounded-lg transition-all duration-200 group"
@@ -96,9 +102,14 @@
                     <!-- Header -->
                     @if (trim($header ?? ''))
                         <div class="px-6 py-4 border-b border-[var(--ui-border)]/60 flex items-center justify-between flex-shrink-0">
-                            <h2 class="text-lg font-semibold text-[var(--ui-secondary)] m-0">
-                                {{ $header }}
-                            </h2>
+                            <div class="flex items-center gap-2 min-w-0">
+                                @if($logoSquare)
+                                    <img src="{{ $logoSquare }}" alt="Logo" class="w-6 h-6 rounded-md flex-shrink-0" />
+                                @endif
+                                <h2 class="text-lg font-semibold text-[var(--ui-secondary)] m-0 truncate">
+                                    {{ $header }}
+                                </h2>
+                            </div>
                             <button
                                 @click="modalShow = false"
                                 class="p-2 text-[var(--ui-muted)] hover:text-[var(--ui-danger)] hover:bg-[var(--ui-danger-5)] rounded-lg transition-all duration-200 group"
