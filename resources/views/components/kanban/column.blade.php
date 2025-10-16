@@ -10,20 +10,20 @@
         wire:sortable.item="{{ $sortableId }}"
         wire:key="column-{{ $sortableId }}"
     @endif
-    {{ $attributes->merge(['class' => 'flex-shrink-0 h-full w-80 flex flex-col']) }}
+    {{ $attributes->merge(['class' => 'kanban-column flex-shrink-0 h-full w-80 flex flex-col']) }}
     x-data="{ isList: localStorage.getItem('kanbanView') === 'list', scrollable: {{ $scrollable ? 'true' : 'false' }} }"
     x-init="this.isList = localStorage.getItem('kanbanView') === 'list'"
     @storage-change.window="isList = localStorage.getItem('kanbanView') === 'list'"
     :class="{ 'w-full': isList, 'w-80': !isList }"
 >
-    <div class="flex flex-col h-full bg-white border border-gray-200 rounded-lg shadow-sm">
+    <div class="flex flex-col h-full bg-[var(--ui-surface)] border border-[var(--ui-border)]/60 rounded-lg shadow-sm">
         
         <!-- Header -->
         <div 
-            class="px-3 py-2 text-xs font-semibold uppercase tracking-wide flex justify-between items-center border-b border-gray-200"
-            :class="{ 'bg-gray-50': isList, 'bg-white': !isList }"
+            class="px-3 py-2 text-[11px] font-semibold uppercase tracking-wide flex justify-between items-center border-b border-[var(--ui-border)]/60"
+            :class="{ 'bg-[var(--ui-muted-5)]': isList, 'bg-[var(--ui-surface)]': !isList }"
         >
-            <span class="text-gray-700 flex-1 truncate">{{ $title }}</span>
+            <span class="text-[var(--ui-secondary)] flex-1 truncate">{{ $title }}</span>
             
             <div class="flex items-center gap-2">
                 @isset($headerActions)
@@ -33,7 +33,7 @@
                 @endisset
                 
                 @if($sortableId)
-                    <button wire:sortable.handle class="text-gray-400 hover:text-gray-600 cursor-grab p-1" title="Spalte verschieben">
+                    <button wire:sortable.handle class="text-[var(--ui-muted)] hover:text-[var(--ui-primary)] cursor-grab p-1 rounded-md hover:bg-[var(--ui-muted-5)]" title="Spalte verschieben">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16" />
                         </svg>
@@ -52,9 +52,21 @@
         </div>
 
         @if($footer)
-            <div class="px-4 py-3 border-t border-gray-200 bg-gray-50 rounded-b-lg">
+            <div class="px-4 py-3 border-t border-[var(--ui-border)]/60 bg-[var(--ui-muted-5)] rounded-b-lg">
                 {{ $footer }}
             </div>
         @endif
     </div>
 </div>
+
+<style>
+    /* Column Drag-Zustände dezent halten */
+    .kanban-column.wire-dragging .flex.flex-col.h-full {
+        background: var(--ui-surface);
+        opacity: .96;
+    }
+    .kanban-column.wire-sortable-placeholder .flex.flex-col.h-full {
+        background: var(--ui-muted-5) !important;
+        border: 1px dashed var(--ui-border);
+    }
+</style>
