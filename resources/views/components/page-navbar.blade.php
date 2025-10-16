@@ -34,11 +34,14 @@
                 {{ $title }}
             </h1>
             @if($__teamName)
-                <span class="inline-flex items-center gap-1 max-w-[16rem] ml-1 px-2 h-6 rounded-full border border-[var(--ui-border)]/60 bg-[var(--ui-muted-5)] text-[color:var(--ui-muted)] text-xs">
+                <button type="button"
+                    @click="$dispatch('open-modal-team')"
+                    class="inline-flex items-center gap-1 max-w-[16rem] ml-1 px-2 h-6 rounded-full border border-[var(--ui-border)]/60 bg-[var(--ui-muted-5)] text-[color:var(--ui-muted)] text-xs hover:text-[color:var(--ui-primary)] hover:border-[var(--ui-primary)]/60 transition-colors"
+                    title="Team wechseln">
                     <span class="truncate" title="{{ $__teamName }}">
                         {{ $__teamName }}
                     </span>
-                </span>
+                </button>
             @endif
             @isset($titleActions)
                 <div class="flex items-center gap-2 ml-2">
