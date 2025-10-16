@@ -7,6 +7,13 @@
     <div class="h-full flex items-center justify-between gap-3">
         {{-- Links: Titel + Left Sidebar Toggle --}}
         <div class="flex items-center gap-3 min-w-0">
+            @php
+                $logoFilePath = public_path('logo.png');
+                $logoUrl = file_exists($logoFilePath) ? asset('logo.png') : null;
+            @endphp
+            @if($logoUrl)
+                <img src="{{ $logoUrl }}" alt="Logo" class="h-6 w-auto flex-shrink-0 mr-2" />
+            @endif
             {{-- Left Sidebar Toggle --}}
             <button x-data 
                 @click="Alpine.store('page') && (Alpine.store('page').sidebarOpen = !Alpine.store('page').sidebarOpen)"
@@ -20,13 +27,6 @@
                     <rect x="11" y="5" width="10" height="14" rx="2" class="opacity-40" />
                 </svg>
             </button>
-            @php
-                $logoFilePath = public_path('logo.png');
-                $logoUrl = file_exists($logoFilePath) ? asset('logo.png') : null;
-            @endphp
-            @if($logoUrl)
-                <img src="{{ $logoUrl }}" alt="Logo" class="h-6 w-auto flex-shrink-0" />
-            @endif
             @if($icon)
                 @svg($icon, 'w-6 h-6 flex-shrink-0 text-[color:var(--ui-primary)]')
             @endif
