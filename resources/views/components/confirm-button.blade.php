@@ -7,11 +7,12 @@
     'class' => '',
     'variant' => 'muted',
     'icon' => null,
+    'size' => 'md',
 ])
 
 <x-ui-button
     :variant="$variant"
-    size="md"
+    :size="$size"
     :class="'hover:bg-[color:var(--ui-danger-80)] hover:text-[color:var(--ui-on-danger)] w-full flex '.$class"
     x-data="{ confirm: false }"
     x-on:click="
