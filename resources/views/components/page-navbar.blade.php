@@ -92,10 +92,7 @@
                     ? 'text-[var(--ui-primary)] bg-[var(--ui-muted-5)]' 
                     : 'text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)]'"
                 title="Aktivitäten-Sidebar umschalten">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
-                    <rect x="3" y="5" width="10" height="14" rx="2" class="opacity-40" />
-                    <rect x="13" y="5" width="8" height="14" rx="2" class="opacity-90" />
-                </svg>
+                @svg('heroicon-o-bell-alert','w-5 h-5')
             </button>
         </div>
     </div>
