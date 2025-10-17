@@ -27,22 +27,9 @@
                     <rect x="11" y="5" width="10" height="14" rx="2" class="opacity-40" />
                 </svg>
             </button>
-            @if($icon)
-                @svg($icon, 'w-6 h-6 flex-shrink-0 text-[color:var(--ui-primary)]')
-            @endif
             <h1 class="m-0 truncate text-[color:var(--ui-secondary)] font-semibold tracking-tight text-base md:text-lg">
                 {{ $title }}
             </h1>
-            @if($__teamName)
-                <button type="button"
-                    @click="$dispatch('open-modal-team')"
-                    class="inline-flex items-center gap-1 max-w-[16rem] ml-1 px-2 h-6 rounded-full border border-[var(--ui-border)]/60 bg-[var(--ui-muted-5)] text-[color:var(--ui-muted)] text-xs hover:text-[color:var(--ui-primary)] hover:border-[var(--ui-primary)]/60 transition-colors"
-                    title="Team wechseln">
-                    <span class="truncate" title="{{ $__teamName }}">
-                        {{ $__teamName }}
-                    </span>
-                </button>
-            @endif
             @isset($titleActions)
                 <div class="flex items-center gap-2 ml-2">
                     {{ $titleActions }}
