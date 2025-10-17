@@ -53,6 +53,13 @@
         {{-- Rechts: Aktionen + Sidebar-Toggles --}}
         <div class="flex items-center gap-2">
             {{ $slot }}
+            {{-- Terminal Toggle --}}
+            <button x-data 
+                @click="window.dispatchEvent(new CustomEvent('toggle-terminal'))"
+                class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-[var(--ui-border)]/60 transition text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)]"
+                title="Terminal umschalten">
+                @svg('heroicon-o-command-line', 'w-5 h-5')
+            </button>
             <div class="h-8 w-px bg-[var(--ui-border)]/60 mx-1"></div>
             {{-- Right Activity Sidebar Toggle --}}
             <button x-data 
