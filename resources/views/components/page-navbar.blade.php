@@ -46,7 +46,9 @@
                 $__moduleNameInline = ucfirst(request()->segment(1) ?? 'dashboard');
             @endphp
             <button type="button" @click="$dispatch('open-modal-modules')" 
-                class="hidden sm:inline-flex items-center gap-2 px-2 h-8 rounded-md border border-[var(--ui-border)]/60 text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)] transition"
+                class="hidden sm:inline-flex items-center gap-2 px-2 h-8 rounded-md border transition
+                text-[var(--ui-primary)] bg-[var(--ui-primary-5)] border-[var(--ui-primary)]/60
+                hover:text-[var(--ui-muted)] hover:bg-transparent hover:border-[var(--ui-border)]/60"
                 title="Module & Teams öffnen">
                 <span class="truncate max-w-[10rem]">{{ $__teamNameInline ?? 'Team' }}</span>
                 <span class="opacity-60">•</span>
