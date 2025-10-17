@@ -53,14 +53,38 @@
         {{-- Rechts: Aktionen + Sidebar-Toggles --}}
         <div class="flex items-center gap-2">
             {{ $slot }}
-            {{-- Terminal Toggle --}}
-            <button x-data 
-                @click="window.dispatchEvent(new CustomEvent('toggle-terminal'))"
+            
+            {{-- Quick Triggers: Team, User, Check-in --}}
+            <button x-data
+                @click="$dispatch('open-modal-team')"
                 class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-[var(--ui-border)]/60 transition text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)]"
+                title="Team verwalten">
+                @svg('heroicon-o-users', 'w-5 h-5')
+            </button>
+            <button x-data
+                @click="$dispatch('open-modal-user')"
+                class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-[var(--ui-border)]/60 transition text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)]"
+                title="Benutzer-Einstellungen">
+                @svg('heroicon-o-user', 'w-5 h-5')
+            </button>
+            <button x-data
+                @click="$dispatch('open-modal-checkin')"
+                class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-[var(--ui-border)]/60 transition text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)]"
+                title="Täglicher Check-in">
+                @svg('heroicon-o-flag', 'w-5 h-5')
+            </button>
+
+            <div class="h-8 w-px bg-[var(--ui-border)]/60 mx-1"></div>
+            {{-- Terminal Toggle (adjacent to Activity Toggle) --}}
+            <button x-data
+                @click="window.dispatchEvent(new CustomEvent('toggle-terminal'))"
+                class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-[var(--ui-border)]/60 transition"
+                :class="Alpine.store('page')?.terminalOpen 
+                    ? 'text-[var(--ui-primary)] bg-[var(--ui-muted-5)]' 
+                    : 'text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)]'"
                 title="Terminal umschalten">
                 @svg('heroicon-o-command-line', 'w-5 h-5')
             </button>
-            <div class="h-8 w-px bg-[var(--ui-border)]/60 mx-1"></div>
             {{-- Right Activity Sidebar Toggle --}}
             <button x-data 
                 @click="Alpine.store('page') && (Alpine.store('page').activityOpen = !Alpine.store('page').activityOpen)" 
