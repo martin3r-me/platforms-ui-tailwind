@@ -50,9 +50,9 @@
 
             {{-- Team Flyout --}}
             <div class="relative hidden sm:block">
-                <button x-data="{ open: false }" 
-                    @click="open = !open" 
-                    @click.away="open = false"
+                <button x-data="{ teamFlyoutOpen: false }" 
+                    @click="teamFlyoutOpen = !teamFlyoutOpen" 
+                    @click.away="teamFlyoutOpen = false"
                     class="inline-flex items-center gap-1 px-3 py-1.5 h-8 rounded-md border transition
                     text-[var(--ui-primary)] bg-[var(--ui-primary-5)] border-[var(--ui-primary)]/60
                     hover:text-[var(--ui-muted)] hover:bg-transparent hover:border-[var(--ui-border)]/60"
@@ -63,7 +63,7 @@
                     </svg>
                 </button>
                 
-                <div x-show="open" x-cloak x-transition
+                <div x-show="teamFlyoutOpen" x-cloak x-transition
                     class="absolute top-full left-0 mt-2 w-80 bg-[var(--ui-surface)] rounded-xl border border-[var(--ui-border)]/60 shadow-lg z-50">
                     <div class="p-4">
                         <h3 class="text-sm font-semibold text-[var(--ui-muted)] mb-3">Teams</h3>
@@ -103,9 +103,9 @@
 
             {{-- Module Flyout --}}
             <div class="relative hidden sm:block">
-                <button x-data="{ open: false }" 
-                    @click="open = !open" 
-                    @click.away="open = false"
+                <button x-data="{ moduleFlyoutOpen: false }" 
+                    @click="moduleFlyoutOpen = !moduleFlyoutOpen" 
+                    @click.away="moduleFlyoutOpen = false"
                     class="inline-flex items-center gap-1 px-3 py-1.5 h-8 rounded-md border transition
                     text-[var(--ui-primary)] bg-[var(--ui-primary-5)] border-[var(--ui-primary)]/60
                     hover:text-[var(--ui-muted)] hover:bg-transparent hover:border-[var(--ui-border)]/60"
@@ -116,7 +116,7 @@
                     </svg>
                 </button>
                 
-                <div x-show="open" x-cloak x-transition
+                <div x-show="moduleFlyoutOpen" x-cloak x-transition
                     class="absolute top-full left-0 mt-2 w-80 bg-[var(--ui-surface)] rounded-xl border border-[var(--ui-border)]/60 shadow-lg z-50">
                     <div class="p-4">
                         <h3 class="text-sm font-semibold text-[var(--ui-muted)] mb-3">Module</h3>
