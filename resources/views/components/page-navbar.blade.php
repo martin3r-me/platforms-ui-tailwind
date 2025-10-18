@@ -59,7 +59,7 @@
                 </button>
                 
                 <div x-show="combinedFlyoutOpen" x-cloak x-transition
-                    class="absolute top-full left-0 mt-2 w-screen max-w-4xl bg-[var(--ui-surface)] rounded-2xl border border-[var(--ui-border)]/60 shadow-lg z-50">
+                    class="absolute top-full right-0 mt-2 w-screen max-w-4xl bg-[var(--ui-surface)] rounded-2xl border border-[var(--ui-border)]/60 shadow-lg z-50">
                     <div class="p-6">
                         <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
                             {{-- Modules Section (Links) --}}
