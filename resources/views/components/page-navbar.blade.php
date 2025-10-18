@@ -41,8 +41,11 @@
         <div class="flex items-center gap-2">
             {{ $slot }}
             
-            {{-- Combined Team & Module Flyout --}}
-            @livewire('core.combined-flyout')
+            {{-- Team Flyout --}}
+            @livewire('core.team-flyout')
+
+            {{-- Module Flyout --}}
+            @livewire('core.module-flyout')
 
             {{-- Quick Triggers: Team, User, Check-in --}}
             <button x-data
