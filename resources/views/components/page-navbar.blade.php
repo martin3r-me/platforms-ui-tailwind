@@ -59,56 +59,23 @@
                 </button>
                 
                 <div x-show="combinedFlyoutOpen" x-cloak x-transition
-                    class="absolute top-full left-0 mt-2 w-96 bg-[var(--ui-surface)] rounded-xl border border-[var(--ui-border)]/60 shadow-lg z-50">
-                    <div class="p-4">
-                        <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
-                            {{-- Teams Section --}}
+                    class="absolute top-full left-0 mt-2 w-screen max-w-4xl bg-[var(--ui-surface)] rounded-2xl border border-[var(--ui-border)]/60 shadow-lg z-50">
+                    <div class="p-6">
+                        <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
+                            {{-- Modules Section (Links) --}}
                             <div>
-                                <h3 class="text-sm font-semibold text-[var(--ui-muted)] mb-3">Teams</h3>
-                                <div class="space-y-2">
-                                    @php
-                                        $userTeams = auth()->user()?->teams()->take(4)->get() ?? collect();
-                                        $currentTeam = auth()->user()?->currentTeam;
-                                    @endphp
-                                    @foreach($userTeams as $team)
-                                        @php $isActiveTeam = $currentTeam?->id === $team->id; @endphp
-                                        <button type="button" @click="$dispatch('open-modal-modules', { tab: 'teams' }); combinedFlyoutOpen = false"
-                                            class="w-full group flex items-center gap-3 p-3 rounded-lg transition
-                                            {{ $isActiveTeam ? 'bg-[var(--ui-primary-5)] border border-[var(--ui-primary)]/60' : 'hover:bg-[var(--ui-muted-5)]' }}">
-                                            <div class="flex-shrink-0">
-                                                @svg('heroicon-o-user-group', 'w-5 h-5 text-[var(--ui-primary)]')
-                                            </div>
-                                            <div class="min-w-0 flex-1 text-left">
-                                                <div class="font-medium text-[var(--ui-secondary)] truncate">{{ $team->name }}</div>
-                                                @if($team->users()->count() > 0)
-                                                    <div class="text-xs text-[var(--ui-muted)]">{{ $team->users()->count() }} Mitglieder</div>
-                                                @endif
-                                            </div>
-                                            @if($isActiveTeam)
-                                                <div class="flex-shrink-0">
-                                                    @svg('heroicon-o-check', 'w-4 h-4 text-[var(--ui-primary)]')
-                                                </div>
-                                            @endif
-                                        </button>
-                                    @endforeach
-                                </div>
-                            </div>
-
-                            {{-- Modules Section --}}
-                            <div>
-                                <h3 class="text-sm font-semibold text-[var(--ui-muted)] mb-3">Module</h3>
-                                <div class="space-y-2">
+                                <h3 class="text-sm font-semibold text-[var(--ui-muted)] mb-4">Verfügbare Module</h3>
+                                <div class="space-y-3">
                                     {{-- Dashboard --}}
                                     <a href="{{ route('platform.dashboard') }}"
-                                        class="w-full group flex items-center gap-3 p-3 rounded-lg transition hover:bg-[var(--ui-muted-5)]">
-                                        <div class="flex-shrink-0">
-                                            @svg('heroicon-o-home', 'w-5 h-5 text-[var(--ui-primary)]')
+                                        class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-[var(--ui-muted-5)] transition">
+                                        <div class="mt-1 flex size-11 flex-none items-center justify-center rounded-lg bg-[var(--ui-primary-5)] group-hover:bg-[var(--ui-primary-10)]">
+                                            @svg('heroicon-o-home', 'w-6 h-6 text-[var(--ui-primary)]')
                                         </div>
-                                        <div class="min-w-0 flex-1 text-left">
-                                            <div class="font-medium text-[var(--ui-secondary)]">Haupt-Dashboard</div>
-                                            <div class="text-xs text-[var(--ui-muted)]">Übersicht & Start</div>
+                                        <div>
+                                            <div class="font-semibold text-[var(--ui-secondary)]">Haupt-Dashboard</div>
+                                            <p class="mt-1 text-sm text-[var(--ui-muted)]">Übersicht & Start</p>
                                         </div>
-                                        @svg('heroicon-o-arrow-right', 'w-4 h-4 text-[var(--ui-muted)] group-hover:text-[var(--ui-primary)]')
                                     </a>
 
                                     @php
@@ -122,40 +89,82 @@
                                             $userAllowed = $user->modules()->where('module_id', $moduleModel->id)->wherePivot('team_id', $teamId)->wherePivot('enabled', true)->exists();
                                             $teamAllowed = $team ? $team->modules()->where('module_id', $moduleModel->id)->wherePivot('enabled', true)->exists() : false;
                                             return $userAllowed || $teamAllowed;
-                                        })->take(3)->values();
+                                        })->take(4)->values();
                                     @endphp
 
                                     @foreach($filteredModules as $key => $module)
                                         @php
                                             $title = $module['title'] ?? $module['label'] ?? ucfirst($key);
+                                            $description = $module['description'] ?? 'Ein leistungsstarkes Tool für Ihr Team.';
                                             $icon = $module['navigation']['icon'] ?? ($module['icon'] ?? null);
                                             $routeName = $module['navigation']['route'] ?? null;
                                             $finalUrl = $routeName && \Illuminate\Support\Facades\Route::has($routeName) ? route($routeName) : ($module['url'] ?? '#');
                                         @endphp
                                         <a href="{{ $finalUrl }}"
-                                            class="w-full group flex items-center gap-3 p-3 rounded-lg transition hover:bg-[var(--ui-muted-5)]">
-                                            <div class="flex-shrink-0">
+                                            class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-[var(--ui-muted-5)] transition">
+                                            <div class="mt-1 flex size-11 flex-none items-center justify-center rounded-lg bg-[var(--ui-primary-5)] group-hover:bg-[var(--ui-primary-10)]">
                                                 @if(!empty($icon))
-                                                    <x-dynamic-component :component="$icon" class="w-5 h-5 text-[var(--ui-primary)]" />
+                                                    <x-dynamic-component :component="$icon" class="w-6 h-6 text-[var(--ui-primary)]" />
                                                 @else
-                                                    @svg('heroicon-o-cube', 'w-5 h-5 text-[var(--ui-primary)]')
+                                                    @svg('heroicon-o-cube', 'w-6 h-6 text-[var(--ui-primary)]')
                                                 @endif
                                             </div>
-                                            <div class="min-w-0 flex-1 text-left">
-                                                <div class="font-medium text-[var(--ui-secondary)]">{{ $title }}</div>
-                                                <div class="text-xs text-[var(--ui-muted)]">{{ $module['description'] ?? 'Modul' }}</div>
+                                            <div>
+                                                <div class="font-semibold text-[var(--ui-secondary)]">{{ $title }}</div>
+                                                <p class="mt-1 text-sm text-[var(--ui-muted)]">{{ $description }}</p>
                                             </div>
-                                            @svg('heroicon-o-arrow-right', 'w-4 h-4 text-[var(--ui-muted)] group-hover:text-[var(--ui-primary)]')
                                         </a>
+                                    @endforeach
+                                </div>
+                            </div>
+
+                            {{-- Teams Section (Rechts) --}}
+                            <div>
+                                <h3 class="text-sm font-semibold text-[var(--ui-muted)] mb-4">Ihre Teams</h3>
+                                <div class="space-y-3">
+                                    @php
+                                        $userTeams = auth()->user()?->teams()->take(4)->get() ?? collect();
+                                        $currentTeam = auth()->user()?->currentTeam;
+                                    @endphp
+                                    @foreach($userTeams as $team)
+                                        @php $isActiveTeam = $currentTeam?->id === $team->id; @endphp
+                                        <button type="button" @click="$dispatch('open-modal-modules', { tab: 'teams' }); combinedFlyoutOpen = false"
+                                            class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-[var(--ui-muted-5)] transition w-full text-left
+                                            {{ $isActiveTeam ? 'bg-[var(--ui-primary-5)] border border-[var(--ui-primary)]/60' : '' }}">
+                                            <div class="mt-1 flex size-11 flex-none items-center justify-center rounded-lg bg-[var(--ui-primary-5)] group-hover:bg-[var(--ui-primary-10)]">
+                                                @svg('heroicon-o-user-group', 'w-6 h-6 text-[var(--ui-primary)]')
+                                            </div>
+                                            <div class="flex-1">
+                                                <div class="font-semibold text-[var(--ui-secondary)]">{{ $team->name }}</div>
+                                                <p class="mt-1 text-sm text-[var(--ui-muted)]">
+                                                    @if($team->users()->count() > 0)
+                                                        {{ $team->users()->count() }} Mitglieder
+                                                    @else
+                                                        Team verwalten
+                                                    @endif
+                                                </p>
+                                            </div>
+                                            @if($isActiveTeam)
+                                                <div class="flex-shrink-0 mt-1">
+                                                    @svg('heroicon-o-check', 'w-5 h-5 text-[var(--ui-primary)]')
+                                                </div>
+                                            @endif
+                                        </button>
                                     @endforeach
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="mt-4 pt-4 border-t border-[var(--ui-border)]/60">
+                        {{-- Footer wie im Beispiel --}}
+                        <div class="mt-6 bg-[var(--ui-muted-5)] px-6 py-4 rounded-lg">
+                            <div class="flex items-center gap-x-3">
+                                <h3 class="text-sm font-semibold text-[var(--ui-secondary)]">Alle Teams & Module</h3>
+                                <span class="rounded-full bg-[var(--ui-primary-5)] px-2.5 py-1.5 text-xs font-semibold text-[var(--ui-primary)]">Neu</span>
+                            </div>
+                            <p class="mt-2 text-sm text-[var(--ui-muted)]">Verwalten Sie alle Teams und Module an einem Ort.</p>
                             <button type="button" @click="$dispatch('open-modal-modules', { tab: 'modules' }); combinedFlyoutOpen = false" 
-                                class="w-full flex items-center justify-center gap-2 p-2 text-sm font-medium text-[var(--ui-muted)] hover:text-[var(--ui-primary)] transition">
-                                Alle Teams & Module anzeigen
+                                class="mt-3 inline-flex items-center gap-2 text-sm font-medium text-[var(--ui-primary)] hover:text-[var(--ui-primary)] transition">
+                                Alle anzeigen
                                 @svg('heroicon-o-arrow-right', 'w-4 h-4')
                             </button>
                         </div>
