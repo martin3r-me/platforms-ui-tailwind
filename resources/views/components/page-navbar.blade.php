@@ -49,9 +49,8 @@
             @endphp
 
             {{-- Team Flyout --}}
-            <div class="relative hidden sm:block">
-                <button x-data="{ teamFlyoutOpen: false }" 
-                    @click="teamFlyoutOpen = !teamFlyoutOpen" 
+            <div class="relative hidden sm:block" x-data="{ teamFlyoutOpen: false }">
+                <button @click="teamFlyoutOpen = !teamFlyoutOpen" 
                     @click.away="teamFlyoutOpen = false"
                     class="inline-flex items-center gap-1 px-3 py-1.5 h-8 rounded-md border transition
                     text-[var(--ui-primary)] bg-[var(--ui-primary-5)] border-[var(--ui-primary)]/60
@@ -102,9 +101,8 @@
             </div>
 
             {{-- Module Flyout --}}
-            <div class="relative hidden sm:block">
-                <button x-data="{ moduleFlyoutOpen: false }" 
-                    @click="moduleFlyoutOpen = !moduleFlyoutOpen" 
+            <div class="relative hidden sm:block" x-data="{ moduleFlyoutOpen: false }">
+                <button @click="moduleFlyoutOpen = !moduleFlyoutOpen" 
                     @click.away="moduleFlyoutOpen = false"
                     class="inline-flex items-center gap-1 px-3 py-1.5 h-8 rounded-md border transition
                     text-[var(--ui-primary)] bg-[var(--ui-primary-5)] border-[var(--ui-primary)]/60
