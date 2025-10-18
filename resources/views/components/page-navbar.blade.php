@@ -148,25 +148,22 @@
                                                 </div>
                                             </div>
                                         @else
-                                            <form method="POST" action="{{ route('platform.team.switch', $team->id) }}" class="w-full">
-                                                @csrf
-                                                <button type="submit" @click="combinedFlyoutOpen = false"
-                                                    class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-[var(--ui-muted-5)] transition w-full text-left">
-                                                    <div class="mt-1 flex size-11 flex-none items-center justify-center rounded-lg bg-[var(--ui-primary-5)] group-hover:bg-[var(--ui-primary-10)]">
-                                                        @svg('heroicon-o-user-group', 'w-6 h-6 text-[var(--ui-primary)]')
-                                                    </div>
-                                                    <div class="flex-1">
-                                                        <div class="font-semibold text-[var(--ui-secondary)]">{{ $team->name }}</div>
-                                                        <p class="mt-1 text-sm text-[var(--ui-muted)]">
-                                                            @if($team->users()->count() > 0)
-                                                                {{ $team->users()->count() }} Mitglieder
-                                                            @else
-                                                                Team wechseln
-                                                            @endif
-                                                        </p>
-                                                    </div>
-                                                </button>
-                                            </form>
+                                            <button type="button" @click="$dispatch('open-modal-modules', { tab: 'teams', teamId: {{ $team->id }} }); combinedFlyoutOpen = false"
+                                                class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-[var(--ui-muted-5)] transition w-full text-left">
+                                                <div class="mt-1 flex size-11 flex-none items-center justify-center rounded-lg bg-[var(--ui-primary-5)] group-hover:bg-[var(--ui-primary-10)]">
+                                                    @svg('heroicon-o-user-group', 'w-6 h-6 text-[var(--ui-primary)]')
+                                                </div>
+                                                <div class="flex-1">
+                                                    <div class="font-semibold text-[var(--ui-secondary)]">{{ $team->name }}</div>
+                                                    <p class="mt-1 text-sm text-[var(--ui-muted)]">
+                                                        @if($team->users()->count() > 0)
+                                                            {{ $team->users()->count() }} Mitglieder
+                                                        @else
+                                                            Team wechseln
+                                                        @endif
+                                                    </p>
+                                                </div>
+                                            </button>
                                         @endif
                                     @endforeach
                                 </div>
