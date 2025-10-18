@@ -42,10 +42,10 @@
             {{ $slot }}
             
             {{-- Team Flyout --}}
-            @livewire('platform::team-flyout')
+            @livewire('core.team-flyout')
 
             {{-- Module Flyout --}}
-            @livewire('platform::module-flyout')
+            @livewire('core.module-flyout')
 
             {{-- Quick Triggers: Team, User, Check-in --}}
             <button x-data
