@@ -116,8 +116,8 @@
                     <span class="{{ $nullBadgeSizeClass }} rounded-lg border transition-colors
                         border-[color:var(--ui-border)] text-[color:var(--ui-secondary)] bg-[var(--ui-surface)]
                         peer-hover:bg-[var(--ui-muted-5)] peer-focus:outline-2 peer-focus:-outline-offset-2 peer-focus:outline-[color:rgb(var(--ui-{$variant}-rgb))]
-                        peer-checked:bg-[color:rgb(var(--ui-{$variant}-rgb))] peer-checked:text-white peer-checked:border-[color:rgb(var(--ui-{$variant}-rgb))]
-                        @if($selected === '' || $selected === null) bg-[color:rgb(var(--ui-{$variant}-rgb))] text-white border-[color:rgb(var(--ui-{$variant}-rgb))] @endif
+                        peer-checked:bg-[rgb(var(--ui-{$variant}-rgb))] peer-checked:text-white peer-checked:border-[rgb(var(--ui-{$variant}-rgb))]
+                        @if($selected === '' || $selected === null) bg-[rgb(var(--ui-{$variant}-rgb))] text-white border-[rgb(var(--ui-{$variant}-rgb))] @endif
                     ">{{ $nullLabel }}</span>
                 </label>
             @endif
@@ -136,8 +136,8 @@
                     <span class="{{ $badgeSizeClass }} rounded-lg border transition-colors
                         border-[color:var(--ui-border)] text-[color:var(--ui-secondary)] bg-[var(--ui-surface)]
                         peer-hover:bg-[var(--ui-muted-5)] peer-focus:outline-2 peer-focus:-outline-offset-2 peer-focus:outline-[color:rgb(var(--ui-{$variant}-rgb))]
-                        peer-checked:bg-[color:rgb(var(--ui-{$variant}-rgb))] peer-checked:text-white peer-checked:border-[color:rgb(var(--ui-{$variant}-rgb))]
-                        @if($selected == $optionKey) bg-[color:rgb(var(--ui-{$variant}-rgb))] text-white border-[color:rgb(var(--ui-{$variant}-rgb))] @endif
+                        peer-checked:bg-[rgb(var(--ui-{$variant}-rgb))] peer-checked:text-white peer-checked:border-[rgb(var(--ui-{$variant}-rgb))]
+                        @if($selected == $optionKey) bg-[rgb(var(--ui-{$variant}-rgb))] text-white border-[rgb(var(--ui-{$variant}-rgb))] @endif
                     ">{{ $optionLabelNormalized }}</span>
                 </label>
             @endforeach
