@@ -14,6 +14,8 @@
     'optionValue'   => 'value',
     'optionLabel'   => 'label',
     'value'         => null,
+    'displayMode'   => 'auto', // 'auto', 'dropdown', 'badges'
+    'badgeSize'     => 'sm', // 'xs', 'sm', 'md', 'lg'
 ])
 
 @php
@@ -50,6 +52,19 @@
     }
 
     $selected = old($name, $value ?? $attributes->get('value'));
+    
+    // Bestimme Anzeigemodus
+    $optionCount = count($normalized) + ($nullable ? 1 : 0);
+    $useBadges = $displayMode === 'badges' || ($displayMode === 'auto' && $optionCount < 10);
+    
+    // Badge-Size Klassen
+    $badgeSizeClass = match($badgeSize) {
+        'xs' => 'px-2 py-1 text-xs',
+        'sm' => 'px-3 py-1.5 text-sm',
+        'md' => 'px-4 py-2 text-base',
+        'lg' => 'px-5 py-2.5 text-lg',
+        default => 'px-3 py-1.5 text-sm',
+    };
 @endphp
 
 <div>
@@ -69,40 +84,84 @@
         </div>
     @endif
 
-    <div class="relative">
-        <select
-            id="{{ $name }}"
-            name="{{ $name }}"
-            @if($required) required @endif
-            @if($disabled) disabled @endif
-            @if($autocomplete) autocomplete="{{ $autocomplete }}" @endif
-            @if($hint) aria-describedby="{{ $name }}-hint" @endif
-            {{ $attributes->merge(['class' => implode(' ', [
-                'block w-full appearance-none rounded-md',
-                'bg-[var(--ui-surface)] text-[color:var(--ui-secondary)]',
-                'outline-1 -outline-offset-1 outline-[color:var(--ui-border)] border border-transparent',
-                'transition-colors',
-                "focus:outline-2 focus:-outline-offset-2 focus:outline-[color:rgb(var(--ui-{$variant}-rgb))]",
-                $sizeClass,
-                'pr-10',
-            ])]) }}
-        >
+    @if($useBadges)
+        {{-- Badge/Button Modus --}}
+        <div class="flex flex-wrap gap-2" @if($hint) aria-describedby="{{ $name }}-hint" @endif>
             @if($nullable)
-                <option value="">{{ $nullLabel }}</option>
+                <button
+                    type="button"
+                    @if($disabled) disabled @endif
+                    @if($required) required @endif
+                    wire:click="$set('{{ $name }}', '')"
+                    class="inline-flex items-center {{ $badgeSizeClass }} rounded-md border transition-colors
+                        @if($selected === '' || $selected === null)
+                            bg-[color:rgb(var(--ui-{$variant}-rgb))] text-white border-[color:rgb(var(--ui-{$variant}-rgb))] shadow-sm
+                        @else
+                            bg-[var(--ui-surface)] text-[color:var(--ui-secondary)] border-[color:var(--ui-border)] hover:bg-[var(--ui-muted-5)] hover:border-[color:rgb(var(--ui-{$variant}-rgb))] focus:outline-2 focus:-outline-offset-2 focus:outline-[color:rgb(var(--ui-{$variant}-rgb))]
+                        @endif
+                        @if($disabled) opacity-50 cursor-not-allowed @endif"
+                >
+                    {{ $nullLabel }}
+                </button>
             @endif
             @foreach($normalized as $optionKey => $optionLabelNormalized)
-                <option value="{{ $optionKey }}" @selected($selected == $optionKey)>
+                <button
+                    type="button"
+                    @if($disabled) disabled @endif
+                    @if($required) required @endif
+                    wire:click="$set('{{ $name }}', '{{ $optionKey }}')"
+                    class="inline-flex items-center {{ $badgeSizeClass }} rounded-md border transition-colors
+                        @if($selected == $optionKey)
+                            bg-[color:rgb(var(--ui-{$variant}-rgb))] text-white border-[color:rgb(var(--ui-{$variant}-rgb))] shadow-sm
+                        @else
+                            bg-[var(--ui-surface)] text-[color:var(--ui-secondary)] border-[color:var(--ui-border)] hover:bg-[var(--ui-muted-5)] hover:border-[color:rgb(var(--ui-{$variant}-rgb))] focus:outline-2 focus:-outline-offset-2 focus:outline-[color:rgb(var(--ui-{$variant}-rgb))]
+                        @endif
+                        @if($disabled) opacity-50 cursor-not-allowed @endif"
+                >
                     {{ $optionLabelNormalized }}
-                </option>
+                </button>
             @endforeach
-        </select>
-        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-            <svg class="w-4 h-4 text-[color:var(--ui-muted)]" fill="none" stroke="currentColor" stroke-width="2"
-                viewBox="0 0 24 24" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
-            </svg>
         </div>
-    </div>
+        
+        {{-- Hidden input für Form-Submission --}}
+        <input type="hidden" name="{{ $name }}" value="{{ $selected }}" />
+    @else
+        {{-- Dropdown Modus (Original) --}}
+        <div class="relative">
+            <select
+                id="{{ $name }}"
+                name="{{ $name }}"
+                @if($required) required @endif
+                @if($disabled) disabled @endif
+                @if($autocomplete) autocomplete="{{ $autocomplete }}" @endif
+                @if($hint) aria-describedby="{{ $name }}-hint" @endif
+                {{ $attributes->merge(['class' => implode(' ', [
+                    'block w-full appearance-none rounded-md',
+                    'bg-[var(--ui-surface)] text-[color:var(--ui-secondary)]',
+                    'outline-1 -outline-offset-1 outline-[color:var(--ui-border)] border border-transparent',
+                    'transition-colors',
+                    "focus:outline-2 focus:-outline-offset-2 focus:outline-[color:rgb(var(--ui-{$variant}-rgb))]",
+                    $sizeClass,
+                    'pr-10',
+                ])]) }}
+            >
+                @if($nullable)
+                    <option value="">{{ $nullLabel }}</option>
+                @endif
+                @foreach($normalized as $optionKey => $optionLabelNormalized)
+                    <option value="{{ $optionKey }}" @selected($selected == $optionKey)>
+                        {{ $optionLabelNormalized }}
+                    </option>
+                @endforeach
+            </select>
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                <svg class="w-4 h-4 text-[color:var(--ui-muted)]" fill="none" stroke="currentColor" stroke-width="2"
+                    viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                </svg>
+            </div>
+        </div>
+    @endif
 
     @error($errorKey)
         <span class="mt-1 text-[color:var(--ui-danger)] text-sm">{{ $message }}</span>
