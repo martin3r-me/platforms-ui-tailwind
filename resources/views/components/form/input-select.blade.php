@@ -59,11 +59,20 @@
     
     // Badge-Size Klassen
     $badgeSizeClass = match($badgeSize) {
+        'xs' => 'px-3 py-1 text-xs',
+        'sm' => 'px-4 py-1.5 text-sm',
+        'md' => 'px-5 py-2 text-base',
+        'lg' => 'px-6 py-2.5 text-lg',
+        default => 'px-4 py-1.5 text-sm',
+    };
+
+    // Schmalere Variante speziell für die Null-Badge ("−")
+    $nullBadgeSizeClass = match($badgeSize) {
         'xs' => 'px-2 py-1 text-xs',
-        'sm' => 'px-3 py-1.5 text-sm',
-        'md' => 'px-4 py-2 text-base',
-        'lg' => 'px-5 py-2.5 text-lg',
-        default => 'px-3 py-1.5 text-sm',
+        'sm' => 'px-2.5 py-1.5 text-sm',
+        'md' => 'px-3 py-2 text-base',
+        'lg' => 'px-3.5 py-2.5 text-lg',
+        default => 'px-2.5 py-1.5 text-sm',
     };
 @endphp
 
@@ -88,43 +97,37 @@
         {{-- Badge/Button Modus --}}
         <div class="flex flex-wrap gap-2" @if($hint) aria-describedby="{{ $name }}-hint" @endif>
             @if($nullable)
-                <label class="inline-flex items-center {{ $badgeSizeClass }} rounded-lg border transition-colors cursor-pointer
-                    @if($selected === '' || $selected === null)
-                        bg-[color:rgb(var(--ui-{$variant}-rgb))] text-white border-[color:rgb(var(--ui-{$variant}-rgb))] shadow-sm
-                    @else
-                        bg-[var(--ui-surface)] text-[color:var(--ui-secondary)] border-[color:var(--ui-border)] hover:bg-[var(--ui-muted-5)] hover:border-[color:rgb(var(--ui-{$variant}-rgb))] focus:outline-2 focus:-outline-offset-2 focus:outline-[color:rgb(var(--ui-{$variant}-rgb))]
-                    @endif
+                <label class="group inline-flex items-center {{ $nullBadgeSizeClass }} rounded-lg border transition-colors cursor-pointer
+                    bg-[var(--ui-surface)] text-[color:var(--ui-secondary)] border-[color:var(--ui-border)] hover:bg-[var(--ui-muted-5)] hover:border-[color:rgb(var(--ui-{$variant}-rgb))]
+                    peer-checked:bg-[color:rgb(var(--ui-{$variant}-rgb))] peer-checked:text-white peer-checked:border-[color:rgb(var(--ui-{$variant}-rgb))]
                     @if($disabled) opacity-50 cursor-not-allowed @endif">
                     <input 
                         type="radio" 
                         name="{{ $name }}" 
                         value="" 
-                        @if($selected === '' || $selected === null) checked @endif
                         @if($disabled) disabled @endif
                         @if($required) required @endif
-                        class="sr-only"
+                        class="sr-only peer"
                         {{ $attributes->whereStartsWith('wire:') }}
+                        @checked($selected === '' || $selected === null)
                     />
                     {{ $nullLabel }}
                 </label>
             @endif
             @foreach($normalized as $optionKey => $optionLabelNormalized)
-                <label class="inline-flex items-center {{ $badgeSizeClass }} rounded-lg border transition-colors cursor-pointer
-                    @if($selected == $optionKey)
-                        bg-[color:rgb(var(--ui-{$variant}-rgb))] text-white border-[color:rgb(var(--ui-{$variant}-rgb))] shadow-sm
-                    @else
-                        bg-[var(--ui-surface)] text-[color:var(--ui-secondary)] border-[color:var(--ui-border)] hover:bg-[var(--ui-muted-5)] hover:border-[color:rgb(var(--ui-{$variant}-rgb))] focus:outline-2 focus:-outline-offset-2 focus:outline-[color:rgb(var(--ui-{$variant}-rgb))]
-                    @endif
+                <label class="group inline-flex items-center {{ $badgeSizeClass }} rounded-lg border transition-colors cursor-pointer
+                    bg-[var(--ui-surface)] text-[color:var(--ui-secondary)] border-[color:var(--ui-border)] hover:bg-[var(--ui-muted-5)] hover:border-[color:rgb(var(--ui-{$variant}-rgb))]
+                    peer-checked:bg-[color:rgb(var(--ui-{$variant}-rgb))] peer-checked:text-white peer-checked:border-[color:rgb(var(--ui-{$variant}-rgb))]
                     @if($disabled) opacity-50 cursor-not-allowed @endif">
                     <input 
                         type="radio" 
                         name="{{ $name }}" 
                         value="{{ $optionKey }}" 
-                        @if($selected == $optionKey) checked @endif
                         @if($disabled) disabled @endif
                         @if($required) required @endif
-                        class="sr-only"
+                        class="sr-only peer"
                         {{ $attributes->whereStartsWith('wire:') }}
+                        @checked($selected == $optionKey)
                     />
                     {{ $optionLabelNormalized }}
                 </label>
