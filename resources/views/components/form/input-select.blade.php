@@ -125,14 +125,12 @@
                         @if($required) required @endif
                         class="sr-only peer"
                         {{ $attributes->whereStartsWith('wire:') }}
-                        @checked($selected === '' || $selected === null)
+                        @checked((string)($selected ?? '') === '')
                     />
                     <span class="{{ $nullBadgeSizeClass }} rounded-lg border transition-colors
-                        border-[rgb(var(--ui-{$allowed}-rgb))] text-[var(--ui-{$allowed})] bg-transparent
-                        hover:bg-[rgba(var(--ui-{$allowed}-rgb),0.08)]
+                        @if((string)($selected ?? '') === '') bg-[rgb(var(--ui-{$allowed}-rgb))] text-[var(--ui-on-{$allowed})] border-transparent @else border-[rgb(var(--ui-{$allowed}-rgb))] text-[var(--ui-{$allowed})] bg-transparent hover:bg-[rgba(var(--ui-{$allowed}-rgb),0.08)] @endif
                         peer-focus:outline-2 peer-focus:-outline-offset-2 peer-focus:outline-[rgb(var(--ui-{$allowed}-rgb))]
                         peer-checked:bg-[rgb(var(--ui-{$allowed}-rgb))] peer-checked:text-[var(--ui-on-{$allowed})] peer-checked:border-transparent
-                        @if($selected === '' || $selected === null) bg-[rgb(var(--ui-{$allowed}-rgb))] text-[var(--ui-on-{$allowed})] border-transparent @endif
                     ">{{ $nullLabel }}</span>
                 </label>
             @endif
@@ -146,14 +144,12 @@
                         @if($required) required @endif
                         class="sr-only peer"
                         {{ $attributes->whereStartsWith('wire:') }}
-                        @checked($selected == $optionKey)
+                        @checked((string) $selected === (string) $optionKey)
                     />
                     <span class="{{ $badgeSizeClass }} rounded-lg border transition-colors
-                        border-[rgb(var(--ui-{$allowed}-rgb))] text-[var(--ui-{$allowed})] bg-transparent
-                        hover:bg-[rgba(var(--ui-{$allowed}-rgb),0.08)]
+                        @if((string)$selected === (string)$optionKey) bg-[rgb(var(--ui-{$allowed}-rgb))] text-[var(--ui-on-{$allowed})] border-transparent @else border-[rgb(var(--ui-{$allowed}-rgb))] text-[var(--ui-{$allowed})] bg-transparent hover:bg-[rgba(var(--ui-{$allowed}-rgb),0.08)] @endif
                         peer-focus:outline-2 peer-focus:-outline-offset-2 peer-focus:outline-[rgb(var(--ui-{$allowed}-rgb))]
                         peer-checked:bg-[rgb(var(--ui-{$allowed}-rgb))] peer-checked:text-[var(--ui-on-{$allowed})] peer-checked:border-transparent
-                        @if($selected == $optionKey) bg-[rgb(var(--ui-{$allowed}-rgb))] text-[var(--ui-on-{$allowed})] border-transparent @endif
                     ">{{ $optionLabelNormalized }}</span>
                 </label>
             @endforeach
