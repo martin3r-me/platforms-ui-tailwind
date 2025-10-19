@@ -79,6 +79,20 @@
         'lg' => 'px-3.5 py-2.5 text-lg',
         default => 'px-2.5 py-1.5 text-sm',
     };
+
+    // Farben wie in x-ui-button
+    $allowed = in_array($variant, ['primary','success','secondary','info','warning','danger','muted']) ? $variant : 'primary';
+    $inactiveColorClasses = implode(' ', [
+        "border-[rgb(var(--ui-{$allowed}-rgb))]",
+        "text-[var(--ui-{$allowed})]",
+        'bg-transparent',
+        "hover:bg-[rgba(var(--ui-{$allowed}-rgb),0.08)]",
+    ]);
+    $activeColorClasses = implode(' ', [
+        "bg-[rgb(var(--ui-{$allowed}-rgb))]",
+        "text-[var(--ui-on-{$allowed})]",
+        'border-transparent',
+    ]);
 @endphp
 
 <div>
@@ -114,10 +128,10 @@
                         @checked($selected === '' || $selected === null)
                     />
                     <span class="{{ $nullBadgeSizeClass }} rounded-lg border transition-colors
-                        border-[color:var(--ui-border)] text-[color:var(--ui-secondary)] bg-[var(--ui-surface)]
-                        peer-hover:bg-[var(--ui-muted-5)] peer-focus:outline-2 peer-focus:-outline-offset-2 peer-focus:outline-[color:rgb(var(--ui-{$variant}-rgb))]
-                        peer-checked:bg-[rgb(var(--ui-{$variant}-rgb))] peer-checked:text-white peer-checked:border-[rgb(var(--ui-{$variant}-rgb))]
-                        @if($selected === '' || $selected === null) bg-[rgb(var(--ui-{$variant}-rgb))] text-white border-[rgb(var(--ui-{$variant}-rgb))] @endif
+                        {{ $inactiveColorClasses }}
+                        peer-focus:outline-2 peer-focus:-outline-offset-2 peer-focus:outline-[rgb(var(--ui-{$allowed}-rgb))]
+                        peer-checked:{{ $activeColorClasses }}
+                        @if($selected === '' || $selected === null) {{ $activeColorClasses }} @endif
                     ">{{ $nullLabel }}</span>
                 </label>
             @endif
@@ -134,10 +148,10 @@
                         @checked($selected == $optionKey)
                     />
                     <span class="{{ $badgeSizeClass }} rounded-lg border transition-colors
-                        border-[color:var(--ui-border)] text-[color:var(--ui-secondary)] bg-[var(--ui-surface)]
-                        peer-hover:bg-[var(--ui-muted-5)] peer-focus:outline-2 peer-focus:-outline-offset-2 peer-focus:outline-[color:rgb(var(--ui-{$variant}-rgb))]
-                        peer-checked:bg-[rgb(var(--ui-{$variant}-rgb))] peer-checked:text-white peer-checked:border-[rgb(var(--ui-{$variant}-rgb))]
-                        @if($selected == $optionKey) bg-[rgb(var(--ui-{$variant}-rgb))] text-white border-[rgb(var(--ui-{$variant}-rgb))] @endif
+                        {{ $inactiveColorClasses }}
+                        peer-focus:outline-2 peer-focus:-outline-offset-2 peer-focus:outline-[rgb(var(--ui-{$allowed}-rgb))]
+                        peer-checked:{{ $activeColorClasses }}
+                        @if($selected == $optionKey) {{ $activeColorClasses }} @endif
                     ">{{ $optionLabelNormalized }}</span>
                 </label>
             @endforeach
