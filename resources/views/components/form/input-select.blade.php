@@ -16,6 +16,7 @@
     'value'         => null,
     'displayMode'   => 'auto', // 'auto', 'dropdown', 'badges'
     'badgeSize'     => 'sm', // 'xs', 'sm', 'md', 'lg'
+    'compactNull'   => true, // Im Badge-Modus "−" statt langem Text
 ])
 
 @php
@@ -56,6 +57,10 @@
     // Bestimme Anzeigemodus
     $optionCount = count($normalized) + ($nullable ? 1 : 0);
     $useBadges = $displayMode === 'badges' || ($displayMode === 'auto' && $optionCount < 10);
+
+    if ($useBadges && $compactNull) {
+        $nullLabel = '−';
+    }
     
     // Badge-Size Klassen
     $badgeSizeClass = match($badgeSize) {
@@ -109,9 +114,10 @@
                         @checked($selected === '' || $selected === null)
                     />
                     <span class="{{ $nullBadgeSizeClass }} rounded-lg border transition-colors
-                        bg-[var(--ui-surface)] text-[color:var(--ui-secondary)] border-[color:var(--ui-border)]
+                        border-[color:var(--ui-border)] text-[color:var(--ui-secondary)] bg-[var(--ui-surface)]
                         peer-hover:bg-[var(--ui-muted-5)] peer-focus:outline-2 peer-focus:-outline-offset-2 peer-focus:outline-[color:rgb(var(--ui-{$variant}-rgb))]
                         peer-checked:bg-[color:rgb(var(--ui-{$variant}-rgb))] peer-checked:text-white peer-checked:border-[color:rgb(var(--ui-{$variant}-rgb))]
+                        @if($selected === '' || $selected === null) bg-[color:rgb(var(--ui-{$variant}-rgb))] text-white border-[color:rgb(var(--ui-{$variant}-rgb))] @endif
                     ">{{ $nullLabel }}</span>
                 </label>
             @endif
@@ -128,9 +134,10 @@
                         @checked($selected == $optionKey)
                     />
                     <span class="{{ $badgeSizeClass }} rounded-lg border transition-colors
-                        bg-[var(--ui-surface)] text-[color:var(--ui-secondary)] border-[color:var(--ui-border)]
+                        border-[color:var(--ui-border)] text-[color:var(--ui-secondary)] bg-[var(--ui-surface)]
                         peer-hover:bg-[var(--ui-muted-5)] peer-focus:outline-2 peer-focus:-outline-offset-2 peer-focus:outline-[color:rgb(var(--ui-{$variant}-rgb))]
                         peer-checked:bg-[color:rgb(var(--ui-{$variant}-rgb))] peer-checked:text-white peer-checked:border-[color:rgb(var(--ui-{$variant}-rgb))]
+                        @if($selected == $optionKey) bg-[color:rgb(var(--ui-{$variant}-rgb))] text-white border-[color:rgb(var(--ui-{$variant}-rgb))] @endif
                     ">{{ $optionLabelNormalized }}</span>
                 </label>
             @endforeach
