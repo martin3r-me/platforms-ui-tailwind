@@ -97,10 +97,7 @@
         {{-- Badge/Button Modus --}}
         <div class="flex flex-wrap gap-2" @if($hint) aria-describedby="{{ $name }}-hint" @endif>
             @if($nullable)
-                <label class="group inline-flex items-center {{ $nullBadgeSizeClass }} rounded-lg border transition-colors cursor-pointer
-                    bg-[var(--ui-surface)] text-[color:var(--ui-secondary)] border-[color:var(--ui-border)] hover:bg-[var(--ui-muted-5)] hover:border-[color:rgb(var(--ui-{$variant}-rgb))]
-                    peer-checked:bg-[color:rgb(var(--ui-{$variant}-rgb))] peer-checked:text-white peer-checked:border-[color:rgb(var(--ui-{$variant}-rgb))]
-                    @if($disabled) opacity-50 cursor-not-allowed @endif">
+                <label class="inline-flex items-center rounded-lg cursor-pointer @if($disabled) opacity-50 cursor-not-allowed @endif">
                     <input 
                         type="radio" 
                         name="{{ $name }}" 
@@ -111,14 +108,15 @@
                         {{ $attributes->whereStartsWith('wire:') }}
                         @checked($selected === '' || $selected === null)
                     />
-                    {{ $nullLabel }}
+                    <span class="{{ $nullBadgeSizeClass }} rounded-lg border transition-colors
+                        bg-[var(--ui-surface)] text-[color:var(--ui-secondary)] border-[color:var(--ui-border)]
+                        peer-hover:bg-[var(--ui-muted-5)] peer-focus:outline-2 peer-focus:-outline-offset-2 peer-focus:outline-[color:rgb(var(--ui-{$variant}-rgb))]
+                        peer-checked:bg-[color:rgb(var(--ui-{$variant}-rgb))] peer-checked:text-white peer-checked:border-[color:rgb(var(--ui-{$variant}-rgb))]
+                    ">{{ $nullLabel }}</span>
                 </label>
             @endif
             @foreach($normalized as $optionKey => $optionLabelNormalized)
-                <label class="group inline-flex items-center {{ $badgeSizeClass }} rounded-lg border transition-colors cursor-pointer
-                    bg-[var(--ui-surface)] text-[color:var(--ui-secondary)] border-[color:var(--ui-border)] hover:bg-[var(--ui-muted-5)] hover:border-[color:rgb(var(--ui-{$variant}-rgb))]
-                    peer-checked:bg-[color:rgb(var(--ui-{$variant}-rgb))] peer-checked:text-white peer-checked:border-[color:rgb(var(--ui-{$variant}-rgb))]
-                    @if($disabled) opacity-50 cursor-not-allowed @endif">
+                <label class="inline-flex items-center rounded-lg cursor-pointer @if($disabled) opacity-50 cursor-not-allowed @endif">
                     <input 
                         type="radio" 
                         name="{{ $name }}" 
@@ -129,7 +127,11 @@
                         {{ $attributes->whereStartsWith('wire:') }}
                         @checked($selected == $optionKey)
                     />
-                    {{ $optionLabelNormalized }}
+                    <span class="{{ $badgeSizeClass }} rounded-lg border transition-colors
+                        bg-[var(--ui-surface)] text-[color:var(--ui-secondary)] border-[color:var(--ui-border)]
+                        peer-hover:bg-[var(--ui-muted-5)] peer-focus:outline-2 peer-focus:-outline-offset-2 peer-focus:outline-[color:rgb(var(--ui-{$variant}-rgb))]
+                        peer-checked:bg-[color:rgb(var(--ui-{$variant}-rgb))] peer-checked:text-white peer-checked:border-[color:rgb(var(--ui-{$variant}-rgb))]
+                    ">{{ $optionLabelNormalized }}</span>
                 </label>
             @endforeach
         </div>
