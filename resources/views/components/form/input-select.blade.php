@@ -128,10 +128,11 @@
                         @checked($selected === '' || $selected === null)
                     />
                     <span class="{{ $nullBadgeSizeClass }} rounded-lg border transition-colors
-                        {{ $inactiveColorClasses }}
+                        border-[rgb(var(--ui-{$allowed}-rgb))] text-[var(--ui-{$allowed})] bg-transparent
+                        hover:bg-[rgba(var(--ui-{$allowed}-rgb),0.08)]
                         peer-focus:outline-2 peer-focus:-outline-offset-2 peer-focus:outline-[rgb(var(--ui-{$allowed}-rgb))]
-                        peer-checked:{{ $activeColorClasses }}
-                        @if($selected === '' || $selected === null) {{ $activeColorClasses }} @endif
+                        peer-checked:bg-[rgb(var(--ui-{$allowed}-rgb))] peer-checked:text-[var(--ui-on-{$allowed})] peer-checked:border-transparent
+                        @if($selected === '' || $selected === null) bg-[rgb(var(--ui-{$allowed}-rgb))] text-[var(--ui-on-{$allowed})] border-transparent @endif
                     ">{{ $nullLabel }}</span>
                 </label>
             @endif
@@ -148,10 +149,11 @@
                         @checked($selected == $optionKey)
                     />
                     <span class="{{ $badgeSizeClass }} rounded-lg border transition-colors
-                        {{ $inactiveColorClasses }}
+                        border-[rgb(var(--ui-{$allowed}-rgb))] text-[var(--ui-{$allowed})] bg-transparent
+                        hover:bg-[rgba(var(--ui-{$allowed}-rgb),0.08)]
                         peer-focus:outline-2 peer-focus:-outline-offset-2 peer-focus:outline-[rgb(var(--ui-{$allowed}-rgb))]
-                        peer-checked:{{ $activeColorClasses }}
-                        @if($selected == $optionKey) {{ $activeColorClasses }} @endif
+                        peer-checked:bg-[rgb(var(--ui-{$allowed}-rgb))] peer-checked:text-[var(--ui-on-{$allowed})] peer-checked:border-transparent
+                        @if($selected == $optionKey) bg-[rgb(var(--ui-{$allowed}-rgb))] text-[var(--ui-on-{$allowed})] border-transparent @endif
                     ">{{ $optionLabelNormalized }}</span>
                 </label>
             @endforeach
