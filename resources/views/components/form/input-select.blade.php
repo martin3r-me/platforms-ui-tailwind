@@ -82,16 +82,20 @@
 
     // Farben wie in x-ui-button
     $allowed = in_array($variant, ['primary','success','secondary','info','warning','danger','muted']) ? $variant : 'primary';
-    $inactiveColorClasses = implode(' ', [
-        "border-[rgb(var(--ui-{$allowed}-rgb))]",
-        "text-[var(--ui-{$allowed})]",
+    // Exakt wie x-ui-button: Outline vs. Filled
+    $outlineClasses = implode(' ', [
         'bg-transparent',
+        "text-[var(--ui-{$allowed})]",
+        "border border-[rgb(var(--ui-{$allowed}-rgb))]",
         "hover:bg-[rgba(var(--ui-{$allowed}-rgb),0.08)]",
+        "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--ui-{$allowed}-rgb))]",
     ]);
-    $activeColorClasses = implode(' ', [
+    $filledClasses = implode(' ', [
         "bg-[rgb(var(--ui-{$allowed}-rgb))]",
         "text-[var(--ui-on-{$allowed})]",
-        'border-transparent',
+        'border border-transparent',
+        'hover:opacity-90',
+        "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--ui-{$allowed}-rgb))]",
     ]);
 @endphp
 
@@ -127,11 +131,9 @@
                         {{ $attributes->whereStartsWith('wire:') }}
                         @checked((string)($selected ?? '') === '')
                     />
-                    <span class="{{ $nullBadgeSizeClass }} rounded-lg border transition-colors
-                        @if((string)($selected ?? '') === '') bg-[rgb(var(--ui-{$allowed}-rgb))] text-[var(--ui-on-{$allowed})] border-transparent @else border-[rgb(var(--ui-{$allowed}-rgb))] text-[var(--ui-{$allowed})] bg-transparent hover:bg-[rgba(var(--ui-{$allowed}-rgb),0.08)] @endif
-                        peer-focus:outline-2 peer-focus:-outline-offset-2 peer-focus:outline-[rgb(var(--ui-{$allowed}-rgb))]
-                        peer-checked:bg-[rgb(var(--ui-{$allowed}-rgb))] peer-checked:text-[var(--ui-on-{$allowed})] peer-checked:border-transparent
-                    ">{{ $nullLabel }}</span>
+                    <span class="{{ $nullBadgeSizeClass }} rounded-lg transition-colors @if((string)($selected ?? '') === '') {{ $filledClasses }} @else {{ $outlineClasses }} @endif">
+                        {{ $nullLabel }}
+                    </span>
                 </label>
             @endif
             @foreach($normalized as $optionKey => $optionLabelNormalized)
@@ -146,11 +148,9 @@
                         {{ $attributes->whereStartsWith('wire:') }}
                         @checked((string) $selected === (string) $optionKey)
                     />
-                    <span class="{{ $badgeSizeClass }} rounded-lg border transition-colors
-                        @if((string)$selected === (string)$optionKey) bg-[rgb(var(--ui-{$allowed}-rgb))] text-[var(--ui-on-{$allowed})] border-transparent @else border-[rgb(var(--ui-{$allowed}-rgb))] text-[var(--ui-{$allowed})] bg-transparent hover:bg-[rgba(var(--ui-{$allowed}-rgb),0.08)] @endif
-                        peer-focus:outline-2 peer-focus:-outline-offset-2 peer-focus:outline-[rgb(var(--ui-{$allowed}-rgb))]
-                        peer-checked:bg-[rgb(var(--ui-{$allowed}-rgb))] peer-checked:text-[var(--ui-on-{$allowed})] peer-checked:border-transparent
-                    ">{{ $optionLabelNormalized }}</span>
+                    <span class="{{ $badgeSizeClass }} rounded-lg transition-colors @if((string)$selected === (string)$optionKey) {{ $filledClasses }} @else {{ $outlineClasses }} @endif">
+                        {{ $optionLabelNormalized }}
+                    </span>
                 </label>
             @endforeach
         </div>
