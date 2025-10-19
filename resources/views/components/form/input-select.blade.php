@@ -88,7 +88,7 @@
         {{-- Badge/Button Modus --}}
         <div class="flex flex-wrap gap-2" @if($hint) aria-describedby="{{ $name }}-hint" @endif>
             @if($nullable)
-                <label class="inline-flex items-center {{ $badgeSizeClass }} rounded-md border transition-colors cursor-pointer
+                <label class="inline-flex items-center {{ $badgeSizeClass }} rounded-lg border transition-colors cursor-pointer
                     @if($selected === '' || $selected === null)
                         bg-[color:rgb(var(--ui-{$variant}-rgb))] text-white border-[color:rgb(var(--ui-{$variant}-rgb))] shadow-sm
                     @else
@@ -109,7 +109,7 @@
                 </label>
             @endif
             @foreach($normalized as $optionKey => $optionLabelNormalized)
-                <label class="inline-flex items-center {{ $badgeSizeClass }} rounded-md border transition-colors cursor-pointer
+                <label class="inline-flex items-center {{ $badgeSizeClass }} rounded-lg border transition-colors cursor-pointer
                     @if($selected == $optionKey)
                         bg-[color:rgb(var(--ui-{$variant}-rgb))] text-white border-[color:rgb(var(--ui-{$variant}-rgb))] shadow-sm
                     @else
