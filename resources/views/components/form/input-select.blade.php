@@ -131,9 +131,11 @@
                         {{ $attributes->whereStartsWith('wire:') }}
                         @checked((string)($selected ?? '') === '')
                     />
-                    <span class="{{ $nullBadgeSizeClass }} rounded-lg transition-colors @if((string)($selected ?? '') === '') {{ $filledClasses }} @else {{ $outlineClasses }} @endif">
-                        {{ $nullLabel }}
-                    </span>
+                    <span class="{{ $nullBadgeSizeClass }} rounded-lg transition-colors
+                        {{ $outlineClasses }}
+                        peer-checked:bg-[rgb(var(--ui-{$allowed}-rgb))] peer-checked:text-[var(--ui-on-{$allowed})] peer-checked:border-transparent
+                        @if((string)($selected ?? '') === '') {{ $filledClasses }} @endif
+                    ">{{ $nullLabel }}</span>
                 </label>
             @endif
             @foreach($normalized as $optionKey => $optionLabelNormalized)
@@ -148,9 +150,11 @@
                         {{ $attributes->whereStartsWith('wire:') }}
                         @checked((string) $selected === (string) $optionKey)
                     />
-                    <span class="{{ $badgeSizeClass }} rounded-lg transition-colors @if((string)$selected === (string)$optionKey) {{ $filledClasses }} @else {{ $outlineClasses }} @endif">
-                        {{ $optionLabelNormalized }}
-                    </span>
+                    <span class="{{ $badgeSizeClass }} rounded-lg transition-colors
+                        {{ $outlineClasses }}
+                        peer-checked:bg-[rgb(var(--ui-{$allowed}-rgb))] peer-checked:text-[var(--ui-on-{$allowed})] peer-checked:border-transparent
+                        @if((string)$selected === (string)$optionKey) {{ $filledClasses }} @endif
+                    ">{{ $optionLabelNormalized }}</span>
                 </label>
             @endforeach
         </div>
