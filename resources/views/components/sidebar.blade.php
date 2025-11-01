@@ -58,56 +58,11 @@
 
         <!-- Bottom Actions -->
         <div class="mt-auto sticky bottom-0 z-10 bg-[var(--ui-surface)]/90 backdrop-blur border-t border-[var(--ui-border)]/60">
-            <button
-                @click="$dispatch('open-modal-comms')"
-                class="w-full flex items-center h-14 text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)] transition-colors"
-                :class="collapsed ? 'justify-center' : 'justify-start px-4 gap-3'"
-                title="Kommunikation"
-            >
-                @svg('heroicon-o-paper-airplane', 'w-5 h-5')
-                <span x-show="!collapsed" class="text-sm font-medium">Comms</span>
-            </button>
-            <!-- Team Trigger -->
-            <button
-                @click="$dispatch('open-modal-team')"
-                class="w-full flex items-center h-14 rounded-none border-t border-[var(--ui-border)]/60 text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)] transition-colors"
-                :class="collapsed ? 'justify-center' : 'justify-start px-4 gap-3'"
-                title="Team verwalten"
-            >
-                @svg('heroicon-o-users', 'w-5 h-5')
-                <span x-show="!collapsed" class="text-sm font-medium">Team</span>
-            </button>
-
-            <!-- User Trigger -->
-            <button
-                @click="$dispatch('open-modal-user')"
-                class="w-full flex items-center h-14 rounded-none border-t border-[var(--ui-border)]/60 text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)] transition-colors"
-                :class="collapsed ? 'justify-center' : 'justify-start px-4 gap-3'"
-                title="Benutzer-Einstellungen"
-            >
-                @svg('heroicon-o-user', 'w-5 h-5')
-                <span x-show="!collapsed" class="text-sm font-medium">Benutzer</span>
-            </button>
-
-            <!-- Check-in Trigger -->
-            <button
-                @click="$dispatch('open-modal-checkin')"
-                class="w-full flex items-center h-14 rounded-none border-t border-[var(--ui-border)]/60 text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)] transition-colors"
-                :class="collapsed ? 'justify-center' : 'justify-start px-4 gap-3'"
-                title="Täglicher Check-in"
-            >
-                @svg('heroicon-o-flag', 'w-5 h-5')
-                <span x-show="!collapsed" class="text-sm font-medium">Check-in</span>
-                <div x-show="!collapsed" class="ml-auto">
-                    <livewire:core.sidebar-timer />
-                </div>
-            </button>
-
             <!-- Terminal Trigger -->
             <button
                 @click="window.dispatchEvent(new CustomEvent('toggle-terminal'))"
-                class="w-full flex items-center h-14 rounded-none border-t border-[var(--ui-border)]/60 transition-colors"
-                :class="(Alpine.store('page')?.terminalOpen ? 'text-[var(--ui-primary)] bg-[var(--ui-muted-5)]' : 'text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)]') + ' ' + (collapsed ? 'justify-center' : 'justify-start px-4 gap-3')"
+                class="w-full flex items-center h-14 text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)] transition-colors"
+                :class="(Alpine.store('page')?.terminalOpen ? 'text-[var(--ui-primary)] bg-[var(--ui-muted-5)]' : '') + ' ' + (collapsed ? 'justify-center' : 'justify-start px-4 gap-3')"
                 title="Terminal"
             >
                 @svg('heroicon-o-command-line', 'w-5 h-5')

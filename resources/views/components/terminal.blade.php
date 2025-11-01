@@ -3,6 +3,7 @@
     x-on:toggle-terminal.window="toggle()"
     class="w-full"
 >
+
     <!-- Slide container (wie Sidebars: Größe animiert) -->
     <div
         class="w-full border-t border-[var(--ui-border)]/60 bg-[var(--ui-surface)]/95 backdrop-blur overflow-hidden transition-[max-height] duration-300 ease-out flex flex-col"
@@ -40,5 +41,3 @@
         </div>
     </div>
 </div>
-
-
