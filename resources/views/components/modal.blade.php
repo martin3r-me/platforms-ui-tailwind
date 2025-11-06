@@ -1,5 +1,5 @@
 @props([
-    'model' => 'modalShow',
+    'model' => null,
     'size' => 'md',
     'backdropClosable' => true,
     'escClosable' => true,
@@ -7,6 +7,17 @@
 ])
 
 @php
+    // Extract wire:model from attributes if model prop not explicitly set
+    if ($model === null) {
+        $wireModelAttr = $attributes->whereStartsWith('wire:model')->first();
+        if ($wireModelAttr) {
+            $model = \Illuminate\Support\Str::after($wireModelAttr, 'wire:model=');
+            $model = trim($model, '"\'');
+        } else {
+            $model = 'modalShow';
+        }
+    }
+    
     $validSizes = ['sm', 'md', 'lg', 'xl', 'full'];
     if (!in_array($size, $validSizes)) {
         $size = 'md';
