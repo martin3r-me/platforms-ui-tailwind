@@ -15,13 +15,13 @@
         </div>
       </div>
       <div class="text-sm text-[var(--ui-secondary)]">
+        @if(isset($member['monthly_minutes']) && $member['monthly_minutes'] > 0)
+          <span class="mr-4 text-[var(--ui-primary)] font-semibold">{{ number_format($member['monthly_minutes'] / 60, 1, ',', '.') }}h</span>
+        @elseif(isset($member['total_minutes']) && $member['total_minutes'] > 0)
+          <span class="mr-4 text-[var(--ui-primary)] font-semibold">{{ number_format($member['total_minutes'] / 60, 1, ',', '.') }}h</span>
+        @endif
         <span class="mr-4"><strong>{{ $member['tasks'] ?? 0 }}</strong> Aufgaben</span>
         <span class="mr-4"><strong>{{ $member['points'] ?? 0 }}</strong> SP</span>
-        @if(isset($member['monthly_minutes']) && $member['monthly_minutes'] > 0)
-          <span class="text-[var(--ui-primary)] font-semibold">{{ number_format($member['monthly_minutes'] / 60, 1, ',', '.') }}h</span>
-        @elseif(isset($member['total_minutes']) && $member['total_minutes'] > 0)
-          <span class="text-[var(--ui-primary)] font-semibold">{{ number_format($member['total_minutes'] / 60, 1, ',', '.') }}h</span>
-        @endif
       </div>
     </div>
   @empty
