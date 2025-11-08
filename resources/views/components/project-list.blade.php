@@ -14,11 +14,18 @@
       </div>
       <div class="flex-1 min-w-0">
         <div class="font-medium truncate">{{ $project['name'] ?? 'Projekt' }}</div>
-        <div class="text-xs text-[var(--ui-muted)] truncate">{{ $project['subtitle'] ?? '' }}</div>
+        <div class="text-xs text-[var(--ui-muted)] truncate">
+          {{ $project['subtitle'] ?? '' }}
+        </div>
       </div>
       <div class="text-sm text-[var(--ui-secondary)]">
         <span class="mr-4"><strong>{{ $project['tasks'] ?? 0 }}</strong> Aufgaben</span>
-        <span><strong>{{ $project['points'] ?? 0 }}</strong> SP</span>
+        <span class="mr-4"><strong>{{ $project['points'] ?? 0 }}</strong> SP</span>
+        @if(isset($project['monthly_minutes']) && $project['monthly_minutes'] > 0)
+          <span class="text-[var(--ui-primary)] font-semibold">{{ number_format($project['monthly_minutes'] / 60, 1, ',', '.') }}h</span>
+        @elseif(isset($project['total_minutes']) && $project['total_minutes'] > 0)
+          <span class="text-[var(--ui-primary)] font-semibold">{{ number_format($project['total_minutes'] / 60, 1, ',', '.') }}h</span>
+        @endif
       </div>
     </a>
   @empty

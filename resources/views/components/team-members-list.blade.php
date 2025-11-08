@@ -10,11 +10,18 @@
       </div>
       <div class="flex-1 min-w-0">
         <div class="font-medium truncate">{{ $member['name'] ?? 'Unbekannt' }}</div>
-        <div class="text-xs text-[var(--ui-muted)]">{{ $member['role'] ?? '' }}</div>
+        <div class="text-xs text-[var(--ui-muted)]">
+          {{ $member['role'] ?? '' }}
+        </div>
       </div>
       <div class="text-sm text-[var(--ui-secondary)]">
         <span class="mr-4"><strong>{{ $member['tasks'] ?? 0 }}</strong> Aufgaben</span>
-        <span><strong>{{ $member['points'] ?? 0 }}</strong> SP</span>
+        <span class="mr-4"><strong>{{ $member['points'] ?? 0 }}</strong> SP</span>
+        @if(isset($member['monthly_minutes']) && $member['monthly_minutes'] > 0)
+          <span class="text-[var(--ui-primary)] font-semibold">{{ number_format($member['monthly_minutes'] / 60, 1, ',', '.') }}h</span>
+        @elseif(isset($member['total_minutes']) && $member['total_minutes'] > 0)
+          <span class="text-[var(--ui-primary)] font-semibold">{{ number_format($member['total_minutes'] / 60, 1, ',', '.') }}h</span>
+        @endif
       </div>
     </div>
   @empty
