@@ -52,8 +52,14 @@
         $normalized = $options;
     }
 
-    // Bei Livewire: Wert aus wire:model holen, sonst aus value oder old()
-    $selected = $attributes->get('value') ?? old($name, $value);
+    // Wert-Ermittlung für Badge-Hervorhebung
+    // Bei Livewire: Der Wert wird über wire:model gesetzt, aber wir brauchen ihn für die Anzeige
+    // Reihenfolge: 1. Expliziter value prop, 2. old() für Validierung, 3. wire:model Wert (wird von Livewire gesetzt)
+    $selected = $value ?? old($name);
+    
+    // Bei Livewire wird der Wert direkt im Input gesetzt, nicht als PHP-Variable
+    // Wir müssen daher auf den checked-Status im Input vertrauen
+    // Für die initiale Anzeige verwenden wir den value prop oder old()
     
     // Bestimme Anzeigemodus
     $optionCount = count($normalized) + ($nullable ? 1 : 0);
@@ -124,7 +130,31 @@
 
     @if($useBadges)
         {{-- Badge/Button Modus --}}
-        <div class="flex flex-wrap gap-2" @if($hint) aria-describedby="{{ $name }}-hint" @endif>
+        <div 
+            x-data="{ 
+                selected: @js($selected ?? ''),
+                updateSelected() {
+                    // Finde das checked Radio-Input (wird von Livewire automatisch gesetzt)
+                    const checked = this.$el.querySelector('input[type=radio]:checked');
+                    if (checked) {
+                        this.selected = checked.value;
+                    }
+                }
+            }"
+            x-init="
+                // Initial: Wert aus checked Input lesen (funktioniert mit Livewire)
+                updateSelected();
+                // Bei Livewire-Updates: Nach kurzer Verzögerung aktualisieren
+                @if($attributes->whereStartsWith('wire:')->isNotEmpty())
+                    $watch('$wire', () => {
+                        setTimeout(() => updateSelected(), 50);
+                    });
+                @endif
+            "
+            @change="updateSelected()"
+            class="flex flex-wrap gap-2" 
+            @if($hint) aria-describedby="{{ $name }}-hint" @endif
+        >
             @if($nullable)
                 @php
                     $isNullSelected = (string)($selected ?? '') === '';
@@ -140,7 +170,10 @@
                         {{ $attributes->whereStartsWith('wire:') }}
                         @checked($isNullSelected)
                     />
-                    <span class="{{ $nullBadgeSizeClass }} rounded-lg transition-all duration-200 {{ $isNullSelected ? $filledClasses : $outlineClasses }}">{{ $nullLabel }}</span>
+                    <span 
+                        x-bind:class="selected === '' ? @js($filledClasses) : @js($outlineClasses)"
+                        class="{{ $nullBadgeSizeClass }} rounded-lg transition-all duration-200 {{ $isNullSelected ? $filledClasses : $outlineClasses }}"
+                    >{{ $nullLabel }}</span>
                 </label>
             @endif
             @foreach($normalized as $optionKey => $optionLabelNormalized)
@@ -158,7 +191,10 @@
                         {{ $attributes->whereStartsWith('wire:') }}
                         @checked($isOptionSelected)
                     />
-                    <span class="{{ $badgeSizeClass }} rounded-lg transition-all duration-200 {{ $isOptionSelected ? $filledClasses : $outlineClasses }}">{{ $optionLabelNormalized }}</span>
+                    <span 
+                        x-bind:class="selected === @js($optionKey) ? @js($filledClasses) : @js($outlineClasses)"
+                        class="{{ $badgeSizeClass }} rounded-lg transition-all duration-200 {{ $isOptionSelected ? $filledClasses : $outlineClasses }}"
+                    >{{ $optionLabelNormalized }}</span>
                 </label>
             @endforeach
         </div>
