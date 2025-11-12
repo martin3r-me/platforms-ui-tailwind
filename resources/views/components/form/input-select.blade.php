@@ -52,7 +52,8 @@
         $normalized = $options;
     }
 
-    $selected = old($name, $value ?? $attributes->get('value'));
+    // Bei Livewire: Wert aus wire:model holen, sonst aus value oder old()
+    $selected = $attributes->get('value') ?? old($name, $value);
     
     // Bestimme Anzeigemodus
     $optionCount = count($normalized) + ($nullable ? 1 : 0);
@@ -95,9 +96,10 @@
         "bg-[rgb(var(--ui-{$allowed}-rgb))]",
         "text-[var(--ui-on-{$allowed})]",
         "border-2 border-[rgb(var(--ui-{$allowed}-rgb))]",
-        'shadow-md',
-        'font-semibold',
-        'ring-2 ring-[rgb(var(--ui-{$allowed}-rgb))] ring-opacity-20',
+        'shadow-lg',
+        'font-bold',
+        'ring-4 ring-[rgb(var(--ui-{$allowed}-rgb))] ring-opacity-30',
+        'scale-105',
         'hover:opacity-90',
         "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--ui-{$allowed}-rgb))]",
     ]);
@@ -124,6 +126,9 @@
         {{-- Badge/Button Modus --}}
         <div class="flex flex-wrap gap-2" @if($hint) aria-describedby="{{ $name }}-hint" @endif>
             @if($nullable)
+                @php
+                    $isNullSelected = (string)($selected ?? '') === '';
+                @endphp
                 <label class="inline-flex items-center rounded-lg cursor-pointer @if($disabled) opacity-50 cursor-not-allowed @endif">
                     <input 
                         type="radio" 
@@ -131,20 +136,17 @@
                         value="" 
                         @if($disabled) disabled @endif
                         @if($required) required @endif
-                        class="sr-only peer"
+                        class="sr-only"
                         {{ $attributes->whereStartsWith('wire:') }}
-                        @checked((string)($selected ?? '') === '')
+                        @checked($isNullSelected)
                     />
-                    @php
-                        $isSelected = (string)($selected ?? '') === '';
-                    @endphp
-                    <span class="{{ $nullBadgeSizeClass }} rounded-lg transition-all duration-200
-                        {{ $isSelected ? $filledClasses : $outlineClasses }}
-                        peer-checked:!bg-[rgb(var(--ui-{$allowed}-rgb))] peer-checked:!text-[var(--ui-on-{$allowed})] peer-checked:!border-2 peer-checked:!border-[rgb(var(--ui-{$allowed}-rgb))] peer-checked:!shadow-md peer-checked:!font-semibold peer-checked:!ring-2 peer-checked:!ring-[rgb(var(--ui-{$allowed}-rgb))] peer-checked:!ring-opacity-20
-                    ">{{ $nullLabel }}</span>
+                    <span class="{{ $nullBadgeSizeClass }} rounded-lg transition-all duration-200 {{ $isNullSelected ? $filledClasses : $outlineClasses }}">{{ $nullLabel }}</span>
                 </label>
             @endif
             @foreach($normalized as $optionKey => $optionLabelNormalized)
+                @php
+                    $isOptionSelected = (string)$selected === (string)$optionKey;
+                @endphp
                 <label class="inline-flex items-center rounded-lg cursor-pointer @if($disabled) opacity-50 cursor-not-allowed @endif">
                     <input 
                         type="radio" 
@@ -152,17 +154,11 @@
                         value="{{ $optionKey }}" 
                         @if($disabled) disabled @endif
                         @if($required) required @endif
-                        class="sr-only peer"
+                        class="sr-only"
                         {{ $attributes->whereStartsWith('wire:') }}
-                        @checked((string) $selected === (string) $optionKey)
+                        @checked($isOptionSelected)
                     />
-                    @php
-                        $isSelected = (string)$selected === (string)$optionKey;
-                    @endphp
-                    <span class="{{ $badgeSizeClass }} rounded-lg transition-all duration-200
-                        {{ $isSelected ? $filledClasses : $outlineClasses }}
-                        peer-checked:!bg-[rgb(var(--ui-{$allowed}-rgb))] peer-checked:!text-[var(--ui-on-{$allowed})] peer-checked:!border-2 peer-checked:!border-[rgb(var(--ui-{$allowed}-rgb))] peer-checked:!shadow-md peer-checked:!font-semibold peer-checked:!ring-2 peer-checked:!ring-[rgb(var(--ui-{$allowed}-rgb))] peer-checked:!ring-opacity-20
-                    ">{{ $optionLabelNormalized }}</span>
+                    <span class="{{ $badgeSizeClass }} rounded-lg transition-all duration-200 {{ $isOptionSelected ? $filledClasses : $outlineClasses }}">{{ $optionLabelNormalized }}</span>
                 </label>
             @endforeach
         </div>
