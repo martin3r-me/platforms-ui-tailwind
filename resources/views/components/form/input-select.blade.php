@@ -84,18 +84,20 @@
     $allowed = in_array($variant, ['primary','success','secondary','info','warning','danger','muted']) ? $variant : 'primary';
     // Exakt wie x-ui-button: Outline vs. Filled
     $outlineClasses = implode(' ', [
-        'bg-transparent',
+        'bg-[var(--ui-surface)]',
         "text-[var(--ui-{$allowed})]",
-        "border border-[rgb(var(--ui-{$allowed}-rgb))]",
-        "hover:bg-[rgba(var(--ui-{$allowed}-rgb),0.08)]",
+        "border border-[var(--ui-border)]",
+        "hover:bg-[rgba(var(--ui-{$allowed}-rgb),0.05)]",
+        "hover:border-[rgb(var(--ui-{$allowed}-rgb))]",
         "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--ui-{$allowed}-rgb))]",
     ]);
     $filledClasses = implode(' ', [
         "bg-[rgb(var(--ui-{$allowed}-rgb))]",
         "text-[var(--ui-on-{$allowed})]",
         "border-2 border-[rgb(var(--ui-{$allowed}-rgb))]",
-        'shadow-sm',
+        'shadow-md',
         'font-semibold',
+        'ring-2 ring-[rgb(var(--ui-{$allowed}-rgb))] ring-opacity-20',
         'hover:opacity-90',
         "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--ui-{$allowed}-rgb))]",
     ]);
@@ -133,13 +135,12 @@
                         {{ $attributes->whereStartsWith('wire:') }}
                         @checked((string)($selected ?? '') === '')
                     />
+                    @php
+                        $isSelected = (string)($selected ?? '') === '';
+                    @endphp
                     <span class="{{ $nullBadgeSizeClass }} rounded-lg transition-all duration-200
-                        @if((string)($selected ?? '') === '') 
-                            {{ $filledClasses }}
-                        @else
-                            {{ $outlineClasses }}
-                        @endif
-                        peer-checked:bg-[rgb(var(--ui-{$allowed}-rgb))] peer-checked:text-[var(--ui-on-{$allowed})] peer-checked:border-2 peer-checked:border-[rgb(var(--ui-{$allowed}-rgb))] peer-checked:shadow-sm peer-checked:font-semibold
+                        {{ $isSelected ? $filledClasses : $outlineClasses }}
+                        peer-checked:!bg-[rgb(var(--ui-{$allowed}-rgb))] peer-checked:!text-[var(--ui-on-{$allowed})] peer-checked:!border-2 peer-checked:!border-[rgb(var(--ui-{$allowed}-rgb))] peer-checked:!shadow-md peer-checked:!font-semibold peer-checked:!ring-2 peer-checked:!ring-[rgb(var(--ui-{$allowed}-rgb))] peer-checked:!ring-opacity-20
                     ">{{ $nullLabel }}</span>
                 </label>
             @endif
@@ -155,13 +156,12 @@
                         {{ $attributes->whereStartsWith('wire:') }}
                         @checked((string) $selected === (string) $optionKey)
                     />
+                    @php
+                        $isSelected = (string)$selected === (string)$optionKey;
+                    @endphp
                     <span class="{{ $badgeSizeClass }} rounded-lg transition-all duration-200
-                        @if((string)$selected === (string)$optionKey) 
-                            {{ $filledClasses }}
-                        @else
-                            {{ $outlineClasses }}
-                        @endif
-                        peer-checked:bg-[rgb(var(--ui-{$allowed}-rgb))] peer-checked:text-[var(--ui-on-{$allowed})] peer-checked:border-2 peer-checked:border-[rgb(var(--ui-{$allowed}-rgb))] peer-checked:shadow-sm peer-checked:font-semibold
+                        {{ $isSelected ? $filledClasses : $outlineClasses }}
+                        peer-checked:!bg-[rgb(var(--ui-{$allowed}-rgb))] peer-checked:!text-[var(--ui-on-{$allowed})] peer-checked:!border-2 peer-checked:!border-[rgb(var(--ui-{$allowed}-rgb))] peer-checked:!shadow-md peer-checked:!font-semibold peer-checked:!ring-2 peer-checked:!ring-[rgb(var(--ui-{$allowed}-rgb))] peer-checked:!ring-opacity-20
                     ">{{ $optionLabelNormalized }}</span>
                 </label>
             @endforeach
