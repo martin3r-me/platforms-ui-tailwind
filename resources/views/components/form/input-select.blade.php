@@ -131,29 +131,37 @@
     @if($useBadges)
         {{-- Badge/Button Modus --}}
         <div 
-            x-data="{ 
-                selected: @js($selected ?? ''),
-                updateSelected() {
-                    // Finde das checked Radio-Input (wird von Livewire automatisch gesetzt)
-                    const checked = this.$el.querySelector('input[type=radio]:checked');
-                    if (checked) {
-                        this.selected = checked.value;
-                    }
-                }
-            }"
-            x-init="
-                // Initial: Wert aus checked Input lesen (funktioniert mit Livewire)
-                updateSelected();
-                // Bei Livewire-Updates: Nach kurzer Verzögerung aktualisieren
-                @if($attributes->whereStartsWith('wire:')->isNotEmpty())
-                    $watch('$wire', () => {
-                        setTimeout(() => updateSelected(), 50);
-                    });
-                @endif
-            "
-            @change="updateSelected()"
             class="flex flex-wrap gap-2" 
             @if($hint) aria-describedby="{{ $name }}-hint" @endif
+            x-data="{
+                init() {
+                    this.updateBadges();
+                    // Bei Änderungen aktualisieren
+                    this.$el.querySelectorAll('input[type=radio]').forEach(radio => {
+                        radio.addEventListener('change', () => this.updateBadges());
+                    });
+                    // Bei Livewire-Updates aktualisieren (wenn wire:model vorhanden)
+                    @if($attributes->whereStartsWith('wire:')->isNotEmpty())
+                        Livewire.hook('morph.updated', () => {
+                            setTimeout(() => this.updateBadges(), 10);
+                        });
+                    @endif
+                },
+                updateBadges() {
+                    const checked = this.$el.querySelector('input[type=radio]:checked');
+                    if (!checked) return;
+                    
+                    const selectedValue = checked.value;
+                    this.$el.querySelectorAll('span[data-badge]').forEach(badge => {
+                        const badgeValue = badge.getAttribute('data-badge');
+                        if (badgeValue === selectedValue) {
+                            badge.className = badge.getAttribute('data-filled-classes');
+                        } else {
+                            badge.className = badge.getAttribute('data-outline-classes');
+                        }
+                    });
+                }
+            }"
         >
             @if($nullable)
                 @php
@@ -171,7 +179,9 @@
                         @checked($isNullSelected)
                     />
                     <span 
-                        x-bind:class="selected === '' ? @js($filledClasses) : @js($outlineClasses)"
+                        data-badge=""
+                        data-filled-classes="{{ $nullBadgeSizeClass }} rounded-lg transition-all duration-200 {{ $filledClasses }}"
+                        data-outline-classes="{{ $nullBadgeSizeClass }} rounded-lg transition-all duration-200 {{ $outlineClasses }}"
                         class="{{ $nullBadgeSizeClass }} rounded-lg transition-all duration-200 {{ $isNullSelected ? $filledClasses : $outlineClasses }}"
                     >{{ $nullLabel }}</span>
                 </label>
@@ -192,7 +202,9 @@
                         @checked($isOptionSelected)
                     />
                     <span 
-                        x-bind:class="selected === @js($optionKey) ? @js($filledClasses) : @js($outlineClasses)"
+                        data-badge="{{ $optionKey }}"
+                        data-filled-classes="{{ $badgeSizeClass }} rounded-lg transition-all duration-200 {{ $filledClasses }}"
+                        data-outline-classes="{{ $badgeSizeClass }} rounded-lg transition-all duration-200 {{ $outlineClasses }}"
                         class="{{ $badgeSizeClass }} rounded-lg transition-all duration-200 {{ $isOptionSelected ? $filledClasses : $outlineClasses }}"
                     >{{ $optionLabelNormalized }}</span>
                 </label>
