@@ -93,7 +93,9 @@
     $filledClasses = implode(' ', [
         "bg-[rgb(var(--ui-{$allowed}-rgb))]",
         "text-[var(--ui-on-{$allowed})]",
-        'border border-transparent',
+        "border-2 border-[rgb(var(--ui-{$allowed}-rgb))]",
+        'shadow-sm',
+        'font-semibold',
         'hover:opacity-90',
         "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--ui-{$allowed}-rgb))]",
     ]);
@@ -131,10 +133,13 @@
                         {{ $attributes->whereStartsWith('wire:') }}
                         @checked((string)($selected ?? '') === '')
                     />
-                    <span class="{{ $nullBadgeSizeClass }} rounded-lg transition-colors
-                        {{ $outlineClasses }}
-                        peer-checked:bg-[rgb(var(--ui-{$allowed}-rgb))] peer-checked:text-[var(--ui-on-{$allowed})] peer-checked:border-transparent
-                        @if((string)($selected ?? '') === '') {{ $filledClasses }} @endif
+                    <span class="{{ $nullBadgeSizeClass }} rounded-lg transition-all duration-200
+                        @if((string)($selected ?? '') === '') 
+                            {{ $filledClasses }}
+                        @else
+                            {{ $outlineClasses }}
+                        @endif
+                        peer-checked:bg-[rgb(var(--ui-{$allowed}-rgb))] peer-checked:text-[var(--ui-on-{$allowed})] peer-checked:border-2 peer-checked:border-[rgb(var(--ui-{$allowed}-rgb))] peer-checked:shadow-sm peer-checked:font-semibold
                     ">{{ $nullLabel }}</span>
                 </label>
             @endif
@@ -150,10 +155,13 @@
                         {{ $attributes->whereStartsWith('wire:') }}
                         @checked((string) $selected === (string) $optionKey)
                     />
-                    <span class="{{ $badgeSizeClass }} rounded-lg transition-colors
-                        {{ $outlineClasses }}
-                        peer-checked:bg-[rgb(var(--ui-{$allowed}-rgb))] peer-checked:text-[var(--ui-on-{$allowed})] peer-checked:border-transparent
-                        @if((string)$selected === (string)$optionKey) {{ $filledClasses }} @endif
+                    <span class="{{ $badgeSizeClass }} rounded-lg transition-all duration-200
+                        @if((string)$selected === (string)$optionKey) 
+                            {{ $filledClasses }}
+                        @else
+                            {{ $outlineClasses }}
+                        @endif
+                        peer-checked:bg-[rgb(var(--ui-{$allowed}-rgb))] peer-checked:text-[var(--ui-on-{$allowed})] peer-checked:border-2 peer-checked:border-[rgb(var(--ui-{$allowed}-rgb))] peer-checked:shadow-sm peer-checked:font-semibold
                     ">{{ $optionLabelNormalized }}</span>
                 </label>
             @endforeach
