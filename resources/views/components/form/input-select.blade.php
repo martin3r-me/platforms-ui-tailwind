@@ -37,7 +37,13 @@
             if (is_object($item) && method_exists($item, $optionLabel)) {
                 $optLabel = $item->{$optionLabel}();
             }
-            $normalized[$optValue] = $optLabel;
+            // Sicherstellen, dass $optLabel ein String ist
+            if (is_array($optLabel)) {
+                $optLabel = json_encode($optLabel);
+            }
+            if ($optValue !== null && $optLabel !== null) {
+                $normalized[$optValue] = (string) $optLabel;
+            }
         }
     }
     elseif (is_array($options) && !empty($options) && is_object(reset($options))) {
@@ -46,10 +52,64 @@
                 ? $enumOption->{$optionLabel}()
                 : data_get($enumOption, $optionLabel);
             $optValue = data_get($enumOption, $optionValue);
-            $normalized[$optValue] = $optLabel;
+            // Sicherstellen, dass $optLabel ein String ist
+            if (is_array($optLabel)) {
+                $optLabel = json_encode($optLabel);
+            }
+            if ($optValue !== null && $optLabel !== null) {
+                $normalized[$optValue] = (string) $optLabel;
+            }
+        }
+    } elseif (is_array($options) && !empty($options) && is_array(reset($options))) {
+        // Array von Arrays (z.B. [['id' => 1, 'name' => 'John'], ...])
+        foreach ($options as $item) {
+            $optValue = data_get($item, $optionValue);
+            $optLabel = data_get($item, $optionLabel);
+            // Sicherstellen, dass $optLabel ein String ist
+            if (is_array($optLabel)) {
+                $optLabel = json_encode($optLabel);
+            }
+            if ($optValue !== null && $optLabel !== null) {
+                $normalized[$optValue] = (string) $optLabel;
+            }
         }
     } else {
+        // Fallback: Ursprüngliche Logik beibehalten für Abwärtskompatibilität
+        // Einfaches assoziatives Array (z.B. ['key' => 'value']) wird direkt verwendet
         $normalized = $options;
+        
+        // Sicherheitsprüfung: Nur wenn Arrays als Werte enthalten sind, normalisieren wir
+        if (is_array($normalized) && !empty($normalized)) {
+            $hasNestedArrays = false;
+            foreach ($normalized as $value) {
+                if (is_array($value)) {
+                    $hasNestedArrays = true;
+                    break;
+                }
+            }
+            
+            // Nur wenn verschachtelte Arrays gefunden wurden, normalisieren wir
+            if ($hasNestedArrays) {
+                $tempNormalized = [];
+                foreach ($normalized as $key => $value) {
+                    if (is_array($value)) {
+                        // Wenn der Wert ein Array ist, versuchen wir es zu normalisieren
+                        $optValue = data_get($value, $optionValue, $key);
+                        $optLabel = data_get($value, $optionLabel, is_array($value) ? json_encode($value) : $value);
+                        if (is_array($optLabel)) {
+                            $optLabel = json_encode($optLabel);
+                        }
+                        if ($optValue !== null && $optLabel !== null) {
+                            $tempNormalized[$optValue] = (string) $optLabel;
+                        }
+                    } else {
+                        // Einfache Werte beibehalten (abwärtskompatibel)
+                        $tempNormalized[$key] = $value;
+                    }
+                }
+                $normalized = $tempNormalized;
+            }
+        }
     }
 
     // Wert-Ermittlung für Badge-Hervorhebung
@@ -189,6 +249,11 @@
             @foreach($normalized as $optionKey => $optionLabelNormalized)
                 @php
                     $isOptionSelected = (string)$selected === (string)$optionKey;
+                    // Sicherstellen, dass $optionLabelNormalized ein String ist
+                    if (is_array($optionLabelNormalized)) {
+                        $optionLabelNormalized = json_encode($optionLabelNormalized);
+                    }
+                    $optionLabelNormalized = (string) $optionLabelNormalized;
                 @endphp
                 <label class="inline-flex items-center rounded-lg cursor-pointer @if($disabled) opacity-50 cursor-not-allowed @endif">
                     <input 
@@ -234,6 +299,13 @@
                     <option value="">{{ $nullLabel }}</option>
                 @endif
                 @foreach($normalized as $optionKey => $optionLabelNormalized)
+                    @php
+                        // Sicherstellen, dass $optionLabelNormalized ein String ist
+                        if (is_array($optionLabelNormalized)) {
+                            $optionLabelNormalized = json_encode($optionLabelNormalized);
+                        }
+                        $optionLabelNormalized = (string) $optionLabelNormalized;
+                    @endphp
                     <option value="{{ $optionKey }}" @selected($selected == $optionKey)>
                         {{ $optionLabelNormalized }}
                     </option>
