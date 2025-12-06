@@ -21,7 +21,11 @@
             $el.innerHTML = '{{ $confirmText }}';
             setTimeout(() => { confirm = false; $el.innerHTML = '{{ $text }}'; }, 3000);
         } else {
-            $wire.call('{{ $action }}');
+            @if(!is_null($value))
+                $wire.call('{{ $action }}', {{ $value }});
+            @else
+                $wire.call('{{ $action }}');
+            @endif
         }
     "
 >
