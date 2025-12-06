@@ -10,6 +10,12 @@
     'size' => 'md',
 ])
 
+@php
+    $wireCall = is_null($value)
+        ? "\$wire.call('{$action}')"
+        : "\$wire.call('{$action}', " . json_encode($value) . ")";
+@endphp
+
 <x-ui-button
     :variant="$variant"
     :size="$size"
@@ -21,11 +27,7 @@
             $el.innerHTML = '{{ $confirmText }}';
             setTimeout(() => { confirm = false; $el.innerHTML = '{{ $text }}'; }, 3000);
         } else {
-            @if(!is_null($value))
-                $wire.call('{{ $action }}', {{ $value }});
-            @else
-                $wire.call('{{ $action }}');
-            @endif
+            {!! $wireCall !!}
         }
     "
 >
