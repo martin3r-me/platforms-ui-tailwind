@@ -47,13 +47,8 @@
             {{-- Module Flyout --}}
             @livewire('core.module-flyout')
 
-            {{-- Quick Triggers: Team, User, Check-in --}}
-            <button x-data
-                @click="$dispatch('open-modal-comms')"
-                class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-[var(--ui-border)]/60 transition text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)]"
-                title="Comms">
-                @svg('heroicon-o-paper-airplane', 'w-5 h-5')
-            </button>
+            {{-- Quick Triggers: Comms (mit Badge), Team, User, Check-in --}}
+            @livewire('comms.comms-indicator')
             <button x-data
                 @click="$dispatch('open-modal-team')"
                 class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-[var(--ui-border)]/60 transition text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)]"
