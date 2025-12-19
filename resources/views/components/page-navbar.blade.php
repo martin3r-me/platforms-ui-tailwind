@@ -68,6 +68,12 @@
                 @svg('heroicon-o-flag', 'w-5 h-5')
             </button>
             <button x-data
+                @click="$dispatch('open-modal-counters')"
+                class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-[var(--ui-border)]/60 transition text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)]"
+                title="Counter">
+                @svg('heroicon-o-plus', 'w-5 h-5')
+            </button>
+            <button x-data
                 @click="$dispatch('organization:open')"
                 class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-[var(--ui-border)]/60 transition text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)]"
                 title="Zeit erfassen">
