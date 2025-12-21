@@ -85,6 +85,12 @@
                 title="KeyResult verknüpfen">
                 @svg('heroicon-o-chart-bar', 'w-5 h-5')
             </button>
+            <button x-data
+                @click="$dispatch('tagging:open')"
+                class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-[var(--ui-border)]/60 transition text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)]"
+                title="Tags verwalten">
+                @svg('heroicon-o-tag', 'w-5 h-5')
+            </button>
 
             <div class="h-8 w-px bg-[var(--ui-border)]/60 mx-1"></div>
             {{-- Terminal Toggle (adjacent to Activity Toggle) --}}
