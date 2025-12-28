@@ -21,7 +21,7 @@
         : [];
 
     // Basis-Styles: bewusst schlicht, aber sauber und stabil beim Drag
-    $classes = 'kanban-card px-3 py-3 bg-[var(--ui-surface)] hover:bg-[var(--ui-muted-5)] transition-colors border-[var(--ui-border)]/60 shadow-sm';
+    $classes = 'kanban-card px-3 py-3 bg-[var(--ui-surface)] hover:bg-[var(--ui-muted-5)] transition-colors';
 
     $mergedAttributes = $attributes->merge(
         array_merge(
@@ -38,7 +38,7 @@
     @storage-change.window="isList = localStorage.getItem('kanbanView') === 'list'"
     :class="{ 'border-b last:border-b-0 rounded-none': isList, 'rounded-lg my-2 mx-2': !isList }">
     @if(!is_null($title) && $title !== '')
-        <div class="mb-2">
+        <div class="mb-3">
             <h4 class="text-sm font-medium text-[var(--ui-secondary)] m-0">{{ $title }}</h4>
         </div>
     @endif
@@ -57,7 +57,7 @@
     @endif
 
     @if($footer)
-        <div class="mt-3 pt-2 border-t border-[var(--ui-border)]/40 flex justify-between items-center text-xs text-[var(--ui-muted)]">
+        <div class="mt-3 pt-3 border-t border-[var(--ui-border)]/30 flex justify-between items-center text-xs text-[var(--ui-muted)]">
             {{ $footer }}
         </div>
     @endif

@@ -16,11 +16,11 @@
     @storage-change.window="isList = localStorage.getItem('kanbanView') === 'list'"
     :class="{ 'w-full': isList, 'w-80': !isList }"
 >
-    <div class="flex flex-col h-full bg-[var(--ui-surface)] border border-[var(--ui-border)]/60 rounded-lg shadow-sm">
+    <div class="flex flex-col h-full bg-[var(--ui-surface)] border border-[var(--ui-border)]/40 rounded-lg">
         
         <!-- Header -->
         <div 
-            class="px-3 py-2 text-[11px] font-semibold uppercase tracking-wide flex justify-between items-center border-b border-[var(--ui-border)]/60"
+            class="px-3 py-2.5 text-xs font-medium flex justify-between items-center border-b border-[var(--ui-border)]/30"
             :class="{ 'bg-[var(--ui-muted-5)]': isList, 'bg-[var(--ui-surface)]': !isList }"
         >
             <span class="text-[var(--ui-secondary)] flex-1 truncate">{{ $title }}</span>
@@ -46,13 +46,13 @@
         <div 
             wire:sortable-group.item-group="{{ $sortableId }}" 
             class="flex-1 min-h-0"
-            :class="{ '': isList, 'px-3 py-3 space-y-2': !isList, 'overflow-y-auto': scrollable }"
+            :class="{ '': isList, 'px-2 py-2 space-y-2': !isList, 'overflow-y-auto': scrollable }"
         >
             {{ $slot }}
         </div>
 
         @if($footer)
-            <div class="px-4 py-3 border-t border-[var(--ui-border)]/60 bg-[var(--ui-muted-5)] rounded-b-lg">
+            <div class="px-3 py-2.5 border-t border-[var(--ui-border)]/30 bg-[var(--ui-muted-5)] rounded-b-lg">
                 {{ $footer }}
             </div>
         @endif
