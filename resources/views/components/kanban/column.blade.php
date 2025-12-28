@@ -3,6 +3,7 @@
     'sortableId' => null,
     'scrollable' => true,
     'footer' => null,
+    'muted' => false,
 ])
 
 <div 
@@ -20,10 +21,13 @@
         
         <!-- Header -->
         <div 
-            class="px-3 py-2.5 text-xs font-medium flex justify-between items-center"
-            :class="{ 'bg-[var(--ui-muted-5)]': isList, 'bg-[var(--ui-surface)]': !isList }"
+            class="px-3 py-2.5 text-xs font-medium flex justify-between items-center {{ $muted ? 'opacity-70' : '' }}"
+            :class="{ 
+                'bg-[var(--ui-muted-5)]': isList, 
+                'bg-[var(--ui-surface)]': !isList
+            }"
         >
-            <span class="text-[var(--ui-secondary)] flex-1 truncate">{{ $title }}</span>
+            <span class="flex-1 truncate {{ $muted ? 'text-[var(--ui-muted)]' : 'text-[var(--ui-secondary)]' }}">{{ $title }}</span>
             
             <div class="flex items-center gap-2">
                 @isset($headerActions)
