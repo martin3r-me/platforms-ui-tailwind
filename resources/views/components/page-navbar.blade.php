@@ -47,12 +47,12 @@
             {{-- Module Flyout --}}
             @livewire('core.module-flyout')
 
-            {{-- Check-in (hervorgehoben, farbig, am Anfang) --}}
+            {{-- Check-in (am Anfang) --}}
             <button x-data
                 @click="$dispatch('open-modal-checkin')"
-                class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-[var(--ui-primary)]/40 transition text-[var(--ui-primary)] bg-[var(--ui-primary-5)] hover:bg-[var(--ui-primary-10)] hover:border-[var(--ui-primary)]/60"
+                class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-[var(--ui-border)]/60 transition text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)]"
                 title="Täglicher Check-in">
-                @svg('heroicon-o-clipboard-document-check', 'w-5 h-5')
+                @svg('heroicon-o-sun', 'w-5 h-5')
             </button>
 
             <div class="h-8 w-px bg-[var(--ui-border)]/60 mx-1"></div>
@@ -75,7 +75,7 @@
                 @click="$dispatch('keyresult:open')"
                 class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-[var(--ui-border)]/60 transition text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)]"
                 title="KeyResult verknüpfen">
-                @svg('heroicon-o-viewfinder-circle', 'w-5 h-5')
+                @svg('heroicon-o-rocket-launch', 'w-5 h-5')
             </button>
             <button x-data
                 @click="$dispatch('tagging:open')"
