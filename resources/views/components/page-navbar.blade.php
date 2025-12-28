@@ -47,20 +47,8 @@
             {{-- Module Flyout --}}
             @livewire('core.module-flyout')
 
-            {{-- Quick Triggers: Comms (mit Badge), Team, User, Check-in --}}
+            {{-- Quick Triggers: Comms, Check-in, Counters, Organization, KeyResult, Tags --}}
             @livewire('comms.comms-indicator')
-            <button x-data
-                @click="$dispatch('open-modal-team')"
-                class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-[var(--ui-border)]/60 transition text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)]"
-                title="Team verwalten">
-                @svg('heroicon-o-users', 'w-5 h-5')
-            </button>
-            <button x-data
-                @click="$dispatch('open-modal-user')"
-                class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-[var(--ui-border)]/60 transition text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)]"
-                title="Benutzer-Einstellungen">
-                @svg('heroicon-o-user', 'w-5 h-5')
-            </button>
             <button x-data
                 @click="$dispatch('open-modal-checkin')"
                 class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-[var(--ui-border)]/60 transition text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)]"
@@ -93,6 +81,20 @@
             </button>
 
             <div class="h-8 w-px bg-[var(--ui-border)]/60 mx-1"></div>
+            
+            {{-- Team und User Modals (nach rechts verschoben) --}}
+            <button x-data
+                @click="$dispatch('open-modal-team')"
+                class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-[var(--ui-border)]/60 transition text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)]"
+                title="Team verwalten">
+                @svg('heroicon-o-users', 'w-5 h-5')
+            </button>
+            <button x-data
+                @click="$dispatch('open-modal-user')"
+                class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-[var(--ui-border)]/60 transition text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)]"
+                title="Benutzer-Einstellungen">
+                @svg('heroicon-o-user', 'w-5 h-5')
+            </button>
             {{-- Terminal Toggle (adjacent to Activity Toggle) --}}
             <button x-data
                 @click="window.dispatchEvent(new CustomEvent('toggle-terminal'))"
