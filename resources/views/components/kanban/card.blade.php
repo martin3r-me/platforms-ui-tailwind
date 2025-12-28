@@ -36,7 +36,7 @@
     x-data="{ isList: localStorage.getItem('kanbanView') === 'list' }"
     x-init="this.isList = localStorage.getItem('kanbanView') === 'list'"
     @storage-change.window="isList = localStorage.getItem('kanbanView') === 'list'"
-    :class="{ 'border-b last:border-b-0 rounded-none': isList, 'rounded-md my-1.5 mx-1.5': !isList }">
+    :class="{ 'border-b last:border-b-0 rounded-none': isList, 'my-2 mx-2': !isList }">
     @if(!is_null($title) && $title !== '')
         <div class="mb-3">
             <h4 class="text-sm font-medium text-[var(--ui-secondary)] m-0">{{ $title }}</h4>
@@ -76,7 +76,6 @@
     .kanban-card.wire-sortable-placeholder {
         background: var(--ui-muted-5) !important;
         border: 1px dashed var(--ui-border);
-        border-radius: .5rem;
         min-height: 3rem;
     }
 </style>

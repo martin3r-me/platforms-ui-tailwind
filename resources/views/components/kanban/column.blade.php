@@ -16,7 +16,7 @@
     @storage-change.window="isList = localStorage.getItem('kanbanView') === 'list'"
     :class="{ 'w-full': isList, 'w-80': !isList }"
 >
-    <div class="flex flex-col h-full bg-[var(--ui-surface)] border border-[var(--ui-border)]/40 rounded-lg">
+    <div class="flex flex-col h-full bg-[var(--ui-surface)] border border-[var(--ui-border)]/40">
         
         <!-- Header -->
         <div 
@@ -46,13 +46,13 @@
         <div 
             wire:sortable-group.item-group="{{ $sortableId }}" 
             class="flex-1 min-h-0"
-            :class="{ '': isList, 'px-1.5 py-1.5': !isList, 'overflow-y-auto': scrollable }"
+            :class="{ '': isList, 'px-2 py-2': !isList, 'overflow-y-auto': scrollable }"
         >
             {{ $slot }}
         </div>
 
         @if($footer)
-            <div class="px-3 py-2.5 border-t border-[var(--ui-border)]/30 bg-[var(--ui-muted-5)] rounded-b-lg">
+            <div class="px-3 py-2.5 border-t border-[var(--ui-border)]/30 bg-[var(--ui-muted-5)]">
                 {{ $footer }}
             </div>
         @endif
