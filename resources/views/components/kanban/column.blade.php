@@ -46,7 +46,7 @@
         <div 
             wire:sortable-group.item-group="{{ $sortableId }}" 
             class="flex-1 min-h-0"
-            :class="{ '': isList, 'px-1.5 py-1.5 space-y-1.5': !isList, 'overflow-y-auto': scrollable }"
+            :class="{ '': isList, 'px-1.5 py-1.5': !isList, 'overflow-y-auto': scrollable }"
         >
             {{ $slot }}
         </div>
