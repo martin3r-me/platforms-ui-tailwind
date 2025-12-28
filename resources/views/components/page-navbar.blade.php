@@ -83,7 +83,7 @@
                 @click="$dispatch('keyresult:open')"
                 class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-[var(--ui-border)]/60 transition text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)]"
                 title="KeyResult verknüpfen">
-                @svg('heroicon-o-target', 'w-5 h-5')
+                @svg('heroicon-o-viewfinder-circle', 'w-5 h-5')
             </button>
             <button x-data
                 @click="$dispatch('tagging:open')"
