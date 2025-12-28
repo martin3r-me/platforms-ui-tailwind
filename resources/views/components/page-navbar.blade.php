@@ -47,14 +47,18 @@
             {{-- Module Flyout --}}
             @livewire('core.module-flyout')
 
-            {{-- Quick Triggers: Comms, Check-in, Counters, Organization, KeyResult, Tags --}}
-            @livewire('comms.comms-indicator')
+            {{-- Check-in (hervorgehoben, farbig, am Anfang) --}}
             <button x-data
                 @click="$dispatch('open-modal-checkin')"
-                class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-[var(--ui-border)]/60 transition text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)]"
+                class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-[var(--ui-primary)]/40 transition text-[var(--ui-primary)] bg-[var(--ui-primary-5)] hover:bg-[var(--ui-primary-10)] hover:border-[var(--ui-primary)]/60"
                 title="Täglicher Check-in">
-                @svg('heroicon-o-flag', 'w-5 h-5')
+                @svg('heroicon-o-clipboard-document-check', 'w-5 h-5')
             </button>
+
+            <div class="h-8 w-px bg-[var(--ui-border)]/60 mx-1"></div>
+
+            {{-- Quick Triggers: Comms, Counters, Organization, KeyResult, Tags --}}
+            @livewire('comms.comms-indicator')
             <button x-data
                 @click="$dispatch('open-modal-counters')"
                 class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-[var(--ui-border)]/60 transition text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)]"
