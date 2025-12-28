@@ -47,18 +47,18 @@
             {{-- Module Flyout --}}
             @livewire('core.module-flyout')
 
-            {{-- Check-in (am Anfang) --}}
+            {{-- Check-in und Comms (gruppiert) --}}
             <button x-data
                 @click="$dispatch('open-modal-checkin')"
                 class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-[var(--ui-border)]/60 transition text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)]"
                 title="Täglicher Check-in">
                 @svg('heroicon-o-sun', 'w-5 h-5')
             </button>
+            @livewire('comms.comms-indicator')
 
             <div class="h-8 w-px bg-[var(--ui-border)]/60 mx-1"></div>
 
-            {{-- Quick Triggers: Comms, Counters, Organization, KeyResult, Tags --}}
-            @livewire('comms.comms-indicator')
+            {{-- Quick Triggers: Counters, Organization, KeyResult, Tags --}}
             <button x-data
                 @click="$dispatch('open-modal-counters')"
                 class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-[var(--ui-border)]/60 transition text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)]"
@@ -99,6 +99,9 @@
                 title="Benutzer-Einstellungen">
                 @svg('heroicon-o-user', 'w-5 h-5')
             </button>
+
+            <div class="h-8 w-px bg-[var(--ui-border)]/60 mx-1"></div>
+
             {{-- Terminal Toggle (adjacent to Activity Toggle) --}}
             <button x-data
                 @click="window.dispatchEvent(new CustomEvent('toggle-terminal'))"
