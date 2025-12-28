@@ -21,7 +21,7 @@
         : [];
 
     // Basis-Styles: bewusst schlicht, aber sauber und stabil beim Drag
-    $classes = 'kanban-card px-3 py-3 bg-[var(--ui-surface)] hover:bg-[var(--ui-muted-5)] transition-colors';
+    $classes = 'kanban-card px-3 py-3 bg-[var(--ui-muted-5)] hover:bg-[var(--ui-muted-10)] transition-colors';
 
     $mergedAttributes = $attributes->merge(
         array_merge(
@@ -36,7 +36,7 @@
     x-data="{ isList: localStorage.getItem('kanbanView') === 'list' }"
     x-init="this.isList = localStorage.getItem('kanbanView') === 'list'"
     @storage-change.window="isList = localStorage.getItem('kanbanView') === 'list'"
-    :class="{ 'border-b last:border-b-0 rounded-none': isList, 'rounded-lg my-2 mx-2': !isList }">
+    :class="{ 'border-b last:border-b-0 rounded-none': isList, 'rounded-md my-1.5 mx-1.5': !isList }">
     @if(!is_null($title) && $title !== '')
         <div class="mb-3">
             <h4 class="text-sm font-medium text-[var(--ui-secondary)] m-0">{{ $title }}</h4>
@@ -67,12 +67,11 @@
     /* Drag-Zustände von Livewire Sortable stabilisieren */
     .kanban-card wire\:sortable-group\:item,
     .kanban-card {
-        background: var(--ui-surface);
+        background: var(--ui-muted-5);
     }
     .kanban-card.wire-dragging {
         opacity: .9; /* leichtes Feedback, aber nicht transparent */
-        background: var(--ui-surface);
-        border-color: rgba(var(--ui-border-rgb, 14,26,54), .6);
+        background: var(--ui-muted-10);
     }
     .kanban-card.wire-sortable-placeholder {
         background: var(--ui-muted-5) !important;

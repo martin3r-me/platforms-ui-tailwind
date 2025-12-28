@@ -20,7 +20,7 @@
         
         <!-- Header -->
         <div 
-            class="px-3 py-2.5 text-xs font-medium flex justify-between items-center border-b border-[var(--ui-border)]/30"
+            class="px-3 py-2.5 text-xs font-medium flex justify-between items-center"
             :class="{ 'bg-[var(--ui-muted-5)]': isList, 'bg-[var(--ui-surface)]': !isList }"
         >
             <span class="text-[var(--ui-secondary)] flex-1 truncate">{{ $title }}</span>
@@ -46,7 +46,7 @@
         <div 
             wire:sortable-group.item-group="{{ $sortableId }}" 
             class="flex-1 min-h-0"
-            :class="{ '': isList, 'px-2 py-2 space-y-2': !isList, 'overflow-y-auto': scrollable }"
+            :class="{ '': isList, 'px-1.5 py-1.5 space-y-1.5': !isList, 'overflow-y-auto': scrollable }"
         >
             {{ $slot }}
         </div>
