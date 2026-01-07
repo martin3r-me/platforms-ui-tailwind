@@ -118,6 +118,17 @@
                 title="Terminal umschalten">
                 @svg('heroicon-o-command-line', 'w-5 h-5')
             </button>
+            {{-- Simple Playground (Modal) --}}
+            @php
+                $routeName = request()->route()?->getName();
+                $routeModule = is_string($routeName) && str_contains($routeName, '.') ? strstr($routeName, '.', true) : null;
+            @endphp
+            <button x-data
+                @click="$dispatch('playground:open', { context: { source_route: @js($routeName), source_module: @js($routeModule), source_url: window.location.href } })"
+                class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-[var(--ui-border)]/60 transition text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)]"
+                title="Playground öffnen">
+                @svg('heroicon-o-sparkles', 'w-5 h-5')
+            </button>
             {{-- Right Activity Sidebar Toggle --}}
             <button x-data 
                 @click="Alpine.store('page') && (Alpine.store('page').activityOpen = !Alpine.store('page').activityOpen)" 
