@@ -108,6 +108,20 @@
 
             <div class="h-8 w-px bg-[var(--ui-border)]/60 mx-1"></div>
 
+            {{-- Simple Playground (Modal) - aktuell hart gecodet: nur User-ID 21 --}}
+            @if(auth()->check() && (int)auth()->id() === 21)
+                @php
+                    $routeName = request()->route()?->getName();
+                    $routeModule = is_string($routeName) && str_contains($routeName, '.') ? strstr($routeName, '.', true) : null;
+                @endphp
+                <button x-data
+                    @click="$dispatch('playground:open', { context: { source_route: @js($routeName), source_module: @js($routeModule), source_url: window.location.href } })"
+                    class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-[var(--ui-border)]/60 transition text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)]"
+                    title="Playground öffnen">
+                    @svg('heroicon-o-sparkles', 'w-5 h-5')
+                </button>
+            @endif
+
             {{-- Terminal Toggle (adjacent to Activity Toggle) --}}
             <button x-data
                 @click="window.dispatchEvent(new CustomEvent('toggle-terminal'))"
@@ -117,17 +131,6 @@
                     : 'text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)]'"
                 title="Terminal umschalten">
                 @svg('heroicon-o-command-line', 'w-5 h-5')
-            </button>
-            {{-- Simple Playground (Modal) --}}
-            @php
-                $routeName = request()->route()?->getName();
-                $routeModule = is_string($routeName) && str_contains($routeName, '.') ? strstr($routeName, '.', true) : null;
-            @endphp
-            <button x-data
-                @click="$dispatch('playground:open', { context: { source_route: @js($routeName), source_module: @js($routeModule), source_url: window.location.href } })"
-                class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-[var(--ui-border)]/60 transition text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)]"
-                title="Playground öffnen">
-                @svg('heroicon-o-sparkles', 'w-5 h-5')
             </button>
             {{-- Right Activity Sidebar Toggle --}}
             <button x-data 
