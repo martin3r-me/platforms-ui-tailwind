@@ -31,8 +31,9 @@
         'lg'   => 'max-w-4xl',
         'xl'   => 'max-w-6xl',
         '2xl'  => 'max-w-7xl',
-        // Robust "wide" (no arbitrary class): wider than 7xl, still modal (overlay has p-4 margin)
-        'wide' => 'max-w-screen-2xl',
+        // Robust "wide": we will set an explicit inline width on the modal container.
+        // Keep max-w none here so width can expand as intended.
+        'wide' => 'max-w-none',
         'full' => 'w-screen h-screen max-w-none max-h-none',
         default => 'max-w-2xl',
     };
@@ -70,6 +71,7 @@
         <!-- Modal -->
         <div 
             class="relative z-[100] w-full {{ $sizeClasses }} {{ $modalExtraClasses }}"
+            style="{{ $size === 'wide' ? 'width: min(95vw, 1600px);' : '' }}"
             x-transition:enter="transition ease-out duration-300"
             x-transition:enter-start="opacity-0 scale-95"
             x-transition:enter-end="opacity-100 scale-100"
