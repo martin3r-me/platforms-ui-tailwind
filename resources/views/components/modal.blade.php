@@ -31,8 +31,8 @@
         'lg'   => 'max-w-4xl',
         'xl'   => 'max-w-6xl',
         '2xl'  => 'max-w-7xl',
-        // near-full width but still "modal": keep margin from the overlay container (p-4)
-        'wide' => 'max-w-[95vw]',
+        // Robust "wide" (no arbitrary class): wider than 7xl, still modal (overlay has p-4 margin)
+        'wide' => 'max-w-screen-2xl',
         'full' => 'w-screen h-screen max-w-none max-h-none',
         default => 'max-w-2xl',
     };
@@ -113,7 +113,7 @@
                 </div>
             @else
                 <!-- Regular Modal -->
-                <div class="{{ $size === 'wide' ? 'h-[92vh]' : 'h-[90vh]' }} flex flex-col">
+                <div class="h-[90vh] flex flex-col">
                     <!-- Header -->
                     @if (trim($header ?? ''))
                         <div class="px-6 py-4 border-b border-[var(--ui-border)]/60 flex items-center justify-between flex-shrink-0">
