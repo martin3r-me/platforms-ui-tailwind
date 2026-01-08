@@ -4,6 +4,7 @@
     'backdropClosable' => true,
     'escClosable' => true,
     'persistent' => false,
+    'hideFooter' => false,
 ])
 
 @php
@@ -18,7 +19,9 @@
         }
     }
     
-    $validSizes = ['sm', 'md', 'lg', 'xl', 'full'];
+    // Add "wide" as an in-between size for large tools/playgrounds:
+    // bigger than 2xl (max-w-7xl) but not full-screen.
+    $validSizes = ['sm', 'md', 'lg', 'xl', '2xl', 'wide', 'full'];
     if (!in_array($size, $validSizes)) {
         $size = 'md';
     }
@@ -27,6 +30,9 @@
         'sm'   => 'max-w-md',
         'lg'   => 'max-w-4xl',
         'xl'   => 'max-w-6xl',
+        '2xl'  => 'max-w-7xl',
+        // near-full width but still "modal": keep margin from the overlay container (p-4)
+        'wide' => 'max-w-[95vw]',
         'full' => 'w-screen h-screen max-w-none max-h-none',
         default => 'max-w-2xl',
     };
@@ -107,7 +113,7 @@
                 </div>
             @else
                 <!-- Regular Modal -->
-                <div class="h-[90vh] flex flex-col">
+                <div class="{{ $size === 'wide' ? 'h-[92vh]' : 'h-[90vh]' }} flex flex-col">
                     <!-- Header -->
                     @if (trim($header ?? ''))
                         <div class="px-6 py-4 border-b border-[var(--ui-border)]/60 flex items-center justify-between flex-shrink-0">
@@ -133,16 +139,18 @@
                     </div>
 
                     <!-- Footer -->
-                    @if (isset($footer))
-                        <div class="px-6 py-4 border-t border-[var(--ui-border)]/60 flex justify-end gap-3 flex-shrink-0">
-                            {{ $footer }}
-                        </div>
-                    @else
-                        <div class="px-6 py-4 border-t border-[var(--ui-border)]/60 flex justify-end gap-3 flex-shrink-0">
-                            <x-ui-button variant="secondary-outline" size="sm" @click="modalShow = false">
-                                Abbrechen
-                            </x-ui-button>
-                        </div>
+                    @if (!$hideFooter)
+                        @if (isset($footer))
+                            <div class="px-6 py-4 border-t border-[var(--ui-border)]/60 flex justify-end gap-3 flex-shrink-0">
+                                {{ $footer }}
+                            </div>
+                        @else
+                            <div class="px-6 py-4 border-t border-[var(--ui-border)]/60 flex justify-end gap-3 flex-shrink-0">
+                                <x-ui-button variant="secondary-outline" size="sm" @click="modalShow = false">
+                                    Abbrechen
+                                </x-ui-button>
+                            </div>
+                        @endif
                     @endif
                 </div>
             @endif
