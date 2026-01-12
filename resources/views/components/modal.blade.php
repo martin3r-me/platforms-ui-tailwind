@@ -71,7 +71,7 @@
         <!-- Modal -->
         <div 
             class="relative z-[100] w-full {{ $sizeClasses }} {{ $modalExtraClasses }}"
-            style="{{ $size === 'wide' ? 'width: min(95vw, 1600px);' : '' }}"
+            style="{{ $size === 'wide' ? 'width: 95vw;' : '' }}"
             x-transition:enter="transition ease-out duration-300"
             x-transition:enter-start="opacity-0 scale-95"
             x-transition:enter-end="opacity-100 scale-100"

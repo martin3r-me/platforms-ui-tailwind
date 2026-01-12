@@ -6,15 +6,12 @@
     'side' => 'left', // 'left' | 'right'
 ])
 
-        <div
-            x-data="{
-                get open(){ return Alpine?.store('page') ? Alpine.store('page')[ '{{ $storeKey }}' ] : ({{ $defaultOpen ? 'true' : 'false' }}) },
-                set open(v){ Alpine?.store('page') && (Alpine.store('page')[ '{{ $storeKey }}' ] = v) }
-            }"
-            :class="open ? (`${'{{ $width }}'} ` + ( '{{ $side }}' === 'right' ? 'border-l border-[var(--ui-border)]/60' : 'border-r border-[var(--ui-border)]/60')) : 'w-0 border-0'"
-            class="relative flex-shrink-0 h-full bg-[var(--ui-muted-5)] transition-all duration-300 overflow-x-hidden"
-            {{ $attributes }}
-        >
+<div
+    x-data
+    :class="(Alpine?.store('page')?.['{{ $storeKey }}'] ?? {{ $defaultOpen ? 'true' : 'false' }}) ? (`{{ $width }} ` + ( '{{ $side }}' === 'right' ? 'border-l border-[var(--ui-border)]/60' : 'border-r border-[var(--ui-border)]/60')) : 'w-0 border-0'"
+    class="relative flex-shrink-0 h-full bg-[var(--ui-muted-5)] transition-all duration-300 overflow-x-hidden"
+    {{ $attributes }}
+>
     <!-- Toggle Button Area (immer sichtbar) -->
     <div class="h-full flex flex-col">
 
@@ -22,7 +19,7 @@
 
         <!-- Sidebar Content -->
         <div 
-            x-show="open" 
+            x-show="Alpine?.store('page')?.['{{ $storeKey }}'] ?? {{ $defaultOpen ? 'true' : 'false' }}" 
             x-transition:enter="transition ease-out duration-300"
             x-transition:enter-start="opacity-0"
             x-transition:enter-end="opacity-100"
@@ -36,7 +33,7 @@
                         <h2 class="text-sm font-semibold text-[var(--ui-secondary)] m-0 tracking-wide uppercase">{{ $title }}</h2>
                         <button 
                             type="button"
-                            @click="open = false"
+                            @click="Alpine?.store('page') && (Alpine.store('page')['{{ $storeKey }}'] = false)"
                             class="ml-auto inline-flex items-center justify-center rounded-md text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)] transition-colors"
                             title="Sidebar schließen"
                         >
