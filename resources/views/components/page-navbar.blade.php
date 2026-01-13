@@ -108,8 +108,8 @@
 
             <div class="h-8 w-px bg-[var(--ui-border)]/60 mx-1"></div>
 
-            {{-- Simple Playground (Modal) - aktuell hart gecodet: nur User-ID 21 --}}
-            @if(auth()->check() && (int)auth()->id() === 21)
+            {{-- Simple Playground (Modal) - aktuell hart gecodet: nur User-ID 21 und 27 --}}
+            @if(auth()->check() && in_array((int)auth()->id(), [21, 27]))
                 @php
                     $routeName = request()->route()?->getName();
                     $routeModule = is_string($routeName) && str_contains($routeName, '.') ? strstr($routeName, '.', true) : null;
