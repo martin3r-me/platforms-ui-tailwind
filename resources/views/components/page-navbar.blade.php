@@ -54,7 +54,6 @@
                 title="Täglicher Check-in">
                 @svg('heroicon-o-sun', 'w-5 h-5')
             </button>
-            @livewire('comms.comms-indicator')
 
             <div class="h-8 w-px bg-[var(--ui-border)]/60 mx-1"></div>
 
