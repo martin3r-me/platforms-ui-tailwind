@@ -73,6 +73,7 @@ class UiTailwindServiceProvider extends ServiceProvider
         Blade::component('ui-tailwind::components.form.input-date', 'ui-input-date');
         Blade::component('ui-tailwind::components.form.input-datetime', 'ui-input-datetime');
         Blade::component('ui-tailwind::components.form.input-number', 'ui-input-number');
+        Blade::component('ui-tailwind::components.form.input-signature', 'ui-input-signature');
 
         // Kanban
         Blade::component('ui-tailwind::components.kanban.container', 'ui-kanban-container');
