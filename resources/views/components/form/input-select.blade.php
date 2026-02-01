@@ -14,9 +14,11 @@
     'optionValue'   => 'value',
     'optionLabel'   => 'label',
     'value'         => null,
-    'displayMode'   => 'auto', // 'auto', 'dropdown', 'badges'
+    'displayMode'   => 'auto', // 'auto', 'dropdown', 'badges', 'searchable'
     'badgeSize'     => 'sm', // 'xs', 'sm', 'md', 'lg'
     'compactNull'   => true, // Im Badge-Modus "−" statt langem Text
+    'searchThreshold' => 20, // Ab dieser Anzahl wird automatisch Suche aktiviert
+    'searchPlaceholder' => 'Suchen...', // Platzhalter für Suchfeld
 ])
 
 @php
@@ -124,6 +126,7 @@
     // Bestimme Anzeigemodus
     $optionCount = count($normalized) + ($nullable ? 1 : 0);
     $useBadges = $displayMode === 'badges' || ($displayMode === 'auto' && $optionCount < 10);
+    $useSearchable = $displayMode === 'searchable' || ($displayMode === 'auto' && $optionCount >= $searchThreshold);
 
     if ($useBadges && $compactNull) {
         $nullLabel = '−';
@@ -274,6 +277,152 @@
                     >{{ $optionLabelNormalized }}</span>
                 </label>
             @endforeach
+        </div>
+    @elseif($useSearchable)
+        {{-- Searchable Dropdown Modus --}}
+        @php
+            // Label für den aktuell ausgewählten Wert ermitteln (mit String-Cast für robuste Vergleiche)
+            $selectedLabelForSearchable = $nullLabel;
+            if ($selected !== null && $selected !== '') {
+                $selectedKey = (string) $selected;
+                foreach ($normalized as $key => $label) {
+                    if ((string) $key === $selectedKey) {
+                        $selectedLabelForSearchable = $label;
+                        break;
+                    }
+                }
+            }
+        @endphp
+        <div
+            class="relative"
+            x-data="{
+                open: false,
+                search: '',
+                selectedValue: '{{ $selected ?? '' }}',
+                selectedLabel: '{{ addslashes($selectedLabelForSearchable) }}',
+                options: {{ json_encode($normalized) }},
+                nullable: {{ $nullable ? 'true' : 'false' }},
+                nullLabel: '{{ $nullLabel }}',
+                get filteredOptions() {
+                    if (!this.search) return this.options;
+                    const searchLower = this.search.toLowerCase();
+                    const filtered = {};
+                    for (const [key, label] of Object.entries(this.options)) {
+                        if (label.toLowerCase().includes(searchLower)) {
+                            filtered[key] = label;
+                        }
+                    }
+                    return filtered;
+                },
+                selectOption(value, label) {
+                    this.selectedValue = value;
+                    this.selectedLabel = label;
+                    this.open = false;
+                    this.search = '';
+                    this.$refs.hiddenInput.value = value;
+                    this.$refs.hiddenInput.dispatchEvent(new Event('change', { bubbles: true }));
+                    this.$refs.hiddenInput.dispatchEvent(new Event('input', { bubbles: true }));
+                }
+            }"
+            @click.outside="open = false"
+            @keydown.escape.window="open = false"
+        >
+            {{-- Hidden input for form submission --}}
+            <input
+                type="hidden"
+                x-ref="hiddenInput"
+                name="{{ $name }}"
+                x-model="selectedValue"
+                @if($required) required @endif
+                {{ $attributes->whereStartsWith('wire:') }}
+            />
+
+            {{-- Display button --}}
+            <button
+                type="button"
+                @click="open = !open"
+                @if($disabled) disabled @endif
+                class="{{ implode(' ', [
+                    'block w-full text-left appearance-none rounded-md',
+                    'bg-[var(--ui-surface)] text-[color:var(--ui-secondary)]',
+                    'outline-1 -outline-offset-1 outline-[color:var(--ui-border)] border border-transparent',
+                    'transition-colors',
+                    "focus:outline-2 focus:-outline-offset-2 focus:outline-[color:rgb(var(--ui-{$variant}-rgb))]",
+                    $sizeClass,
+                    'pr-10',
+                    $disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer',
+                ]) }}"
+            >
+                <span x-text="selectedLabel" class="block truncate"></span>
+                <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                    <svg class="w-4 h-4 text-[color:var(--ui-muted)]" fill="none" stroke="currentColor" stroke-width="2"
+                        viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                </span>
+            </button>
+
+            {{-- Dropdown panel --}}
+            <div
+                x-show="open"
+                x-transition:enter="transition ease-out duration-100"
+                x-transition:enter-start="opacity-0 scale-95"
+                x-transition:enter-end="opacity-100 scale-100"
+                x-transition:leave="transition ease-in duration-75"
+                x-transition:leave-start="opacity-100 scale-100"
+                x-transition:leave-end="opacity-0 scale-95"
+                class="absolute z-50 mt-1 w-full rounded-md bg-[var(--ui-surface)] shadow-lg ring-1 ring-[var(--ui-border)] max-h-60 overflow-hidden"
+                style="display: none;"
+            >
+                {{-- Search input --}}
+                <div class="p-2 border-b border-[var(--ui-border)]">
+                    <input
+                        type="text"
+                        x-model="search"
+                        x-ref="searchInput"
+                        @click.stop
+                        placeholder="{{ $searchPlaceholder }}"
+                        class="{{ implode(' ', [
+                            'block w-full rounded-md',
+                            'bg-[var(--ui-surface)] text-[color:var(--ui-secondary)]',
+                            'outline-1 -outline-offset-1 outline-[color:var(--ui-border)] border border-[var(--ui-border)]',
+                            'transition-colors',
+                            "focus:outline-2 focus:-outline-offset-2 focus:outline-[color:rgb(var(--ui-{$variant}-rgb))]",
+                            'px-3 py-1.5 text-sm',
+                        ]) }}"
+                        x-init="$watch('open', value => { if(value) setTimeout(() => $refs.searchInput.focus(), 50) })"
+                    />
+                </div>
+
+                {{-- Options list --}}
+                <ul class="overflow-auto max-h-48 py-1" role="listbox">
+                    <template x-if="nullable">
+                        <li
+                            @click="selectOption('', nullLabel)"
+                            :class="selectedValue === '' ? 'bg-[rgb(var(--ui-{{ $variant }}-rgb))] text-[var(--ui-on-{{ $variant }})]' : 'text-[color:var(--ui-secondary)] hover:bg-[rgba(var(--ui-{{ $variant }}-rgb),0.1)]'"
+                            class="cursor-pointer select-none px-4 py-2 text-sm"
+                            role="option"
+                        >
+                            <span x-text="nullLabel"></span>
+                        </li>
+                    </template>
+                    <template x-for="(label, value) in filteredOptions" :key="value">
+                        <li
+                            @click="selectOption(value, label)"
+                            :class="selectedValue === value ? 'bg-[rgb(var(--ui-{{ $variant }}-rgb))] text-[var(--ui-on-{{ $variant }})]' : 'text-[color:var(--ui-secondary)] hover:bg-[rgba(var(--ui-{{ $variant }}-rgb),0.1)]'"
+                            class="cursor-pointer select-none px-4 py-2 text-sm"
+                            role="option"
+                        >
+                            <span x-text="label"></span>
+                        </li>
+                    </template>
+                    <template x-if="Object.keys(filteredOptions).length === 0">
+                        <li class="px-4 py-2 text-sm text-[color:var(--ui-muted)] italic">
+                            Keine Ergebnisse
+                        </li>
+                    </template>
+                </ul>
+            </div>
         </div>
     @else
         {{-- Dropdown Modus (Original) --}}
