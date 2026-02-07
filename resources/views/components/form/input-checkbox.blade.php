@@ -1,8 +1,9 @@
 {{-- resources/views/components/ui/boolean-toggle.blade.php --}}
 @props([
     'model' => null,
-    'checkedLabel' => 'Erledigt',
-    'uncheckedLabel' => 'Als erledigt markieren',
+    'label' => null,
+    'checkedLabel' => null,
+    'uncheckedLabel' => null,
     'size' => 'md',
     'disabled' => false,
     'block' => false,
@@ -11,6 +12,10 @@
 ])
 
 @php
+    // Label als Fallback für checkedLabel/uncheckedLabel
+    $checkedLabel = $checkedLabel ?? $label ?? 'Erledigt';
+    $uncheckedLabel = $uncheckedLabel ?? $label ?? 'Als erledigt markieren';
+
     // Extract model from wire:model attribute if not explicitly set
     if ($model === null) {
         // Get wire:model or wire:model.live etc.
@@ -32,9 +37,8 @@
 
 <button
     type="button"
-    x-data="{ checked: @entangle($model) }"
+    x-data="{ checked: @entangle($model).live }"
     @click="if(!{{ $disabled ? 'true' : 'false' }}) checked = !checked"
-    x-effect="$wire.set('{{ $model }}', checked)"
     :class="checked
         ? 'bg-[rgb(var(--ui-{{ $variant }}-rgb))] text-[color:var(--ui-on-{{ $variant }})] hover:opacity-90'
         : 'bg-transparent border border-[color:rgb(var(--ui-{{ $variant }}-rgb))] text-[color:var(--ui-{{ $variant }})] hover:bg-[rgb(var(--ui-{{ $variant }}-rgb))] hover:text-[color:var(--ui-on-{{ $variant }})]'"
