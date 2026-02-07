@@ -1,6 +1,6 @@
 {{-- resources/views/components/ui/boolean-toggle.blade.php --}}
 @props([
-    'model',
+    'model' => null,
     'checkedLabel' => 'Erledigt',
     'uncheckedLabel' => 'Als erledigt markieren',
     'size' => 'md',
@@ -11,6 +11,15 @@
 ])
 
 @php
+    // Extract model from wire:model attribute if not explicitly set
+    if ($model === null) {
+        // Get wire:model or wire:model.live etc.
+        $wireModelAttrs = $attributes->whereStartsWith('wire:model');
+        if ($wireModelAttrs->isNotEmpty()) {
+            $model = $wireModelAttrs->first();
+        }
+    }
+
     $sizes = [
         'xs' => 'py-1 px-2 text-xs',
         'sm' => 'py-1 px-3 text-sm',
