@@ -42,15 +42,26 @@
             init() {
                 this.canvas = this.$refs.canvas;
                 this.ctx = this.canvas.getContext('2d');
+
+                // Canvas-Auflösung an tatsächliche Anzeigegröße anpassen
+                this.$nextTick(() => { this.resizeCanvas(); });
+
+                // Load existing signature if present
+                if (this.signatureData) {
+                    this.$nextTick(() => { this.loadSignature(); });
+                }
+            },
+
+            resizeCanvas() {
+                const rect = this.canvas.getBoundingClientRect();
+                const dpr = window.devicePixelRatio || 1;
+                this.canvas.width = rect.width * dpr;
+                this.canvas.height = rect.height * dpr;
+                this.ctx.scale(dpr, dpr);
                 this.ctx.strokeStyle = '{{ $lineColor }}';
                 this.ctx.lineWidth = {{ $lineWidth }};
                 this.ctx.lineCap = 'round';
                 this.ctx.lineJoin = 'round';
-
-                // Load existing signature if present
-                if (this.signatureData) {
-                    this.loadSignature();
-                }
             },
 
             loadSignature() {
@@ -65,18 +76,16 @@
 
             getCoordinates(e) {
                 const rect = this.canvas.getBoundingClientRect();
-                const scaleX = this.canvas.width / rect.width;
-                const scaleY = this.canvas.height / rect.height;
 
                 if (e.touches && e.touches.length > 0) {
                     return {
-                        x: (e.touches[0].clientX - rect.left) * scaleX,
-                        y: (e.touches[0].clientY - rect.top) * scaleY
+                        x: e.touches[0].clientX - rect.left,
+                        y: e.touches[0].clientY - rect.top
                     };
                 }
                 return {
-                    x: (e.clientX - rect.left) * scaleX,
-                    y: (e.clientY - rect.top) * scaleY
+                    x: e.clientX - rect.left,
+                    y: e.clientY - rect.top
                 };
             },
 
@@ -131,7 +140,7 @@
                 width="{{ $width }}"
                 height="{{ $height }}"
                 class="w-full cursor-crosshair"
-                style="max-width: {{ $width }}px; height: auto; aspect-ratio: {{ $width }} / {{ $height }};"
+                style="height: {{ $height }}px;"
                 @mousedown="startDrawing($event)"
                 @mousemove="draw($event)"
                 @mouseup="stopDrawing($event)"
