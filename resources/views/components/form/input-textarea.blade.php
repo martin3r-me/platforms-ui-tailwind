@@ -1,6 +1,6 @@
 {{-- resources/views/components/ui/textarea.blade.php --}}
 @props([
-    'name',
+    'name' => null,
     'label' => null,
     'hint' => null,
     'value' => null,
@@ -33,21 +33,23 @@
     @if($label)
         <div class="flex items-center justify-between">
             <x-ui-label :for="$name" :text="$label" :variant="$variant" :required="$required" :size="$size" class="mb-1"/>
-            @if($hint)
+            @if($hint && $name)
                 <span id="{{ $name }}-hint" class="text-sm/6 text-[color:var(--ui-muted)]">{{ $hint }}</span>
+            @elseif($hint)
+                <span class="text-sm/6 text-[color:var(--ui-muted)]">{{ $hint }}</span>
             @endif
         </div>
     @endif
 
     <textarea
-        id="{{ $name }}"
-        name="{{ $name }}"
+        @if($name) id="{{ $name }}" @endif
+        @if($name) name="{{ $name }}" @endif
         rows="{{ $rows }}"
         @if($required) required @endif
         @if($placeholder) placeholder="{{ $placeholder }}" @endif
-        @if($hint) aria-describedby="{{ $name }}-hint" @endif
+        @if($hint && $name) aria-describedby="{{ $name }}-hint" @endif
         {{ $attributes->merge(['class' => implode(' ', $baseClasses)]) }}
-    >{{ old($name, $value) }}</textarea>
+    >{{ $name ? old($name, $value) : $value }}</textarea>
 
     @error($errorKey)
         <span class="mt-1 text-[color:var(--ui-danger)] text-sm">{{ $message }}</span>
