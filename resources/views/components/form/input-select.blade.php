@@ -128,6 +128,10 @@
     $useBadges = $displayMode === 'badges' || ($displayMode === 'auto' && $optionCount < 10);
     $useSearchable = $displayMode === 'searchable' || ($displayMode === 'auto' && $optionCount >= $searchThreshold);
 
+    // Wire:model Erkennung für Alpine @entangle
+    $hasWireModel = $attributes->whereStartsWith('wire:model')->isNotEmpty();
+    $wireModel = $hasWireModel ? $attributes->wire('model') : null;
+
     if ($useBadges && $compactNull) {
         $nullLabel = '−';
     }
@@ -192,117 +196,72 @@
     @endif
 
     @if($useBadges)
-        {{-- Badge/Button Modus --}}
-        <div 
-            class="flex flex-wrap gap-2" 
+        {{-- Badge/Button Modus - reaktiv via Alpine x-model + @entangle --}}
+        <div
+            class="flex flex-wrap gap-2"
             @if($hint) aria-describedby="{{ $name }}-hint" @endif
             x-data="{
-                init() {
-                    this.updateBadges();
-                    // Bei Änderungen aktualisieren
-                    this.$el.querySelectorAll('input[type=radio]').forEach(radio => {
-                        radio.addEventListener('change', () => this.updateBadges());
-                    });
-                    // Bei Livewire-Updates aktualisieren (wenn wire:model vorhanden)
-                    @if($attributes->whereStartsWith('wire:')->isNotEmpty())
-                        Livewire.hook('morph.updated', () => {
-                            setTimeout(() => this.updateBadges(), 10);
-                        });
-                    @endif
-                },
-                updateBadges() {
-                    const checked = this.$el.querySelector('input[type=radio]:checked');
-                    if (!checked) return;
-                    
-                    const selectedValue = checked.value;
-                    this.$el.querySelectorAll('span[data-badge]').forEach(badge => {
-                        const badgeValue = badge.getAttribute('data-badge');
-                        if (badgeValue === selectedValue) {
-                            badge.className = badge.getAttribute('data-filled-classes');
-                        } else {
-                            badge.className = badge.getAttribute('data-outline-classes');
-                        }
-                    });
-                }
+                selected: @if($hasWireModel) @entangle($wireModel) @else '{{ addslashes($selected ?? '') }}' @endif,
             }"
         >
             @if($nullable)
-                @php
-                    $isNullSelected = (string)($selected ?? '') === '';
-                @endphp
                 <label class="inline-flex items-center rounded-lg cursor-pointer @if($disabled) opacity-50 cursor-not-allowed @endif">
-                    <input 
-                        type="radio" 
-                        name="{{ $name }}" 
-                        value="" 
+                    <input
+                        type="radio"
+                        name="{{ $name }}"
+                        value=""
+                        x-model="selected"
                         @if($disabled) disabled @endif
                         @if($required) required @endif
                         class="sr-only"
-                        {{ $attributes->whereStartsWith('wire:') }}
-                        @checked($isNullSelected)
                     />
-                    <span 
-                        data-badge=""
-                        data-filled-classes="{{ $nullBadgeSizeClass }} rounded-lg transition-all duration-200 {{ $filledClasses }}"
-                        data-outline-classes="{{ $nullBadgeSizeClass }} rounded-lg transition-all duration-200 {{ $outlineClasses }}"
-                        class="{{ $nullBadgeSizeClass }} rounded-lg transition-all duration-200 {{ $isNullSelected ? $filledClasses : $outlineClasses }}"
+                    <span
+                        :class="(selected == null || selected === '')
+                            ? '{{ $nullBadgeSizeClass }} rounded-lg transition-all duration-200 {{ $filledClasses }}'
+                            : '{{ $nullBadgeSizeClass }} rounded-lg transition-all duration-200 {{ $outlineClasses }}'"
                     >{{ $nullLabel }}</span>
                 </label>
             @endif
             @foreach($normalized as $optionKey => $optionLabelNormalized)
                 @php
-                    $isOptionSelected = (string)$selected === (string)$optionKey;
-                    // Sicherstellen, dass $optionLabelNormalized ein String ist
                     if (is_array($optionLabelNormalized)) {
                         $optionLabelNormalized = json_encode($optionLabelNormalized);
                     }
                     $optionLabelNormalized = (string) $optionLabelNormalized;
                 @endphp
                 <label class="inline-flex items-center rounded-lg cursor-pointer @if($disabled) opacity-50 cursor-not-allowed @endif">
-                    <input 
-                        type="radio" 
-                        name="{{ $name }}" 
-                        value="{{ $optionKey }}" 
+                    <input
+                        type="radio"
+                        name="{{ $name }}"
+                        value="{{ $optionKey }}"
+                        x-model="selected"
                         @if($disabled) disabled @endif
                         @if($required) required @endif
                         class="sr-only"
-                        {{ $attributes->whereStartsWith('wire:') }}
-                        @checked($isOptionSelected)
                     />
-                    <span 
-                        data-badge="{{ $optionKey }}"
-                        data-filled-classes="{{ $badgeSizeClass }} rounded-lg transition-all duration-200 {{ $filledClasses }}"
-                        data-outline-classes="{{ $badgeSizeClass }} rounded-lg transition-all duration-200 {{ $outlineClasses }}"
-                        class="{{ $badgeSizeClass }} rounded-lg transition-all duration-200 {{ $isOptionSelected ? $filledClasses : $outlineClasses }}"
+                    <span
+                        :class="String(selected) === '{{ $optionKey }}'
+                            ? '{{ $badgeSizeClass }} rounded-lg transition-all duration-200 {{ $filledClasses }}'
+                            : '{{ $badgeSizeClass }} rounded-lg transition-all duration-200 {{ $outlineClasses }}'"
                     >{{ $optionLabelNormalized }}</span>
                 </label>
             @endforeach
         </div>
     @elseif($useSearchable)
-        {{-- Searchable Dropdown Modus --}}
-        @php
-            // Label für den aktuell ausgewählten Wert ermitteln (mit String-Cast für robuste Vergleiche)
-            $selectedLabelForSearchable = $nullLabel;
-            if ($selected !== null && $selected !== '') {
-                $selectedKey = (string) $selected;
-                foreach ($normalized as $key => $label) {
-                    if ((string) $key === $selectedKey) {
-                        $selectedLabelForSearchable = $label;
-                        break;
-                    }
-                }
-            }
-        @endphp
+        {{-- Searchable Dropdown Modus - reaktiv via @entangle --}}
         <div
             class="relative"
             x-data="{
                 open: false,
                 search: '',
-                selectedValue: '{{ $selected ?? '' }}',
-                selectedLabel: '{{ addslashes($selectedLabelForSearchable) }}',
+                selectedValue: @if($hasWireModel) @entangle($wireModel) @else '{{ addslashes($selected ?? '') }}' @endif,
                 options: {{ json_encode($normalized) }},
                 nullable: {{ $nullable ? 'true' : 'false' }},
-                nullLabel: '{{ $nullLabel }}',
+                nullLabel: '{{ addslashes($nullLabel) }}',
+                get selectedLabel() {
+                    if (this.selectedValue == null || this.selectedValue === '') return this.nullLabel;
+                    return this.options[String(this.selectedValue)] ?? this.nullLabel;
+                },
                 get filteredOptions() {
                     if (!this.search) return this.options;
                     const searchLower = this.search.toLowerCase();
@@ -314,14 +273,10 @@
                     }
                     return filtered;
                 },
-                selectOption(value, label) {
+                selectOption(value) {
                     this.selectedValue = value;
-                    this.selectedLabel = label;
                     this.open = false;
                     this.search = '';
-                    this.$refs.hiddenInput.value = value;
-                    this.$refs.hiddenInput.dispatchEvent(new Event('change', { bubbles: true }));
-                    this.$refs.hiddenInput.dispatchEvent(new Event('input', { bubbles: true }));
                 }
             }"
             @click.outside="open = false"
@@ -334,7 +289,6 @@
                 name="{{ $name }}"
                 x-model="selectedValue"
                 @if($required) required @endif
-                {{ $attributes->whereStartsWith('wire:') }}
             />
 
             {{-- Display button --}}
@@ -398,8 +352,8 @@
                 <ul class="overflow-auto max-h-48 py-1" role="listbox">
                     <template x-if="nullable">
                         <li
-                            @click="selectOption('', nullLabel)"
-                            :class="selectedValue === '' ? 'bg-[rgb(var(--ui-{{ $variant }}-rgb))] text-[var(--ui-on-{{ $variant }})]' : 'text-[color:var(--ui-secondary)] hover:bg-[rgba(var(--ui-{{ $variant }}-rgb),0.1)]'"
+                            @click="selectOption('')"
+                            :class="(selectedValue == null || selectedValue === '') ? 'bg-[rgb(var(--ui-{{ $variant }}-rgb))] text-[var(--ui-on-{{ $variant }})]' : 'text-[color:var(--ui-secondary)] hover:bg-[rgba(var(--ui-{{ $variant }}-rgb),0.1)]'"
                             class="cursor-pointer select-none px-4 py-2 text-sm"
                             role="option"
                         >
@@ -408,8 +362,8 @@
                     </template>
                     <template x-for="(label, value) in filteredOptions" :key="value">
                         <li
-                            @click="selectOption(value, label)"
-                            :class="selectedValue === value ? 'bg-[rgb(var(--ui-{{ $variant }}-rgb))] text-[var(--ui-on-{{ $variant }})]' : 'text-[color:var(--ui-secondary)] hover:bg-[rgba(var(--ui-{{ $variant }}-rgb),0.1)]'"
+                            @click="selectOption(value)"
+                            :class="String(selectedValue) === String(value) ? 'bg-[rgb(var(--ui-{{ $variant }}-rgb))] text-[var(--ui-on-{{ $variant }})]' : 'text-[color:var(--ui-secondary)] hover:bg-[rgba(var(--ui-{{ $variant }}-rgb),0.1)]'"
                             class="cursor-pointer select-none px-4 py-2 text-sm"
                             role="option"
                         >
