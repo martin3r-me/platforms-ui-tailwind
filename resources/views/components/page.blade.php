@@ -22,6 +22,10 @@
         {{ $navbar }}
     @endisset
 
+    @isset($actionbar)
+        {{ $actionbar }}
+    @endisset
+
     <div class="flex-1 min-h-0 min-w-0 flex">
         @isset($sidebar)
             {{ $sidebar }}
