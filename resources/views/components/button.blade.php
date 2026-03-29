@@ -17,15 +17,15 @@
     if ($isOutline) {
         $variantClasses = implode(' ', [
             'bg-transparent',
-            "text-[var(--ui-{$allowed})]",
+            "text-[color:var(--ui-{$allowed})]",
             "border border-[rgb(var(--ui-{$allowed}-rgb))]",
-            "hover:bg-[rgb(var(--ui-{$allowed}-rgb))] hover:text-[var(--ui-on-{$allowed})]",
+            "hover:bg-[rgb(var(--ui-{$allowed}-rgb))] hover:text-[color:var(--ui-on-{$allowed})]",
             "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--ui-{$allowed}-rgb))]",
         ]);
     } elseif ($isGhost) {
         $variantClasses = implode(' ', [
             'bg-transparent',
-            "text-[var(--ui-{$allowed})]",
+            "text-[color:var(--ui-{$allowed})]",
             'border border-transparent',
             "hover:bg-[rgba(var(--ui-{$allowed}-rgb),0.08)]",
             "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--ui-{$allowed}-rgb))]",
@@ -33,9 +33,9 @@
     } else {
         $variantClasses = implode(' ', [
             "bg-[rgb(var(--ui-{$allowed}-rgb))]",
-            "text-[var(--ui-on-{$allowed})]",
+            "text-[color:var(--ui-on-{$allowed})]",
             'border border-transparent',
-            'hover:opacity-90',
+            'hover:brightness-110 hover:shadow-sm',
             "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--ui-{$allowed}-rgb))]",
         ]);
     }
@@ -61,8 +61,8 @@
     }
 
     $classes = implode(' ', array_filter([
-        'inline-flex items-center justify-center select-none whitespace-nowrap',
-        'transition-colors duration-200',
+        'inline-flex items-center justify-center select-none whitespace-nowrap font-medium',
+        'transition-all duration-150 active:scale-[0.98]',
         $variantClasses,
         $roundedClass,
         $sizeClass,
@@ -72,13 +72,13 @@
 
 @if($href)
     <a href="{{ $href }}" {{ $attributes->merge(['class' => $classes]) }} @disabled($disabled)>
-        <span class="flex items-center justify-center">
+        <span class="flex items-center justify-center gap-2">
             {{ $iconOnly ? $slot->withAttributes(['class' => trim(($slot->attributes['class'] ?? '') . ' ' . $iconSize)]) : $slot }}
         </span>
     </a>
 @else
     <button {{ $attributes->merge(['class' => $classes]) }} @disabled($disabled)>
-        <span class="flex items-center justify-center">
+        <span class="flex items-center justify-center gap-2">
             {{ $iconOnly ? $slot->withAttributes(['class' => trim(($slot->attributes['class'] ?? '') . ' ' . $iconSize)]) : $slot }}
         </span>
     </button>

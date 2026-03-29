@@ -24,8 +24,9 @@
         default => 'px-3 py-1.5 text-base sm:text-sm/6',
     };
     $baseClasses = [
-        'block w-full rounded-md bg-white text-[color:var(--ui-body-color)] placeholder-[color:var(--ui-muted)]',
+        'block w-full rounded-md bg-[color:var(--ui-surface)] text-[color:var(--ui-body-color)] placeholder-[color:var(--ui-muted)]',
         'outline-1 -outline-offset-1 outline-[color:var(--ui-border)] border border-transparent',
+        'transition-all duration-150',
         // Focus mit Variablenfarbe (analog Vorlage)
         "focus:outline-2 focus:-outline-offset-2 focus:outline-[color:rgb(var(--ui-{$variant}-rgb))]",
         $sizeClass,

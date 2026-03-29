@@ -4,7 +4,7 @@
 ])
 
 @php
-    $paddingClass = $compact ? 'p-1' : 'p-3';
+    $paddingClass = $compact ? 'px-2 py-1.5' : 'p-3';
     $alignClass = match($align) {
         'center' => 'text-center',
         'right' => 'text-right',
@@ -12,6 +12,6 @@
     };
 @endphp
 
-<td class="{{ $paddingClass }} {{ $alignClass }} text-[color:var(--ui-body-color)] border-r border-[color:var(--ui-border)]">
+<td class="{{ $paddingClass }} {{ $alignClass }} text-[color:var(--ui-body-color)]">
     {{ $slot }}
 </td>

@@ -4,16 +4,16 @@
   'class' => '',
 ])
 
-<section {{ $attributes->merge(['class' => 'rounded-md border border-[var(--ui-border)] bg-white '.$class]) }}>
-  <header class="p-3 border-b border-[var(--ui-border)]">
+<section {{ $attributes->merge(['class' => 'rounded-lg border border-[color:var(--ui-border)] bg-[color:var(--ui-surface)] shadow-sm '.$class]) }}>
+  <header class="px-4 py-3 border-b border-[color:var(--ui-border)]">
     @if($title)
-      <h3 class="text-base font-semibold text-[var(--ui-secondary)] m-0">{{ $title }}</h3>
+      <h3 class="text-base font-semibold text-[color:var(--ui-secondary)] m-0">{{ $title }}</h3>
     @endif
     @if($subtitle)
-      <div class="text-xs text-[var(--ui-muted)]">{{ $subtitle }}</div>
+      <div class="text-xs text-[color:var(--ui-muted)]">{{ $subtitle }}</div>
     @endif
   </header>
-  <div class="p-3">
+  <div class="p-4">
     {{ $slot }}
   </div>
 </section>

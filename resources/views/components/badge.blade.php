@@ -12,10 +12,10 @@
 
 @php
     $sizeClasses = [
-        'xs' => 'text-xs px-2 py-1',
-        'sm' => 'text-sm px-3 py-1',
-        'md' => 'text-base px-4 py-2',
-        'lg' => 'text-lg px-5 py-2',
+        'xs' => 'text-xs px-1.5 py-0.5',
+        'sm' => 'text-xs px-2 py-0.5',
+        'md' => 'text-sm px-2.5 py-1',
+        'lg' => 'text-sm px-3 py-1',
     ];
     $iconSize = [
         'xs' => 'w-3 h-3',
@@ -41,12 +41,8 @@
     {{ $attributes->merge(['class' => $base]) }}
 >
     @if(isset($icon))
-        @if($icon === 'heroicon-o-check-circle')
-            <x-heroicon-o-check-circle :class="$iconSize" />
-        @elseif($icon === 'heroicon-o-play-circle')
-            <x-heroicon-o-play-circle :class="$iconSize" />
-        @elseif($icon === 'heroicon-o-clock')
-            <x-heroicon-o-clock :class="$iconSize" />
+        @if(str_starts_with($icon, 'heroicon-'))
+            <x-dynamic-component :component="$icon" :class="$iconSize" />
         @else
             <span class="inline-flex {{ $iconSize }} items-center justify-center">
                 {{ $icon }}

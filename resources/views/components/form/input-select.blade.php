@@ -158,22 +158,21 @@
     $allowed = in_array($variant, ['primary','success','secondary','info','warning','danger','muted']) ? $variant : 'primary';
     // Exakt wie x-ui-button: Outline vs. Filled
     $outlineClasses = implode(' ', [
-        'bg-[var(--ui-surface)]',
-        "text-[var(--ui-{$allowed})]",
-        "border border-[var(--ui-border)]",
+        'bg-[color:var(--ui-surface)]',
+        "text-[color:var(--ui-{$allowed})]",
+        "border border-[color:var(--ui-border)]",
         "hover:bg-[rgba(var(--ui-{$allowed}-rgb),0.05)]",
         "hover:border-[rgb(var(--ui-{$allowed}-rgb))]",
         "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--ui-{$allowed}-rgb))]",
     ]);
     $filledClasses = implode(' ', [
         "bg-[rgb(var(--ui-{$allowed}-rgb))]",
-        "text-[var(--ui-on-{$allowed})]",
+        "text-[color:var(--ui-on-{$allowed})]",
         "border-2 border-[rgb(var(--ui-{$allowed}-rgb))]",
-        'shadow-lg',
-        'font-bold',
-        'ring-4 ring-[rgb(var(--ui-{$allowed}-rgb))] ring-opacity-30',
-        'scale-105',
-        'hover:opacity-90',
+        'shadow-sm',
+        'font-semibold',
+        'ring-2 ring-[rgb(var(--ui-{$allowed}-rgb))] ring-opacity-20',
+        'hover:brightness-110',
         "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--ui-{$allowed}-rgb))]",
     ]);
 @endphp
@@ -298,7 +297,7 @@
                 @if($disabled) disabled @endif
                 class="{{ implode(' ', [
                     'block w-full text-left appearance-none rounded-md',
-                    'bg-[var(--ui-surface)] text-[color:var(--ui-secondary)]',
+                    'bg-[color:var(--ui-surface)] text-[color:var(--ui-secondary)]',
                     'outline-1 -outline-offset-1 outline-[color:var(--ui-border)] border border-transparent',
                     'transition-colors',
                     "focus:outline-2 focus:-outline-offset-2 focus:outline-[color:rgb(var(--ui-{$variant}-rgb))]",
@@ -325,11 +324,11 @@
                 x-transition:leave="transition ease-in duration-75"
                 x-transition:leave-start="opacity-100 scale-100"
                 x-transition:leave-end="opacity-0 scale-95"
-                class="absolute z-50 mt-1 w-full rounded-md bg-[var(--ui-surface)] shadow-lg ring-1 ring-[var(--ui-border)] max-h-60 overflow-hidden"
+                class="absolute z-50 mt-1 w-full rounded-md bg-[color:var(--ui-surface)] shadow-lg ring-1 ring-[color:var(--ui-border)] max-h-60 overflow-hidden"
                 style="display: none;"
             >
                 {{-- Search input --}}
-                <div class="p-2 border-b border-[var(--ui-border)]">
+                <div class="p-2 border-b border-[color:var(--ui-border)]">
                     <input
                         type="text"
                         x-model="search"
@@ -338,8 +337,8 @@
                         placeholder="{{ $searchPlaceholder }}"
                         class="{{ implode(' ', [
                             'block w-full rounded-md',
-                            'bg-[var(--ui-surface)] text-[color:var(--ui-secondary)]',
-                            'outline-1 -outline-offset-1 outline-[color:var(--ui-border)] border border-[var(--ui-border)]',
+                            'bg-[color:var(--ui-surface)] text-[color:var(--ui-secondary)]',
+                            'outline-1 -outline-offset-1 outline-[color:var(--ui-border)] border border-[color:var(--ui-border)]',
                             'transition-colors',
                             "focus:outline-2 focus:-outline-offset-2 focus:outline-[color:rgb(var(--ui-{$variant}-rgb))]",
                             'px-3 py-1.5 text-sm',
@@ -353,7 +352,7 @@
                     <template x-if="nullable">
                         <li
                             @click="selectOption('')"
-                            :class="(selectedValue == null || selectedValue === '') ? 'bg-[rgb(var(--ui-{{ $variant }}-rgb))] text-[var(--ui-on-{{ $variant }})]' : 'text-[color:var(--ui-secondary)] hover:bg-[rgba(var(--ui-{{ $variant }}-rgb),0.1)]'"
+                            :class="(selectedValue == null || selectedValue === '') ? 'bg-[rgb(var(--ui-{{ $variant }}-rgb))] text-[color:var(--ui-on-{{ $variant }})]' : 'text-[color:var(--ui-secondary)] hover:bg-[rgba(var(--ui-{{ $variant }}-rgb),0.1)]'"
                             class="cursor-pointer select-none px-4 py-2 text-sm"
                             role="option"
                         >
@@ -363,7 +362,7 @@
                     <template x-for="(label, value) in filteredOptions" :key="value">
                         <li
                             @click="selectOption(value)"
-                            :class="String(selectedValue) === String(value) ? 'bg-[rgb(var(--ui-{{ $variant }}-rgb))] text-[var(--ui-on-{{ $variant }})]' : 'text-[color:var(--ui-secondary)] hover:bg-[rgba(var(--ui-{{ $variant }}-rgb),0.1)]'"
+                            :class="String(selectedValue) === String(value) ? 'bg-[rgb(var(--ui-{{ $variant }}-rgb))] text-[color:var(--ui-on-{{ $variant }})]' : 'text-[color:var(--ui-secondary)] hover:bg-[rgba(var(--ui-{{ $variant }}-rgb),0.1)]'"
                             class="cursor-pointer select-none px-4 py-2 text-sm"
                             role="option"
                         >
@@ -390,7 +389,7 @@
                 @if($hint) aria-describedby="{{ $name }}-hint" @endif
                 {{ $attributes->merge(['class' => implode(' ', [
                     'block w-full appearance-none rounded-md',
-                    'bg-[var(--ui-surface)] text-[color:var(--ui-secondary)]',
+                    'bg-[color:var(--ui-surface)] text-[color:var(--ui-secondary)]',
                     'outline-1 -outline-offset-1 outline-[color:var(--ui-border)] border border-transparent',
                     'transition-colors',
                     "focus:outline-2 focus:-outline-offset-2 focus:outline-[color:rgb(var(--ui-{$variant}-rgb))]",

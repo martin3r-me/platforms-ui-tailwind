@@ -1,7 +1,4 @@
 @props([
-    'striped' => true,
-    'hover' => true,
-    'bordered' => true,
     'compact' => false,
 ])
 

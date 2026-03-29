@@ -31,6 +31,18 @@ module.exports = {
         lg: 'var(--ui-radius-lg)',
         xl: 'var(--ui-radius-xl)',
         full: 'var(--ui-radius-full)'
+      },
+      boxShadow: {
+        'xs': '0 1px 2px 0 rgb(0 0 0 / 0.03)',
+        'sm': '0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.06)',
+        'md': '0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.07)',
+        'lg': '0 10px 15px -3px rgb(0 0 0 / 0.07), 0 4px 6px -4px rgb(0 0 0 / 0.07)',
+      },
+      transitionDuration: {
+        DEFAULT: '150ms',
+      },
+      transitionTimingFunction: {
+        DEFAULT: 'cubic-bezier(0.4, 0, 0.2, 1)',
       }
     }
   },

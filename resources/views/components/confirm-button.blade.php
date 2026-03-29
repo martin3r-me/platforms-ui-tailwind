@@ -20,21 +20,23 @@
     :variant="$variant"
     :size="$size"
     :class="'hover:bg-[color:var(--ui-danger-80)] hover:text-[color:var(--ui-on-danger)] w-full flex '.$class"
-    x-data="{ confirm: false }"
+    x-data="{ confirming: false }"
     x-on:click="
-        if (!confirm) {
-            confirm = true;
-            $el.innerHTML = '{{ $confirmText }}';
-            setTimeout(() => { confirm = false; $el.innerHTML = '{{ $text }}'; }, 3000);
+        if (!confirming) {
+            confirming = true;
+            setTimeout(() => { confirming = false; }, 3000);
         } else {
             {!! $wireCall !!}
         }
     "
 >
-    <div class="flex gap-2 items-center">
-        @if($icon)
-            {!! $icon !!}
-        @endif
-        <span>{{ $text }}</span>
-    </div>
+    <span x-show="!confirming">
+        <span class="flex gap-2 items-center">
+            @if($icon)
+                {!! $icon !!}
+            @endif
+            <span>{{ $text }}</span>
+        </span>
+    </span>
+    <span x-show="confirming" x-cloak>{{ $confirmText }}</span>
 </x-ui-button>

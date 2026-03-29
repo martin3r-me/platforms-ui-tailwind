@@ -8,7 +8,7 @@
 ])
 
 @php
-    $paddingClass = $compact ? 'p-1' : 'p-3';
+    $paddingClass = $compact ? 'px-2 py-1.5' : 'p-3';
     $alignClass = match($align) {
         'center' => 'text-center',
         'right' => 'text-right',

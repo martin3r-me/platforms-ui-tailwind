@@ -9,7 +9,7 @@
 @php
     $classes = ['border-b', 'border-[color:var(--ui-border)]'];
     if ($hover) {
-        $classes[] = 'hover:bg-[color:var(--ui-primary-5)] transition-colors';
+        $classes[] = 'hover:bg-[color:var(--ui-muted-5)] transition-colors duration-150';
     }
     if ($striped) {
         $classes[] = 'even:bg-[color:var(--ui-muted-5)]';

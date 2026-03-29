@@ -3,7 +3,7 @@
   'description' => null,
 ])
 
-<section {{ $attributes->merge(['class' => 'rounded-lg border border-[color:var(--ui-border)]/60 bg-[var(--ui-surface)] shadow-sm']) }}>
+<section {{ $attributes->merge(['class' => 'rounded-lg border border-[color:var(--ui-border)]/60 bg-[color:var(--ui-surface)] shadow-sm']) }}>
   @if($title || $description)
     <div class="px-4 py-3 border-b border-[color:var(--ui-border)]/60">
       @if($title)
