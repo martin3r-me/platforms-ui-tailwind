@@ -6,7 +6,7 @@
     $tableTextSize = $compact ? 'text-sm' : 'text-base';
 @endphp
 
-<div class="bg-[color:var(--ui-surface)] rounded-lg border border-[color:var(--ui-border)] overflow-hidden shadow-sm">
+<div class="bg-[color:var(--ui-surface)] rounded-lg border-4 border-red-500 overflow-hidden shadow-lg">
     <table class="w-full border-collapse {{ $tableTextSize }}">
         {{ $slot }}
     </table>
