@@ -17,7 +17,7 @@
     /* ===== Body, Surface, Border (optional overridebar) ===== */
     --ui-body-bg:    {{ config('ui.body.bg') }};
     --ui-body-color: {{ config('ui.body.color') }};
-    --ui-surface:    {{ config('ui.surface.bg', '#fff') }};
+    --ui-surface:    {{ config('ui.surface.bg', 'rgba(255,255,255,0.72)') }};
     --ui-surface-color: {{ config('ui.surface.color', '#1F2937') }};
     --ui-border:     {{ config('ui.border.color', 'rgba(0,0,0,.08)') }};
 
@@ -35,6 +35,15 @@
     @foreach(config('ui.breakpoints') as $key => $val)
         --ui-break-{{ $key }}: {{ $val }};
     @endforeach
+
+    /* ===== Glass & Shadows ===== */
+    --ui-surface-solid: #fff;
+    --ui-glass-blur: 12px;
+    --ui-glass-border: rgba(255,255,255,0.5);
+    --ui-shadow-xs: 0 1px 2px rgba(0,0,0,0.03);
+    --ui-shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.03);
+    --ui-shadow-md: 0 4px 12px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
+    --ui-shadow-lg: 0 12px 32px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.04);
 
     /* ===== Typography ===== */
     --ui-font-sans: {{ config('ui.typography.font_sans') }};

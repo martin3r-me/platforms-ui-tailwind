@@ -33,7 +33,7 @@
   ][$variant] ?? 'border-[color:var(--ui-info-20)]';
 @endphp
 
-<div class="rounded-lg border {{ $borderColor }} {{ $bg }} p-3">
+<div class="rounded-lg border border-white/30 backdrop-blur-sm {{ $bg }} p-3">
   <div class="flex items-start gap-2">
     @if($icon)
       @svg($icon, 'w-5 h-5 '.$text)

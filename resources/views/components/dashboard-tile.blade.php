@@ -69,13 +69,12 @@
     $isClickable = $clickable || $linkUrl;
 
     $containerClasses = implode(' ', [
-        'bg-[color:var(--ui-surface)] rounded-lg border transition-all duration-200',
+        'bg-white/60 backdrop-blur-sm rounded-lg border border-white/30 transition-all duration-200',
         $sizeClasses['container'],
         $variantClasses['bg'],
-        $variantClasses['border'],
         $isClickable ? 'cursor-pointer' : '',
-        $isClickable ? $variantClasses['hover'] : '',
-        $isClickable ? 'hover:shadow-lg hover:scale-[1.02]' : 'hover:shadow-md',
+        $isClickable ? 'hover:bg-white/80 hover:shadow-md' : 'hover:bg-white/80 hover:shadow-md',
+        $isClickable ? 'hover:shadow-lg hover:scale-[1.02]' : '',
         $loading ? 'opacity-75' : '',
         $animate ? 'animate-pulse' : '',
     ]);

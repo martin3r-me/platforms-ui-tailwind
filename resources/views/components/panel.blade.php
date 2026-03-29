@@ -4,7 +4,7 @@
   'class' => '',
 ])
 
-<section {{ $attributes->merge(['class' => 'rounded-lg border border-[color:var(--ui-border)] bg-[color:var(--ui-surface)] shadow-sm '.$class]) }}>
+<section {{ $attributes->merge(['class' => 'rounded-xl bg-white/70 backdrop-blur-sm border border-white/40 shadow-[0_1px_3px_rgba(0,0,0,0.04),0_1px_2px_rgba(0,0,0,0.03)] '.$class]) }}>
   <header class="px-4 py-3 border-b border-[color:var(--ui-border)]">
     @if($title)
       <h3 class="text-base font-semibold text-[color:var(--ui-secondary)] m-0">{{ $title }}</h3>

@@ -158,9 +158,9 @@
     $allowed = in_array($variant, ['primary','success','secondary','info','warning','danger','muted']) ? $variant : 'primary';
     // Exakt wie x-ui-button: Outline vs. Filled
     $outlineClasses = implode(' ', [
-        'bg-[color:var(--ui-surface)]',
+        'bg-white/50 backdrop-blur-sm',
         "text-[color:var(--ui-{$allowed})]",
-        "border border-[color:var(--ui-border)]",
+        "border border-white/40",
         "hover:bg-[rgba(var(--ui-{$allowed}-rgb),0.05)]",
         "hover:border-[rgb(var(--ui-{$allowed}-rgb))]",
         "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--ui-{$allowed}-rgb))]",

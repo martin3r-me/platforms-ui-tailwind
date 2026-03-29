@@ -9,10 +9,10 @@
 @php
     $classes = ['border-b', 'border-[color:var(--ui-border)]'];
     if ($hover) {
-        $classes[] = 'hover:bg-[color:var(--ui-muted-5)] transition-colors duration-150';
+        $classes[] = 'hover:bg-white/60 transition-colors duration-150';
     }
     if ($striped) {
-        $classes[] = 'even:bg-[color:var(--ui-muted-5)]';
+        $classes[] = 'even:bg-white/30';
     }
     if ($clickable) {
         $classes[] = 'cursor-pointer';

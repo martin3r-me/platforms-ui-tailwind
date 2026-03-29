@@ -20,7 +20,7 @@
     }
 @endphp
 
-<th class="{{ $paddingClass }} {{ $alignClass }} font-semibold text-[color:var(--ui-body-color)] border-b border-[color:var(--ui-border)] bg-[color:var(--ui-muted-5)] {{ $sortClasses }}">
+<th class="{{ $paddingClass }} {{ $alignClass }} font-semibold text-[color:var(--ui-body-color)] border-b border-[color:var(--ui-border)] bg-white/50 backdrop-blur-sm text-xs uppercase tracking-wider {{ $sortClasses }}">
     @if($sortable)
         <button 
             type="button" 

@@ -16,12 +16,12 @@
   $btn = $sizes[$size] ?? $sizes['sm'];
 @endphp
 
-<div class="inline-flex rounded-lg border border-[color:var(--ui-border)] bg-white overflow-hidden">
+<div class="inline-flex rounded-lg border border-white/30 bg-white/40 backdrop-blur-sm overflow-hidden">
   @foreach($options as $idx => $opt)
     @php $isActive = ($current ?? '') === ($opt['value'] ?? null); @endphp
     <button type="button"
       @if($model) wire:click="$set('{{ $model }}','{{ $opt['value'] }}')" @endif
-      class="inline-flex items-center gap-2 transition-all duration-150 {{ $btn }} {{ $isActive ? 'bg-[rgb(var(--ui-'.$activeVariant.'-rgb))] text-[color:var(--ui-on-'.$activeVariant.')]' : 'bg-white text-[color:var(--ui-body-color)] hover:bg-[color:var(--ui-muted-5)]' }} {{ $idx>0 ? 'border-l border-[color:var(--ui-border)]' : '' }}">
+      class="inline-flex items-center gap-2 transition-all duration-150 {{ $btn }} {{ $isActive ? 'bg-[rgb(var(--ui-'.$activeVariant.'-rgb))] text-[color:var(--ui-on-'.$activeVariant.')]' : 'bg-transparent text-[color:var(--ui-body-color)] hover:bg-white/50' }} {{ $idx>0 ? 'border-l border-white/30' : '' }}">
       @if(isset($opt['icon']))
         @svg($opt['icon'], 'w-4 h-4')
       @endif

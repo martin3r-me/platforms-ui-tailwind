@@ -16,10 +16,10 @@
 
     if ($isOutline) {
         $variantClasses = implode(' ', [
-            'bg-transparent',
+            'bg-white/50 backdrop-blur-sm',
             "text-[color:var(--ui-{$allowed})]",
             "border border-[rgb(var(--ui-{$allowed}-rgb))]",
-            "hover:bg-[rgb(var(--ui-{$allowed}-rgb))] hover:text-[color:var(--ui-on-{$allowed})]",
+            "hover:bg-white/70 hover:text-[color:var(--ui-on-{$allowed})]",
             "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--ui-{$allowed}-rgb))]",
         ]);
     } elseif ($isGhost) {
@@ -27,15 +27,15 @@
             'bg-transparent',
             "text-[color:var(--ui-{$allowed})]",
             'border border-transparent',
-            "hover:bg-[rgba(var(--ui-{$allowed}-rgb),0.08)]",
+            "hover:bg-white/40",
             "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--ui-{$allowed}-rgb))]",
         ]);
     } else {
         $variantClasses = implode(' ', [
             "bg-[rgb(var(--ui-{$allowed}-rgb))]",
             "text-[color:var(--ui-on-{$allowed})]",
-            'border border-transparent',
-            'hover:brightness-110 hover:shadow-sm',
+            'border border-transparent shadow-sm',
+            'hover:brightness-110 hover:shadow-md',
             "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--ui-{$allowed}-rgb))]",
         ]);
     }

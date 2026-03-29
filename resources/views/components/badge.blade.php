@@ -24,7 +24,7 @@
         'lg' => 'w-6 h-6',
     ][$size] ?? 'w-4 h-4';
 
-    $variantClasses = "bg-[color:var(--ui-{$variant}-10)] text-[color:var(--ui-{$variant})] border-[color:var(--ui-{$variant}-20)]";
+    $variantClasses = "bg-[color:var(--ui-{$variant}-10)] text-[color:var(--ui-{$variant})] border-white/30 backdrop-blur-sm";
     $rounded = $pill ? 'rounded-full' : 'rounded-md';
     $base = implode(' ', [
         'inline-flex items-center gap-2 border font-medium select-none',

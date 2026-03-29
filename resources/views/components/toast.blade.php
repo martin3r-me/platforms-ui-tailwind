@@ -26,7 +26,7 @@
 @endphp
 
 <div
-    class="toast {{ $classes }} rounded-lg shadow-lg p-4 min-w-80 w-80 flex flex-col gap-2 hover:brightness-105 hover:-translate-x-0.5 transition relative"
+    class="toast {{ $classes }} rounded-lg shadow-[0_12px_32px_rgba(0,0,0,0.12)] backdrop-blur-md border border-white/20 p-4 min-w-80 w-80 flex flex-col gap-2 hover:brightness-105 hover:-translate-x-0.5 transition relative"
     x-data="{ show: true }"
 >
     {{-- Close button --}}
