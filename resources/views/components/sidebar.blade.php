@@ -1,8 +1,9 @@
 <div x-data="sidebarState()" x-init="init()" class="flex">
-    <aside 
+    <aside
         x-cloak
-        :class="collapsed ? 'w-16' : 'w-72'" 
-        class="shrink-0 h-screen border-r border-[var(--ui-border)]/60 bg-[var(--ui-surface)] transition-all duration-300 flex flex-col"
+        :style="collapsed ? 'width: 4rem' : 'width: ' + sidebarWidth + 'px'"
+        :class="resizing ? '' : 'transition-all duration-300'"
+        class="shrink-0 h-screen border-r border-[var(--ui-border)]/60 bg-[var(--ui-surface)] flex flex-col relative"
     >
         <!-- Toggle/Header-Bereich (immer sichtbar) -->
         <div class="sticky top-0 z-10 bg-[var(--ui-surface)]/90 backdrop-blur">
@@ -69,20 +70,61 @@
                 <span x-show="!collapsed" class="text-sm font-medium">Terminal</span>
             </button>
         </div>
+
+        <!-- Resize handle (right edge) -->
+        <div
+            x-show="!collapsed"
+            @mousedown.prevent="startResize($event)"
+            class="absolute top-0 right-0 w-1 h-full cursor-ew-resize group/resize z-20"
+        >
+            <div class="w-px h-full bg-transparent group-hover/resize:bg-[var(--ui-primary)]/40 transition ml-auto"></div>
+        </div>
     </aside>
 </div>
 
 <script>
 function sidebarState() {
+    const STORAGE_KEY = 'sidebar-width';
+    const DEFAULT_WIDTH = 288;
+    const MIN_WIDTH = 200;
+    const MAX_WIDTH = 480;
+
     return {
         collapsed: false,
+        sidebarWidth: parseInt(localStorage.getItem(STORAGE_KEY)) || DEFAULT_WIDTH,
+        resizing: false,
+
         init() {
             this.collapsed = localStorage.getItem('sidebar-collapsed') === 'true';
+            this.sidebarWidth = Math.max(MIN_WIDTH, Math.min(MAX_WIDTH, this.sidebarWidth));
             this.$el.addEventListener('toggle-sidebar', () => { this.toggle(); });
         },
+
         toggle() {
             this.collapsed = !this.collapsed;
             localStorage.setItem('sidebar-collapsed', this.collapsed);
+        },
+
+        startResize(e) {
+            if (this.collapsed) return;
+            this.resizing = true;
+            const startX = e.clientX;
+            const startWidth = this.sidebarWidth;
+
+            const onMouseMove = (ev) => {
+                const delta = ev.clientX - startX;
+                this.sidebarWidth = Math.max(MIN_WIDTH, Math.min(MAX_WIDTH, startWidth + delta));
+            };
+
+            const onMouseUp = () => {
+                this.resizing = false;
+                localStorage.setItem(STORAGE_KEY, this.sidebarWidth);
+                document.removeEventListener('mousemove', onMouseMove);
+                document.removeEventListener('mouseup', onMouseUp);
+            };
+
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mouseup', onMouseUp);
         }
     }
 }
