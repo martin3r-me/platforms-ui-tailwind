@@ -62,7 +62,7 @@
             <!-- Terminal Trigger -->
             <button
                 @click="window.dispatchEvent(new CustomEvent('toggle-terminal'))"
-                class="w-full flex items-center h-14 text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)] transition-colors"
+                class="w-full flex items-center h-9 text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)] transition-colors"
                 :class="(Alpine.store('page')?.terminalOpen ? 'text-[var(--ui-primary)] bg-[var(--ui-muted-5)]' : '') + ' ' + (collapsed ? 'justify-center' : 'justify-start px-4 gap-3')"
                 title="Terminal"
             >
@@ -77,7 +77,8 @@
             @mousedown.prevent="startResize($event)"
             class="absolute top-0 right-0 w-1 h-full cursor-ew-resize group/resize z-20"
         >
-            <div class="w-px h-full bg-transparent group-hover/resize:bg-[var(--ui-primary)]/40 transition ml-auto"></div>
+            <div class="absolute inset-y-0 right-0 w-px bg-transparent group-hover/resize:bg-[var(--ui-primary)]/40 transition"></div>
+            <div class="absolute top-1/2 -translate-y-1/2 right-0 h-8 w-1 rounded-full bg-transparent group-hover/resize:bg-[var(--ui-primary)]/30 transition"></div>
         </div>
     </aside>
 </div>
