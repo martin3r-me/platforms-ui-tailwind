@@ -119,11 +119,25 @@
 
             <div class="h-8 w-px bg-[var(--ui-border)]/60 mx-1"></div>
 
+            {{-- Hilfe --}}
+            @if(auth()->check())
+                @php
+                    $routeName = $routeName ?? request()->route()?->getName();
+                    $routeModule = $routeModule ?? (is_string($routeName) && str_contains($routeName, '.') ? strstr($routeName, '.', true) : null);
+                @endphp
+                <button x-data
+                    @click="$dispatch('open-help', { module: @js($routeModule) })"
+                    class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-[var(--ui-border)]/60 transition text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)]"
+                    title="Hilfe">
+                    @svg('heroicon-o-question-mark-circle', 'w-5 h-5')
+                </button>
+            @endif
+
             {{-- Simple Playground (Modal) --}}
             @if(auth()->check())
                 @php
-                    $routeName = request()->route()?->getName();
-                    $routeModule = is_string($routeName) && str_contains($routeName, '.') ? strstr($routeName, '.', true) : null;
+                    $routeName = $routeName ?? request()->route()?->getName();
+                    $routeModule = $routeModule ?? (is_string($routeName) && str_contains($routeName, '.') ? strstr($routeName, '.', true) : null);
                 @endphp
                 <button x-data
                     @click="$dispatch('playground:open', { context: { source_route: @js($routeName), source_module: @js($routeModule), source_url: window.location.href } })"
