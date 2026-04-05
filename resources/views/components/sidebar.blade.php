@@ -58,7 +58,7 @@
         </template>
 
         <!-- Bottom Actions -->
-        <div class="mt-auto sticky bottom-0 z-10 bg-[var(--ui-surface)]/90 backdrop-blur border-t border-[var(--ui-border)]/60">
+        <div class="mt-auto sticky bottom-0 z-10 bg-[var(--ui-surface)]/90 backdrop-blur border-t-2 border-[var(--ui-border)]">
             <!-- Terminal Trigger -->
             <button
                 @click="window.dispatchEvent(new CustomEvent('toggle-terminal'))"
