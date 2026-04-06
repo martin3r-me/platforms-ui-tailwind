@@ -72,6 +72,7 @@ class UiTailwindServiceProvider extends ServiceProvider
         Blade::component('ui-tailwind::components.form.input-select', 'ui-input-select');
         Blade::component('ui-tailwind::components.form.input-checkbox', 'ui-input-checkbox');
         Blade::component('ui-tailwind::components.form.input-date', 'ui-input-date');
+        Blade::component('ui-tailwind::components.form.input-date-select', 'ui-input-date-select');
         Blade::component('ui-tailwind::components.form.input-datetime', 'ui-input-datetime');
         Blade::component('ui-tailwind::components.form.input-number', 'ui-input-number');
         Blade::component('ui-tailwind::components.form.input-signature', 'ui-input-signature');
