@@ -10,13 +10,22 @@
 @php
     $errorKey = $errorKey ?: $name;
     $months = [
-        1 => 'Jan', 2 => 'Feb', 3 => 'Mär', 4 => 'Apr',
-        5 => 'Mai', 6 => 'Jun', 7 => 'Jul', 8 => 'Aug',
-        9 => 'Sep', 10 => 'Okt', 11 => 'Nov', 12 => 'Dez',
+        1 => 'Januar', 2 => 'Februar', 3 => 'März', 4 => 'April',
+        5 => 'Mai', 6 => 'Juni', 7 => 'Juli', 8 => 'August',
+        9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Dezember',
     ];
     $currentYear = (int) date('Y');
     $yearStart = $currentYear + 1;
     $yearEnd = $currentYear - 5;
+
+    $selectClasses = implode(' ', [
+        'block w-full appearance-none rounded-md',
+        'bg-[color:var(--ui-surface)] text-[color:var(--ui-secondary)]',
+        'outline-1 -outline-offset-1 outline-[color:var(--ui-border)] border border-transparent',
+        'transition-colors',
+        "focus:outline-2 focus:-outline-offset-2 focus:outline-[color:rgb(var(--ui-{$variant}-rgb))]",
+        'pl-3 pr-8 py-1.5 text-base sm:text-sm/6',
+    ]);
 @endphp
 
 <div
@@ -50,39 +59,45 @@
     x-effect="sync()"
 >
     @if($label)
-        <x-ui-label :for="$name" :text="$label" :variant="$variant" :required="$required" :size="$size" class="mb-1"/>
+        <x-ui-label :for="$name" :text="$label" :variant="$variant" :required="$required" size="sm" class="mb-1"/>
     @endif
 
-    <div class="flex gap-2">
+    <div class="grid grid-cols-[5rem_1fr_6rem] gap-2">
         {{-- Tag --}}
-        <select
-            x-model.number="day"
-            class="flex-1 rounded-lg border border-[var(--ui-border)]/60 bg-[var(--ui-surface)] px-3 py-2 text-sm text-[var(--ui-secondary)] focus:outline-none focus:ring-2 focus:ring-[var(--ui-primary)]/20 focus:border-[var(--ui-primary)]"
-        >
-            @for($d = 1; $d <= 31; $d++)
-                <option value="{{ $d }}">{{ $d }}</option>
-            @endfor
-        </select>
+        <div class="relative">
+            <select x-model.number="day" class="{{ $selectClasses }}">
+                @for($d = 1; $d <= 31; $d++)
+                    <option value="{{ $d }}">{{ str_pad($d, 2, '0', STR_PAD_LEFT) }}</option>
+                @endfor
+            </select>
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                <svg class="w-4 h-4 text-[color:var(--ui-muted)]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+            </div>
+        </div>
 
         {{-- Monat --}}
-        <select
-            x-model.number="month"
-            class="flex-[1.3] rounded-lg border border-[var(--ui-border)]/60 bg-[var(--ui-surface)] px-3 py-2 text-sm text-[var(--ui-secondary)] focus:outline-none focus:ring-2 focus:ring-[var(--ui-primary)]/20 focus:border-[var(--ui-primary)]"
-        >
-            @foreach($months as $num => $name_label)
-                <option value="{{ $num }}">{{ $name_label }}</option>
-            @endforeach
-        </select>
+        <div class="relative">
+            <select x-model.number="month" class="{{ $selectClasses }}">
+                @foreach($months as $num => $monthLabel)
+                    <option value="{{ $num }}">{{ $monthLabel }}</option>
+                @endforeach
+            </select>
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                <svg class="w-4 h-4 text-[color:var(--ui-muted)]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+            </div>
+        </div>
 
         {{-- Jahr --}}
-        <select
-            x-model.number="year"
-            class="flex-1 rounded-lg border border-[var(--ui-border)]/60 bg-[var(--ui-surface)] px-3 py-2 text-sm text-[var(--ui-secondary)] focus:outline-none focus:ring-2 focus:ring-[var(--ui-primary)]/20 focus:border-[var(--ui-primary)]"
-        >
-            @for($y = $yearStart; $y >= $yearEnd; $y--)
-                <option value="{{ $y }}">{{ $y }}</option>
-            @endfor
-        </select>
+        <div class="relative">
+            <select x-model.number="year" class="{{ $selectClasses }}">
+                @for($y = $yearStart; $y >= $yearEnd; $y--)
+                    <option value="{{ $y }}">{{ $y }}</option>
+                @endfor
+            </select>
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                <svg class="w-4 h-4 text-[color:var(--ui-muted)]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+            </div>
+        </div>
     </div>
 
     @error($errorKey)
