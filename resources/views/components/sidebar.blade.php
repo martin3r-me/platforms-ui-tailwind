@@ -57,19 +57,6 @@
             </button>
         </template>
 
-        <!-- Bottom Actions -->
-        <div class="mt-auto sticky bottom-0 z-10 bg-[var(--ui-surface)]/90 backdrop-blur border-t-2 border-[var(--ui-border)]">
-            <!-- Terminal Trigger -->
-            <button
-                @click="window.dispatchEvent(new CustomEvent('toggle-terminal'))"
-                class="w-full flex items-center h-9 text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)] transition-colors"
-                :class="(Alpine.store('page')?.terminalOpen ? 'text-[var(--ui-primary)] bg-[var(--ui-muted-5)]' : '') + ' ' + (collapsed ? 'justify-center' : 'justify-start px-4 gap-3')"
-                title="Terminal"
-            >
-                @svg('heroicon-o-command-line', 'w-5 h-5')
-                <span x-show="!collapsed" class="text-sm font-medium">Terminal</span>
-            </button>
-        </div>
 
         <!-- Resize handle (right edge) -->
         <div
