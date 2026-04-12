@@ -8,25 +8,10 @@
         <!-- Toggle/Header-Bereich (immer sichtbar) -->
         <div class="sticky top-0 z-10 bg-[var(--ui-surface)]/90 backdrop-blur">
             <div class="flex flex-col">
-                <!-- Modul-Trigger -->
-                <button 
-                    @click="$dispatch('open-modal-modules')" 
-                    class="flex items-center h-14 border-b border-[var(--ui-border)]/60 text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)] transition-colors"
-                    :class="collapsed ? 'justify-center' : 'justify-start px-4 gap-3'"
-                    title="Module öffnen"
-                >
-                    @if (file_exists(public_path('logo_square.png')))
-                        <img src="{{ asset('logo_square.png') }}" alt="Logo" class="w-6 h-6 rounded-md" />
-                    @else
-                        @svg('heroicon-o-squares-2x2', 'w-6 h-6')
-                    @endif
-                    <span x-show="!collapsed" class="text-sm font-medium">Module</span>
-                </button>
-
                 <!-- Sidebar ein-/ausklappen -->
-                <button 
-                    @click="toggle()" 
-                    class="flex items-center justify-center h-14 border-b border-[var(--ui-border)]/60 text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)] transition-colors"
+                <button
+                    @click="toggle()"
+                    class="flex items-center justify-center h-10 border-b border-[var(--ui-border)]/60 text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)] transition-colors"
                     :title="collapsed ? 'Sidebar ausklappen' : 'Sidebar einklappen'"
                 >
                     <template x-if="collapsed">
