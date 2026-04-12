@@ -1,5 +1,5 @@
 @props([
-    'padding' => 'p-5',
+    'padding' => 'px-5 pb-5',
     'spacing' => 'space-y-8',
     'background' => 'bg-gray-50/30',
 ])
