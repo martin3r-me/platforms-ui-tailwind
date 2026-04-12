@@ -8,6 +8,7 @@
         if (!window.Alpine) return;
         if (!Alpine.store('page')) {
             Alpine.store('page', {
+                mainSidebarOpen: localStorage.getItem('sidebar-collapsed') !== 'true',
                 sidebarOpen: JSON.parse(localStorage.getItem('page.sidebarOpen') ?? 'true'),
                 activityOpen: JSON.parse(localStorage.getItem('page.activityOpen') ?? 'false'),
                 terminalOpen: JSON.parse(localStorage.getItem('page.terminalOpen') ?? 'false'),

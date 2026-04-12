@@ -70,12 +70,21 @@ function sidebarState() {
         init() {
             this.collapsed = localStorage.getItem('sidebar-collapsed') === 'true';
             this.sidebarWidth = Math.max(MIN_WIDTH, Math.min(MAX_WIDTH, this.sidebarWidth));
+            this.syncStore();
             this.$el.addEventListener('toggle-sidebar', () => { this.toggle(); });
+            window.addEventListener('toggle-main-sidebar', () => { this.toggle(); });
+        },
+
+        syncStore() {
+            if (window.Alpine?.store('page')) {
+                Alpine.store('page').mainSidebarOpen = !this.collapsed;
+            }
         },
 
         toggle() {
             this.collapsed = !this.collapsed;
             localStorage.setItem('sidebar-collapsed', this.collapsed);
+            this.syncStore();
         },
 
         startResize(e) {
