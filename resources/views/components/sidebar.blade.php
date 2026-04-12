@@ -1,4 +1,4 @@
-<div x-data="sidebarState()" x-init="init()" class="flex">
+<div x-data="sidebarState()" x-init="init()" @toggle-main-sidebar.window="toggle()" class="flex">
     <aside
         x-cloak
         :style="collapsed ? 'width: 4rem' : 'width: ' + sidebarWidth + 'px'"
@@ -72,7 +72,6 @@ function sidebarState() {
             this.sidebarWidth = Math.max(MIN_WIDTH, Math.min(MAX_WIDTH, this.sidebarWidth));
             this.syncStore();
             this.$el.addEventListener('toggle-sidebar', () => { this.toggle(); });
-            window.addEventListener('toggle-main-sidebar', () => { this.toggle(); });
         },
 
         syncStore() {
