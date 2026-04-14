@@ -11,6 +11,17 @@
 ])
 
 @php
+    // Support wire:click as fallback for action prop
+    if (empty($action) && $attributes->has('wire:click')) {
+        $wireClick = $attributes->get('wire:click');
+        if (preg_match('/^(\w+)\((.+)\)$/', $wireClick, $m)) {
+            $action = $m[1];
+            $value = $value ?? $m[2];
+        } else {
+            $action = $wireClick;
+        }
+    }
+
     $wireCall = is_null($value)
         ? "\$wire.call('{$action}')"
         : "\$wire.call('{$action}', " . json_encode($value) . ")";
