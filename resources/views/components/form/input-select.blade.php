@@ -125,7 +125,7 @@
     
     // Bestimme Anzeigemodus
     $optionCount = count($normalized) + ($nullable ? 1 : 0);
-    $useBadges = $displayMode === 'badges' || ($displayMode === 'auto' && $optionCount < 10);
+    $useBadges = $displayMode === 'badges';
     $useSearchable = $displayMode === 'searchable' || ($displayMode === 'auto' && $optionCount >= $searchThreshold);
 
     // Wire:model Erkennung für Alpine @entangle
