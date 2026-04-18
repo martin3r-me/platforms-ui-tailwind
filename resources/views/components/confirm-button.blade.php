@@ -27,7 +27,7 @@
 
     $wireCall = is_null($value)
         ? "\$wire.call('{$action}')"
-        : "\$wire.call('{$action}', " . ($rawValue ? $value : json_encode($value, JSON_HEX_QUOT | JSON_HEX_APOS)) . ")";
+        : "\$wire.call('{$action}', " . ($rawValue ? $value : json_encode($value)) . ")";
 @endphp
 
 <x-ui-button
@@ -40,7 +40,7 @@
             confirming = true;
             setTimeout(() => { confirming = false; }, 3000);
         } else {
-            {!! $wireCall !!}
+            {{ $wireCall }}
         }
     "
 >
