@@ -25,9 +25,15 @@
         }
     }
 
-    $wireCall = is_null($value)
-        ? "\$wire.call('{$action}')"
-        : "\$wire.call('{$action}', " . ($rawValue ? $value : json_encode($value)) . ")";
+    if (is_null($value)) {
+        $wireCall = "\$wire.call('{$action}')";
+    } elseif ($rawValue || is_numeric($value)) {
+        $wireCall = "\$wire.call('{$action}', {$value})";
+    } else {
+        // Single quotes avoid conflict with double-quoted HTML attributes
+        $escaped = str_replace(["\\", "'"], ["\\\\", "\\'"], $value);
+        $wireCall = "\$wire.call('{$action}', '{$escaped}')";
+    }
 @endphp
 
 <x-ui-button
