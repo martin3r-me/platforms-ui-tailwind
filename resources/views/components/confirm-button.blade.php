@@ -27,7 +27,7 @@
 
     $wireCall = is_null($value)
         ? "\$wire.call('{$action}')"
-        : "\$wire.call('{$action}', " . ($rawValue ? $value : json_encode($value)) . ")";
+        : "\$wire.call('{$action}', " . ($rawValue ? $value : json_encode($value, JSON_HEX_QUOT | JSON_HEX_APOS)) . ")";
 @endphp
 
 <x-ui-button
