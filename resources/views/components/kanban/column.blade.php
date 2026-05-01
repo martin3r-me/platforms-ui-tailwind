@@ -11,11 +11,11 @@
         wire:sortable.item="{{ $sortableId }}"
         wire:key="column-{{ $sortableId }}"
     @endif
-    {{ $attributes->merge(['class' => 'kanban-column flex-shrink-0 h-full w-80 min-w-[20rem] flex flex-col']) }}
+    {{ $attributes->merge(['class' => 'kanban-column flex-shrink-0 h-full flex flex-col', 'style' => 'width:20rem;min-width:20rem']) }}
     x-data="{ isList: localStorage.getItem('kanbanView') === 'list', scrollable: {{ $scrollable ? 'true' : 'false' }} }"
     x-init="this.isList = localStorage.getItem('kanbanView') === 'list'"
     @storage-change.window="isList = localStorage.getItem('kanbanView') === 'list'"
-    :class="{ 'w-full min-w-0': isList, 'w-80 min-w-[20rem]': !isList }"
+    :style="isList ? 'width:100%;min-width:0' : 'width:20rem;min-width:20rem'"
 >
     <div class="flex flex-col h-full bg-[var(--ui-surface)] border border-[var(--ui-border)]/40">
         
