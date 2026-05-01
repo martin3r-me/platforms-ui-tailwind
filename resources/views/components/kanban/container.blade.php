@@ -3,7 +3,7 @@
     'sortableGroup' => null,
 ])
 
-<div class="flex-1 min-h-0 h-full relative" x-data="{ 
+<div class="flex-1 min-h-0 h-full overflow-x-auto overflow-y-hidden relative" x-data="{ 
     view: (localStorage.getItem('kanbanView') || 'board'),
     toggleView() { 
         this.view = this.view === 'board' ? 'list' : 'board'; 
