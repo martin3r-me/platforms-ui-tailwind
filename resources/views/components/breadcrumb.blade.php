@@ -13,7 +13,7 @@
         @endif
         
         <div class="flex items-center">
-            @if($item['icon'] ?? false)
+            @if(($item['icon'] ?? false) && app('safe-svg')->resolve($item['icon'], 'heroicon-o-'))
                 @svg('heroicon-o-' . $item['icon'], 'w-4 h-4 text-[var(--ui-muted)] mr-1')
             @endif
             

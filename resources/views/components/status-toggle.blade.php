@@ -24,7 +24,7 @@
 
 <div class="flex items-center justify-between p-4 bg-white rounded-lg border border-[var(--ui-border)]/60 hover:border-[var(--ui-primary)]/40 transition-colors">
     <div class="flex items-center space-x-3">
-        @if($icon)
+        @if($icon && app('safe-svg')->resolve($icon, 'heroicon-o-'))
             <div class="flex-shrink-0">
                 @svg('heroicon-o-' . $icon, 'w-5 h-5 text-[var(--ui-muted)]')
             </div>

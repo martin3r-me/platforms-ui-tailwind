@@ -5,6 +5,7 @@
 
 @php
     $uid = \Illuminate\Support\Str::uuid()->toString();
+    $icon = $icon ? app('safe-svg')->resolve($icon) : null;
 @endphp
 
 <div x-data="{ open: false }">

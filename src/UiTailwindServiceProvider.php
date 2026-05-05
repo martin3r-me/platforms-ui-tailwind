@@ -4,6 +4,7 @@ namespace Platform\UiTailwind;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use BladeUI\Icons\Factory as IconFactory;
 
 class UiTailwindServiceProvider extends ServiceProvider
 {
@@ -96,6 +97,40 @@ class UiTailwindServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/ui.php', 'ui');
         $this->app->register(\BladeUI\Heroicons\BladeHeroiconsServiceProvider::class);
+
+        $this->app->singleton('safe-svg', function () {
+            return new class {
+                /**
+                 * Validates that an icon name is a safe, renderable SVG identifier.
+                 * Returns null if the name contains emoji, multibyte chars, or is not a valid heroicon.
+                 */
+                public function resolve(?string $icon, string $prefix = ''): ?string
+                {
+                    if ($icon === null || $icon === '') {
+                        return null;
+                    }
+
+                    // Reject anything with multibyte/emoji characters (valid icon names are ASCII-only)
+                    if (preg_match('/[^\x20-\x7E]/', $icon)) {
+                        return null;
+                    }
+
+                    // Only allow alphanumeric, hyphens, and dots (standard icon name chars)
+                    if (!preg_match('/^[a-zA-Z0-9\-\.]+$/', $icon)) {
+                        return null;
+                    }
+
+                    $fullName = $prefix ? $prefix . $icon : $icon;
+
+                    try {
+                        app(IconFactory::class)->svg($fullName);
+                        return $icon;
+                    } catch (\Exception $e) {
+                        return null;
+                    }
+                }
+            };
+        });
     }
 }
 
