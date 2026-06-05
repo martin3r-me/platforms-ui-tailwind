@@ -1,26 +1,61 @@
 @props([
     'title' => '',
-    'width' => 'w-80',         // expanded width
+    'width' => 'w-80',         // expanded width (Tailwind class — wird zu Default-px geparst)
     'defaultOpen' => true,
     'storeKey' => 'sidebarOpen', // für Aktivitäten explizit "activityOpen" setzen
     'side' => 'left',            // 'left' | 'right'
-    'icon' => null,              // optionaler Heroicon-Name fürs Rail (z.B. heroicon-o-bolt)
+    'icon' => null,              // optionaler Heroicon-Name fürs Rail
     'railWidth' => 'w-11',       // collapsed rail width (~44px)
+    'minWidth' => 200,           // resize min in px
+    'maxWidth' => 640,           // resize max in px
 ])
 
 @php
     $openExpr = "(Alpine?.store('page')?.['{$storeKey}'] ?? " . ($defaultOpen ? 'true' : 'false') . ")";
     $borderClass = $side === 'right' ? 'border-l border-[var(--ui-border)]/60' : 'border-r border-[var(--ui-border)]/60';
     $expandIcon = $side === 'right' ? 'heroicon-o-chevron-double-left' : 'heroicon-o-chevron-double-right';
+
+    // Default-Breite aus Tailwind-Klasse in Pixel ableiten (für Resize-Startwert).
+    $widthMap = [
+        'w-56' => 224, 'w-60' => 240, 'w-64' => 256, 'w-72' => 288,
+        'w-80' => 320, 'w-96' => 384,
+    ];
+    $defaultWidthPx = $widthMap[$width] ?? 320;
+    $widthStorageKey = "page-sidebar.{$storeKey}.width";
 @endphp
 
 <div
-    x-data
-    :class="{{ $openExpr }} ? '{{ $width }}' : '{{ $railWidth }}'"
-    class="relative flex-shrink-0 h-full bg-[var(--ui-muted-5)] transition-all duration-300 overflow-x-hidden {{ $borderClass }}"
+    x-data="{
+        width: parseInt(localStorage.getItem('{{ $widthStorageKey }}')) || {{ $defaultWidthPx }},
+        resizing: false,
+        startResize(e) {
+            this.resizing = true;
+            const startX = e.clientX;
+            const startWidth = this.width;
+            const side = '{{ $side }}';
+            const MIN = {{ $minWidth }};
+            const MAX = {{ $maxWidth }};
+            const onMouseMove = (ev) => {
+                const delta = ev.clientX - startX;
+                const adjusted = side === 'left' ? startWidth + delta : startWidth - delta;
+                this.width = Math.max(MIN, Math.min(MAX, adjusted));
+            };
+            const onMouseUp = () => {
+                this.resizing = false;
+                localStorage.setItem('{{ $widthStorageKey }}', this.width);
+                document.removeEventListener('mousemove', onMouseMove);
+                document.removeEventListener('mouseup', onMouseUp);
+            };
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mouseup', onMouseUp);
+        }
+    }"
+    :style="{{ $openExpr }} ? ('width: ' + width + 'px') : 'width: 44px'"
+    :class="resizing ? '' : 'transition-all duration-200'"
+    class="relative flex-shrink-0 h-full bg-[var(--ui-muted-5)] overflow-x-hidden {{ $borderClass }}"
     {{ $attributes }}
 >
-    {{-- Collapsed Rail — bleibt immer sichtbar, gleicher Mechanismus wie Done/Dashboard-Strips --}}
+    {{-- Collapsed Rail --}}
     <button
         type="button"
         x-show="!{{ $openExpr }}"
@@ -29,7 +64,6 @@
         class="group/rail h-full w-full flex flex-col items-center justify-between py-3 px-2 hover:bg-[var(--ui-muted-10)] transition-colors cursor-pointer"
         title="@if($title){{ $title }} öffnen @else Öffnen @endif"
     >
-        {{-- Top: Icon-Chip oder Expand-Chevron --}}
         @if($icon)
             <span class="inline-flex items-center justify-center w-6 h-6 rounded-md bg-white shadow-sm flex-shrink-0">
                 @svg($icon, 'w-3.5 h-3.5 text-[var(--ui-secondary)]')
@@ -38,7 +72,6 @@
             @svg($expandIcon, 'w-4 h-4 text-[var(--ui-secondary)] group-hover/rail:text-[var(--ui-primary)] transition-colors flex-shrink-0')
         @endif
 
-        {{-- Middle: vertikales Titel-Label --}}
         @if($title)
             <span
                 class="text-[10px] font-semibold uppercase tracking-wider text-[var(--ui-muted)] group-hover/rail:text-[var(--ui-secondary)] transition-colors my-2 truncate"
@@ -50,7 +83,6 @@
             <span class="flex-1"></span>
         @endif
 
-        {{-- Bottom: Expand-Chevron (wenn oben schon das Icon ist) --}}
         @if($icon)
             @svg($expandIcon, 'w-4 h-4 text-[var(--ui-secondary)] group-hover/rail:text-[var(--ui-primary)] transition-colors flex-shrink-0')
         @else
@@ -95,5 +127,15 @@
         <div class="flex-1 overflow-y-auto overflow-x-hidden">
             {{ $slot }}
         </div>
+    </div>
+
+    {{-- Resize-Handle (nur im expanded state, klebt an der nach außen zeigenden Kante) --}}
+    <div
+        x-show="{{ $openExpr }}"
+        @mousedown.prevent="startResize($event)"
+        class="absolute top-0 {{ $side === 'right' ? 'left-0' : 'right-0' }} w-1 h-full cursor-ew-resize group/resize z-20"
+    >
+        <div class="absolute inset-y-0 {{ $side === 'right' ? 'left-0' : 'right-0' }} w-px bg-transparent group-hover/resize:bg-[var(--ui-primary)]/40 transition"></div>
+        <div class="absolute top-1/2 -translate-y-1/2 {{ $side === 'right' ? 'left-0' : 'right-0' }} h-8 w-1 rounded-full bg-transparent group-hover/resize:bg-[var(--ui-primary)]/30 transition"></div>
     </div>
 </div>
