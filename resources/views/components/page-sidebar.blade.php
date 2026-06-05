@@ -35,7 +35,7 @@
                 @svg($icon, 'w-3.5 h-3.5 text-[var(--ui-secondary)]')
             </span>
         @else
-            @svg($expandIcon, 'w-4 h-4 text-[var(--ui-muted)] group-hover/rail:text-[var(--ui-secondary)] transition-colors flex-shrink-0')
+            @svg($expandIcon, 'w-4 h-4 text-[var(--ui-secondary)] group-hover/rail:text-[var(--ui-primary)] transition-colors flex-shrink-0')
         @endif
 
         {{-- Middle: vertikales Titel-Label --}}
@@ -52,7 +52,7 @@
 
         {{-- Bottom: Expand-Chevron (wenn oben schon das Icon ist) --}}
         @if($icon)
-            @svg($expandIcon, 'w-4 h-4 text-[var(--ui-muted)] group-hover/rail:text-[var(--ui-secondary)] transition-colors flex-shrink-0')
+            @svg($expandIcon, 'w-4 h-4 text-[var(--ui-secondary)] group-hover/rail:text-[var(--ui-primary)] transition-colors flex-shrink-0')
         @else
             <span class="block w-1.5 h-1.5"></span>
         @endif
@@ -80,10 +80,14 @@
                 <button
                     type="button"
                     @click="Alpine?.store('page') && (Alpine.store('page')['{{ $storeKey }}'] = false)"
-                    class="ml-auto inline-flex items-center justify-center w-7 h-7 rounded-md text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)] transition-colors flex-shrink-0"
+                    class="ml-auto inline-flex items-center justify-center w-7 h-7 rounded-md text-[var(--ui-secondary)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-10)] transition-colors flex-shrink-0"
                     title="Einklappen"
                 >
-                    @svg('heroicon-o-chevron-double-left', 'w-4 h-4', ['class' => $side === 'right' ? 'rotate-180' : ''])
+                    @if($side === 'right')
+                        @svg('heroicon-o-chevron-double-right', 'w-4 h-4')
+                    @else
+                        @svg('heroicon-o-chevron-double-left', 'w-4 h-4')
+                    @endif
                 </button>
             </div>
         @endif
