@@ -1,5 +1,5 @@
 <div
-    x-data="{ get open(){ return Alpine?.store('page')?.terminalOpen ?? false }, toggle(){ Alpine?.store('page') && (Alpine.store('page').terminalOpen = !Alpine.store('page').terminalOpen) } }"
+    x-data="{ get open(){ return this.$store.ui?.m('terminal', 'open') ?? false }, toggle(){ this.$store.ui?.mToggle('terminal', 'open') } }"
     x-on:toggle-terminal.window="toggle()"
     class="w-full"
 >

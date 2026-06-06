@@ -1,7 +1,7 @@
-<div x-data="sidebarState()" x-init="init()" @toggle-main-sidebar.window="toggle()" class="flex">
+<div x-data="sidebarState()" @toggle-main-sidebar.window="toggle()" class="flex">
     <aside
         x-cloak
-        :style="collapsed ? 'width: 4rem' : 'width: ' + sidebarWidth + 'px'"
+        :style="collapsed ? 'width: 4rem' : 'width: ' + width + 'px'"
         :class="resizing ? '' : 'transition-all duration-300'"
         class="shrink-0 h-screen border-r border-[var(--ui-border)]/60 bg-[var(--ui-surface)] flex flex-col relative"
     >
@@ -31,7 +31,7 @@
             </nav>
         </template>
         <template x-if="collapsed">
-            <button 
+            <button
                 @click="toggle()"
                 class="flex-1 w-full flex items-center justify-center hover:bg-[var(--ui-muted-5)]"
                 title="Sidebar ausklappen"
@@ -57,49 +57,38 @@
 
 <script>
 function sidebarState() {
-    const STORAGE_KEY = 'sidebar-width';
-    const DEFAULT_WIDTH = 288;
     const MIN_WIDTH = 200;
     const MAX_WIDTH = 480;
 
     return {
-        collapsed: false,
-        sidebarWidth: parseInt(localStorage.getItem(STORAGE_KEY)) || DEFAULT_WIDTH,
         resizing: false,
 
-        init() {
-            this.collapsed = localStorage.getItem('sidebar-collapsed') === 'true';
-            this.sidebarWidth = Math.max(MIN_WIDTH, Math.min(MAX_WIDTH, this.sidebarWidth));
-            this.syncStore();
-            this.$el.addEventListener('toggle-sidebar', () => { this.toggle(); });
+        get collapsed() {
+            return !!this.$store.ui?.g('main_sidebar', 'collapsed');
         },
-
-        syncStore() {
-            if (window.Alpine?.store('page')) {
-                Alpine.store('page').mainSidebarOpen = !this.collapsed;
-            }
+        get width() {
+            const w = this.$store.ui?.g('main_sidebar', 'width') ?? 288;
+            return Math.max(MIN_WIDTH, Math.min(MAX_WIDTH, w));
         },
 
         toggle() {
-            this.collapsed = !this.collapsed;
-            localStorage.setItem('sidebar-collapsed', this.collapsed);
-            this.syncStore();
+            this.$store.ui?.gSet('main_sidebar', 'collapsed', !this.collapsed);
         },
 
         startResize(e) {
             if (this.collapsed) return;
             this.resizing = true;
             const startX = e.clientX;
-            const startWidth = this.sidebarWidth;
+            const startWidth = this.width;
 
             const onMouseMove = (ev) => {
                 const delta = ev.clientX - startX;
-                this.sidebarWidth = Math.max(MIN_WIDTH, Math.min(MAX_WIDTH, startWidth + delta));
+                const next = Math.max(MIN_WIDTH, Math.min(MAX_WIDTH, startWidth + delta));
+                this.$store.ui?.gSet('main_sidebar', 'width', next);
             };
 
             const onMouseUp = () => {
                 this.resizing = false;
-                localStorage.setItem(STORAGE_KEY, this.sidebarWidth);
                 document.removeEventListener('mousemove', onMouseMove);
                 document.removeEventListener('mouseup', onMouseUp);
             };

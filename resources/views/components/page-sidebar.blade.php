@@ -2,7 +2,7 @@
     'title' => '',
     'width' => 'w-80',         // expanded width (Tailwind class — wird zu Default-px geparst)
     'defaultOpen' => true,
-    'storeKey' => 'sidebarOpen', // für Aktivitäten explizit "activityOpen" setzen
+    'storeKey' => 'sidebarOpen', // 'sidebarOpen' (links) | 'activityOpen' (rechts)
     'side' => 'left',            // 'left' | 'right'
     'icon' => null,              // optionaler Heroicon-Name fürs Rail
     'railWidth' => 'w-11',       // collapsed rail width (~44px)
@@ -11,23 +11,35 @@
 ])
 
 @php
-    $openExpr = "(Alpine?.store('page')?.['{$storeKey}'] ?? " . ($defaultOpen ? 'true' : 'false') . ")";
+    // storeKey → Scope-Name im UI-Store
+    $scope = $storeKey === 'activityOpen' ? 'activity' : 'page_sidebar';
     $borderClass = $side === 'right' ? 'border-l border-[var(--ui-border)]/60' : 'border-r border-[var(--ui-border)]/60';
     $expandIcon = $side === 'right' ? 'heroicon-o-chevron-double-left' : 'heroicon-o-chevron-double-right';
 
-    // Default-Breite aus Tailwind-Klasse in Pixel ableiten (für Resize-Startwert).
+    // Default-Breite aus Tailwind-Klasse in Pixel ableiten
     $widthMap = [
         'w-56' => 224, 'w-60' => 240, 'w-64' => 256, 'w-72' => 288,
         'w-80' => 320, 'w-96' => 384,
     ];
     $defaultWidthPx = $widthMap[$width] ?? 320;
-    $widthStorageKey = "page-sidebar.{$storeKey}.width";
 @endphp
 
 <div
     x-data="{
-        width: parseInt(localStorage.getItem('{{ $widthStorageKey }}')) || {{ $defaultWidthPx }},
+        scope: @js($scope),
+        defaultOpen: @js((bool) $defaultOpen),
+        defaultWidth: {{ $defaultWidthPx }},
         resizing: false,
+        get open() {
+            const v = this.$store.ui?.m(this.scope, 'open');
+            return v === undefined ? this.defaultOpen : v;
+        },
+        get width() {
+            const v = this.$store.ui?.m(this.scope, 'width');
+            const w = v === undefined ? this.defaultWidth : v;
+            return Math.max({{ $minWidth }}, Math.min({{ $maxWidth }}, w));
+        },
+        setOpen(v) { this.$store.ui?.mSet(this.scope, 'open', v); },
         startResize(e) {
             this.resizing = true;
             const startX = e.clientX;
@@ -38,11 +50,11 @@
             const onMouseMove = (ev) => {
                 const delta = ev.clientX - startX;
                 const adjusted = side === 'left' ? startWidth + delta : startWidth - delta;
-                this.width = Math.max(MIN, Math.min(MAX, adjusted));
+                const next = Math.max(MIN, Math.min(MAX, adjusted));
+                this.$store.ui?.mSet(this.scope, 'width', next);
             };
             const onMouseUp = () => {
                 this.resizing = false;
-                localStorage.setItem('{{ $widthStorageKey }}', this.width);
                 document.removeEventListener('mousemove', onMouseMove);
                 document.removeEventListener('mouseup', onMouseUp);
             };
@@ -50,7 +62,7 @@
             document.addEventListener('mouseup', onMouseUp);
         }
     }"
-    :style="{{ $openExpr }} ? ('width: ' + width + 'px') : 'width: 44px'"
+    :style="open ? ('width: ' + width + 'px') : 'width: 44px'"
     :class="resizing ? '' : 'transition-all duration-200'"
     class="relative flex-shrink-0 h-full bg-[var(--ui-muted-5)] overflow-x-hidden {{ $borderClass }}"
     {{ $attributes }}
@@ -58,9 +70,9 @@
     {{-- Collapsed Rail --}}
     <button
         type="button"
-        x-show="!{{ $openExpr }}"
+        x-show="!open"
         x-cloak
-        @click="Alpine?.store('page') && (Alpine.store('page')['{{ $storeKey }}'] = true)"
+        @click="setOpen(true)"
         class="group/rail h-full w-full flex flex-col items-center justify-between py-3 px-2 hover:bg-[var(--ui-muted-10)] transition-colors cursor-pointer"
         title="@if($title){{ $title }} öffnen @else Öffnen @endif"
     >
@@ -92,7 +104,7 @@
 
     {{-- Expanded Content --}}
     <div
-        x-show="{{ $openExpr }}"
+        x-show="open"
         x-transition:enter="transition ease-out duration-300"
         x-transition:enter-start="opacity-0"
         x-transition:enter-end="opacity-100"
@@ -111,7 +123,7 @@
                 <h2 class="text-sm font-semibold text-[var(--ui-secondary)] m-0 tracking-wide uppercase truncate">{{ $title }}</h2>
                 <button
                     type="button"
-                    @click="Alpine?.store('page') && (Alpine.store('page')['{{ $storeKey }}'] = false)"
+                    @click="setOpen(false)"
                     class="ml-auto inline-flex items-center justify-center w-7 h-7 rounded-md text-[var(--ui-secondary)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-10)] transition-colors flex-shrink-0"
                     title="Einklappen"
                 >
@@ -131,7 +143,7 @@
 
     {{-- Resize-Handle (nur im expanded state, klebt an der nach außen zeigenden Kante) --}}
     <div
-        x-show="{{ $openExpr }}"
+        x-show="open"
         @mousedown.prevent="startResize($event)"
         class="absolute top-0 {{ $side === 'right' ? 'left-0' : 'right-0' }} w-1 h-full cursor-ew-resize group/resize z-20"
     >
