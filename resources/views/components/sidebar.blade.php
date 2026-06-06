@@ -64,15 +64,15 @@ function sidebarState() {
         resizing: false,
 
         get collapsed() {
-            return !!this.$store.ui?.g('main_sidebar', 'collapsed');
+            return !!this.$store.ui?.m('main_sidebar', 'collapsed');
         },
         get width() {
-            const w = this.$store.ui?.g('main_sidebar', 'width') ?? 288;
+            const w = this.$store.ui?.m('main_sidebar', 'width') ?? 288;
             return Math.max(MIN_WIDTH, Math.min(MAX_WIDTH, w));
         },
 
         toggle() {
-            this.$store.ui?.gSet('main_sidebar', 'collapsed', !this.collapsed);
+            this.$store.ui?.mSet('main_sidebar', 'collapsed', !this.collapsed);
         },
 
         startResize(e) {
@@ -84,7 +84,7 @@ function sidebarState() {
             const onMouseMove = (ev) => {
                 const delta = ev.clientX - startX;
                 const next = Math.max(MIN_WIDTH, Math.min(MAX_WIDTH, startWidth + delta));
-                this.$store.ui?.gSet('main_sidebar', 'width', next);
+                this.$store.ui?.mSet('main_sidebar', 'width', next);
             };
 
             const onMouseUp = () => {
