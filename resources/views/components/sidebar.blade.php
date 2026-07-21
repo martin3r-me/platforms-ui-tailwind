@@ -1,7 +1,7 @@
 <div x-data="sidebarState()" @toggle-main-sidebar.window="toggle()" class="flex">
     <aside
         x-cloak
-        :style="collapsed ? 'width: 4rem' : 'width: ' + width + 'px'"
+        :style="collapsed ? 'width: 2.75rem' : 'width: ' + width + 'px'"
         :class="resizing ? '' : 'transition-all duration-300'"
         class="shrink-0 h-screen border-r border-[color:var(--nx-line)] bg-[color:var(--nx-bg)] flex flex-col relative"
     >
@@ -11,7 +11,7 @@
                 <!-- Sidebar ein-/ausklappen -->
                 <button
                     @click="toggle()"
-                    class="flex items-center justify-center h-12 border-b border-[color:var(--nx-line)] text-[color:var(--nx-muted)] hover:text-[color:var(--nx-text)] hover:bg-[color:var(--nx-hover)] transition-colors"
+                    class="flex items-center justify-center h-11 border-b border-[color:var(--nx-line)] text-[color:var(--nx-muted)] hover:text-[color:var(--nx-text)] hover:bg-[color:var(--nx-hover)] transition-colors"
                     :title="collapsed ? 'Sidebar ausklappen' : 'Sidebar einklappen'"
                 >
                     <template x-if="collapsed">
