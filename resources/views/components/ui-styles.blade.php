@@ -87,11 +87,3 @@
     --nx-font:          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 </style>
-
-{{-- nx — Bauteil-Klassen (eigenes CSS → build-unabhängig, kein Tailwind-JIT nötig) --}}
-<style>
-    .nx-card{ background:var(--nx-surface); border:1px solid var(--nx-line); border-radius:var(--nx-radius); color:var(--nx-text); }
-    .nx-card.is-pad{ padding:1rem; }
-    .nx-card.is-hover{ transition:background .12s ease; cursor:pointer; }
-    .nx-card.is-hover:hover{ background:var(--nx-hover); }
-</style>
