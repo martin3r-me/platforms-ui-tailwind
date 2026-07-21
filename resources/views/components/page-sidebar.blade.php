@@ -120,7 +120,7 @@
                         @svg($icon, 'w-4 h-4')
                     </span>
                 @endif
-                <h2 class="text-sm font-semibold text-[color:var(--nx-text)] m-0 tracking-wide uppercase truncate">{{ $title }}</h2>
+                <h2 class="text-sm font-semibold text-[color:var(--nx-text)] m-0 tracking-wide truncate">{{ $title }}</h2>
                 <button
                     type="button"
                     @click="setOpen(false)"
