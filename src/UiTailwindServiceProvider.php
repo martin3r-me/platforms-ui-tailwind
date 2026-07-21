@@ -95,6 +95,7 @@ class UiTailwindServiceProvider extends ServiceProvider
         // Explizit registriert (wie alle x-ui-*), damit die Aufloesung garantiert
         // ist. Neue nx-Komponenten hier ergaenzen.
         Blade::component('ui-tailwind::components-nx.card', 'nx-card');
+        Blade::component('ui-tailwind::components-nx.bauhaus', 'nx-bauhaus');
     }
 
     public function register(): void
