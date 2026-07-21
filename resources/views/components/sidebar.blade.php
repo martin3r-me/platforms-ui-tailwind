@@ -3,10 +3,10 @@
         x-cloak
         :style="collapsed ? 'width: 4rem' : 'width: ' + width + 'px'"
         :class="resizing ? '' : 'transition-all duration-300'"
-        class="shrink-0 h-screen border-r border-[color:var(--nx-line)] bg-[color:var(--nx-surface)] flex flex-col relative"
+        class="shrink-0 h-screen border-r border-[color:var(--nx-line)] bg-[color:var(--nx-bg)] flex flex-col relative"
     >
         <!-- Toggle/Header-Bereich (immer sichtbar) -->
-        <div class="sticky top-0 z-10 bg-[color:var(--nx-surface)] backdrop-blur">
+        <div class="sticky top-0 z-10 bg-[color:var(--nx-bg)]">
             <div class="flex flex-col">
                 <!-- Sidebar ein-/ausklappen -->
                 <button

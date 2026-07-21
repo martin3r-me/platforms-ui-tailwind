@@ -59,7 +59,7 @@
        aus". Wird von den restylten Rahmen-Elementen und den x-nx-Bausteinen
        genutzt. Akzent = neutral Near-Black.
        ======================================================================= */
-    --nx-bg:            #faf9f7;               /* warmes Off-White (Chrome/Seite) */
+    --nx-bg:            #f4f3ee;               /* warmes Off-White (Chrome/Seite) */
     --nx-surface:       #ffffff;               /* Karten/Flächen                  */
     --nx-elevated:      #ffffff;               /* Overlays/Popover                */
     --nx-text:          #37352f;               /* warmes Near-Black (Primärtext)  */

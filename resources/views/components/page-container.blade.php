@@ -2,7 +2,7 @@
 @props([
     'padding' => 'px-5 pb-5',
     'spacing' => 'space-y-8',
-    'background' => 'bg-[color:var(--nx-bg)]',
+    'background' => 'bg-[color:var(--nx-surface)]',
 ])
 
 <div class="flex-1 overflow-y-auto overflow-x-hidden {{ $background }} text-[color:var(--nx-text)]">

@@ -64,7 +64,7 @@
     }"
     :style="open ? ('width: ' + width + 'px') : 'width: 44px'"
     :class="resizing ? '' : 'transition-all duration-200'"
-    class="relative flex-shrink-0 h-full bg-[color:var(--nx-surface)] overflow-x-hidden {{ $borderClass }}"
+    class="relative flex-shrink-0 h-full bg-[color:var(--nx-bg)] overflow-x-hidden {{ $borderClass }}"
     {{ $attributes }}
 >
     {{-- Collapsed Rail --}}
@@ -114,7 +114,7 @@
         class="h-full overflow-hidden overflow-x-hidden flex flex-col"
     >
         @if($title)
-            <div class="px-6 h-14 flex-shrink-0 flex items-center border-b border-[color:var(--nx-line)] bg-[color:var(--nx-surface)] backdrop-blur">
+            <div class="px-6 h-14 flex-shrink-0 flex items-center border-b border-[color:var(--nx-line)] bg-[color:var(--nx-bg)]">
                 @if($icon)
                     <span class="inline-flex items-center justify-center w-5 h-5 mr-2 text-[color:var(--nx-text)]">
                         @svg($icon, 'w-4 h-4')
