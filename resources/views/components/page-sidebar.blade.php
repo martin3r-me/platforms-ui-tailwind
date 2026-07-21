@@ -73,33 +73,37 @@
         x-show="!open"
         x-cloak
         @click="setOpen(true)"
-        class="group/rail h-full w-full flex flex-col items-center justify-between py-3 px-2 hover:bg-[color:var(--nx-hover)] transition-colors cursor-pointer"
+        class="group/rail h-full w-full flex flex-col items-stretch hover:bg-[color:var(--nx-hover)] transition-colors cursor-pointer"
         title="@if($title){{ $title }} öffnen @else Öffnen @endif"
     >
-        @if($icon)
-            <span class="inline-flex items-center justify-center w-6 h-6 rounded-md bg-[color:var(--nx-surface)] border border-[color:var(--nx-line)] flex-shrink-0">
-                @svg($icon, 'w-3.5 h-3.5 text-[color:var(--nx-text)]')
-            </span>
-        @else
-            @svg($expandIcon, 'w-4 h-4 text-[color:var(--nx-text)] group-hover/rail:text-[color:var(--nx-text)] transition-colors flex-shrink-0')
-        @endif
+        {{-- Kopf-Quadrat (44px) mit Icon + Border — analog Haupt-Sidebar/Actionbar --}}
+        <div class="h-11 flex-shrink-0 flex items-center justify-center border-b border-[color:var(--nx-line)]">
+            @if($icon)
+                @svg($icon, 'w-4 h-4 text-[color:var(--nx-text)]')
+            @else
+                @svg($expandIcon, 'w-4 h-4 text-[color:var(--nx-muted)] group-hover/rail:text-[color:var(--nx-text)] transition-colors')
+            @endif
+        </div>
 
-        @if($title)
-            <span
-                class="text-[10px] font-semibold uppercase tracking-wider text-[color:var(--nx-muted)] group-hover/rail:text-[color:var(--nx-text)] transition-colors my-2 truncate"
-                style="writing-mode: vertical-rl; transform: rotate(180deg); max-height: 100%;"
-            >
-                {{ $title }}
-            </span>
-        @else
-            <span class="flex-1"></span>
-        @endif
+        {{-- Vertikaler Titel + Aufklapp-Hinweis --}}
+        <div class="flex-1 min-h-0 flex flex-col items-center justify-between py-3 px-2">
+            @if($title)
+                <span
+                    class="text-[10px] font-semibold uppercase tracking-wider text-[color:var(--nx-muted)] group-hover/rail:text-[color:var(--nx-text)] transition-colors my-2 truncate"
+                    style="writing-mode: vertical-rl; transform: rotate(180deg); max-height: 100%;"
+                >
+                    {{ $title }}
+                </span>
+            @else
+                <span class="flex-1"></span>
+            @endif
 
-        @if($icon)
-            @svg($expandIcon, 'w-4 h-4 text-[color:var(--nx-text)] group-hover/rail:text-[color:var(--nx-text)] transition-colors flex-shrink-0')
-        @else
-            <span class="block w-1.5 h-1.5"></span>
-        @endif
+            @if($icon)
+                @svg($expandIcon, 'w-4 h-4 text-[color:var(--nx-muted)] group-hover/rail:text-[color:var(--nx-text)] transition-colors flex-shrink-0')
+            @else
+                <span class="block w-1.5 h-1.5"></span>
+            @endif
+        </div>
     </button>
 
     {{-- Expanded Content --}}
