@@ -52,5 +52,46 @@
         --ui-text-md: {{ config('ui.typography.size.md') }};
     @endif
     /* Weitere Sizes/Weights/Leading bei Bedarf */
+
+    /* =======================================================================
+       nx — festes Notion-Design-System (env-UNABHÄNGIG, plattform-übergleich).
+       Bewusst NICHT aus config/ui.php/.env — "die Plattform sieht immer gleich
+       aus". Wird von den restylten Rahmen-Elementen und den x-nx-Bausteinen
+       genutzt. Akzent = neutral Near-Black.
+       ======================================================================= */
+    --nx-bg:            #faf9f7;               /* warmes Off-White (Chrome/Seite) */
+    --nx-surface:       #ffffff;               /* Karten/Flächen                  */
+    --nx-elevated:      #ffffff;               /* Overlays/Popover                */
+    --nx-text:          #37352f;               /* warmes Near-Black (Primärtext)  */
+    --nx-muted:         #787774;               /* Sekundärtext                    */
+    --nx-faint:         #9b9a97;               /* Meta/Captions                   */
+    --nx-line:          rgba(55,53,47,.09);    /* Hairline statt Rahmen           */
+    --nx-line-strong:   rgba(55,53,47,.16);
+    --nx-hover:         rgba(55,53,47,.055);   /* dezente Hover-Fläche            */
+    --nx-active:        rgba(55,53,47,.09);
+    --nx-accent:        #37352f;               /* Akzent = neutral Near-Black     */
+    --nx-accent-hover:  #262521;
+    --nx-accent-soft:   rgba(55,53,47,.08);
+    --nx-on-accent:     #ffffff;
+    /* semantische Töne, leicht angewärmt — nur für Zahlen/Status */
+    --nx-success:       #2f9e44;
+    --nx-danger:        #e03131;
+    --nx-warning:       #e8590c;
+    --nx-info:          #1971c2;
+    /* Form */
+    --nx-radius-sm:     6px;
+    --nx-radius:        8px;
+    --nx-radius-lg:     12px;
+    --nx-shadow:        none;
+    --nx-shadow-pop:    0 6px 24px rgba(15,15,15,.10), 0 1px 3px rgba(15,15,15,.06);
+    --nx-font:          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
+</style>
+
+{{-- nx — Bauteil-Klassen (eigenes CSS → build-unabhängig, kein Tailwind-JIT nötig) --}}
+<style>
+    .nx-card{ background:var(--nx-surface); border:1px solid var(--nx-line); border-radius:var(--nx-radius); color:var(--nx-text); }
+    .nx-card.is-pad{ padding:1rem; }
+    .nx-card.is-hover{ transition:background .12s ease; cursor:pointer; }
+    .nx-card.is-hover:hover{ background:var(--nx-hover); }
 </style>

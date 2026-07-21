@@ -91,6 +91,10 @@ class UiTailwindServiceProvider extends ServiceProvider
         Blade::component('ui-tailwind::components.breadcrumb', 'ui-breadcrumb');
         Blade::component('ui-tailwind::components.status-toggle', 'ui-status-toggle');
 
+        // ===== nx — festes Notion-Design-System (opt-in pro Modul) =====
+        // Anonyme Komponenten aus resources/views/components-nx/ → <x-nx-*>.
+        // Additiv neben den bestehenden x-ui-*; nichts Altes wird angefasst.
+        Blade::anonymousComponentPath(__DIR__ . '/../resources/views/components-nx', 'nx');
     }
 
     public function register(): void
