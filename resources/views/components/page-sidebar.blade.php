@@ -114,7 +114,7 @@
         class="h-full overflow-hidden overflow-x-hidden flex flex-col"
     >
         @if($title)
-            <div class="px-6 h-14 flex-shrink-0 flex items-center border-b border-[color:var(--nx-line)] bg-[color:var(--nx-bg)]">
+            <div class="px-3 h-11 flex-shrink-0 flex items-center border-b border-[color:var(--nx-line)] bg-[color:var(--nx-bg)]">
                 @if($icon)
                     <span class="inline-flex items-center justify-center w-5 h-5 mr-2 text-[color:var(--nx-text)]">
                         @svg($icon, 'w-4 h-4')
