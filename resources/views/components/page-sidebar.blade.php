@@ -13,7 +13,7 @@
 @php
     // storeKey → Scope-Name im UI-Store
     $scope = $storeKey === 'activityOpen' ? 'activity' : 'page_sidebar';
-    $borderClass = $side === 'right' ? 'border-l border-[var(--ui-border)]/60' : 'border-r border-[var(--ui-border)]/60';
+    $borderClass = $side === 'right' ? 'border-l border-[color:var(--nx-line)]' : 'border-r border-[color:var(--nx-line)]';
     $expandIcon = $side === 'right' ? 'heroicon-o-chevron-double-left' : 'heroicon-o-chevron-double-right';
 
     // Default-Breite aus Tailwind-Klasse in Pixel ableiten
@@ -64,7 +64,7 @@
     }"
     :style="open ? ('width: ' + width + 'px') : 'width: 44px'"
     :class="resizing ? '' : 'transition-all duration-200'"
-    class="relative flex-shrink-0 h-full bg-[var(--ui-muted-5)] overflow-x-hidden {{ $borderClass }}"
+    class="relative flex-shrink-0 h-full bg-[color:var(--nx-surface)] overflow-x-hidden {{ $borderClass }}"
     {{ $attributes }}
 >
     {{-- Collapsed Rail --}}
@@ -73,20 +73,20 @@
         x-show="!open"
         x-cloak
         @click="setOpen(true)"
-        class="group/rail h-full w-full flex flex-col items-center justify-between py-3 px-2 hover:bg-[var(--ui-muted-10)] transition-colors cursor-pointer"
+        class="group/rail h-full w-full flex flex-col items-center justify-between py-3 px-2 hover:bg-[color:var(--nx-hover)] transition-colors cursor-pointer"
         title="@if($title){{ $title }} öffnen @else Öffnen @endif"
     >
         @if($icon)
-            <span class="inline-flex items-center justify-center w-6 h-6 rounded-md bg-white shadow-sm flex-shrink-0">
-                @svg($icon, 'w-3.5 h-3.5 text-[var(--ui-secondary)]')
+            <span class="inline-flex items-center justify-center w-6 h-6 rounded-md bg-[color:var(--nx-surface)] border border-[color:var(--nx-line)] flex-shrink-0">
+                @svg($icon, 'w-3.5 h-3.5 text-[color:var(--nx-text)]')
             </span>
         @else
-            @svg($expandIcon, 'w-4 h-4 text-[var(--ui-secondary)] group-hover/rail:text-[var(--ui-primary)] transition-colors flex-shrink-0')
+            @svg($expandIcon, 'w-4 h-4 text-[color:var(--nx-text)] group-hover/rail:text-[color:var(--nx-text)] transition-colors flex-shrink-0')
         @endif
 
         @if($title)
             <span
-                class="text-[10px] font-semibold uppercase tracking-wider text-[var(--ui-muted)] group-hover/rail:text-[var(--ui-secondary)] transition-colors my-2 truncate"
+                class="text-[10px] font-semibold uppercase tracking-wider text-[color:var(--nx-muted)] group-hover/rail:text-[color:var(--nx-text)] transition-colors my-2 truncate"
                 style="writing-mode: vertical-rl; transform: rotate(180deg); max-height: 100%;"
             >
                 {{ $title }}
@@ -96,7 +96,7 @@
         @endif
 
         @if($icon)
-            @svg($expandIcon, 'w-4 h-4 text-[var(--ui-secondary)] group-hover/rail:text-[var(--ui-primary)] transition-colors flex-shrink-0')
+            @svg($expandIcon, 'w-4 h-4 text-[color:var(--nx-text)] group-hover/rail:text-[color:var(--nx-text)] transition-colors flex-shrink-0')
         @else
             <span class="block w-1.5 h-1.5"></span>
         @endif
@@ -114,17 +114,17 @@
         class="h-full overflow-hidden overflow-x-hidden flex flex-col"
     >
         @if($title)
-            <div class="px-6 h-14 flex-shrink-0 flex items-center border-b border-[var(--ui-border)]/60 bg-[var(--ui-surface)]/90 backdrop-blur">
+            <div class="px-6 h-14 flex-shrink-0 flex items-center border-b border-[color:var(--nx-line)] bg-[color:var(--nx-surface)] backdrop-blur">
                 @if($icon)
-                    <span class="inline-flex items-center justify-center w-5 h-5 mr-2 text-[var(--ui-secondary)]">
+                    <span class="inline-flex items-center justify-center w-5 h-5 mr-2 text-[color:var(--nx-text)]">
                         @svg($icon, 'w-4 h-4')
                     </span>
                 @endif
-                <h2 class="text-sm font-semibold text-[var(--ui-secondary)] m-0 tracking-wide uppercase truncate">{{ $title }}</h2>
+                <h2 class="text-sm font-semibold text-[color:var(--nx-text)] m-0 tracking-wide uppercase truncate">{{ $title }}</h2>
                 <button
                     type="button"
                     @click="setOpen(false)"
-                    class="ml-auto inline-flex items-center justify-center w-7 h-7 rounded-md text-[var(--ui-secondary)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-10)] transition-colors flex-shrink-0"
+                    class="ml-auto inline-flex items-center justify-center w-7 h-7 rounded-md text-[color:var(--nx-text)] hover:text-[color:var(--nx-text)] hover:bg-[color:var(--nx-hover)] transition-colors flex-shrink-0"
                     title="Einklappen"
                 >
                     @if($side === 'right')
@@ -147,7 +147,7 @@
         @mousedown.prevent="startResize($event)"
         class="absolute top-0 {{ $side === 'right' ? 'left-0' : 'right-0' }} w-1 h-full cursor-ew-resize group/resize z-20"
     >
-        <div class="absolute inset-y-0 {{ $side === 'right' ? 'left-0' : 'right-0' }} w-px bg-transparent group-hover/resize:bg-[var(--ui-primary)]/40 transition"></div>
-        <div class="absolute top-1/2 -translate-y-1/2 {{ $side === 'right' ? 'left-0' : 'right-0' }} h-8 w-1 rounded-full bg-transparent group-hover/resize:bg-[var(--ui-primary)]/30 transition"></div>
+        <div class="absolute inset-y-0 {{ $side === 'right' ? 'left-0' : 'right-0' }} w-px bg-transparent group-hover/resize:bg-[color:var(--nx-line-strong)] transition"></div>
+        <div class="absolute top-1/2 -translate-y-1/2 {{ $side === 'right' ? 'left-0' : 'right-0' }} h-8 w-1 rounded-full bg-transparent group-hover/resize:bg-[color:var(--nx-line-strong)] transition"></div>
     </div>
 </div>

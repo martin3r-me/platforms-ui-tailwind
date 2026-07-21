@@ -3,15 +3,15 @@
         x-cloak
         :style="collapsed ? 'width: 4rem' : 'width: ' + width + 'px'"
         :class="resizing ? '' : 'transition-all duration-300'"
-        class="shrink-0 h-screen border-r border-[var(--ui-border)]/60 bg-[var(--ui-surface)] flex flex-col relative"
+        class="shrink-0 h-screen border-r border-[color:var(--nx-line)] bg-[color:var(--nx-surface)] flex flex-col relative"
     >
         <!-- Toggle/Header-Bereich (immer sichtbar) -->
-        <div class="sticky top-0 z-10 bg-[var(--ui-surface)]/90 backdrop-blur">
+        <div class="sticky top-0 z-10 bg-[color:var(--nx-surface)] backdrop-blur">
             <div class="flex flex-col">
                 <!-- Sidebar ein-/ausklappen -->
                 <button
                     @click="toggle()"
-                    class="flex items-center justify-center h-12 border-b border-[var(--ui-border)]/60 text-[var(--ui-muted)] hover:text-[var(--ui-primary)] hover:bg-[var(--ui-muted-5)] transition-colors"
+                    class="flex items-center justify-center h-12 border-b border-[color:var(--nx-line)] text-[color:var(--nx-muted)] hover:text-[color:var(--nx-text)] hover:bg-[color:var(--nx-hover)] transition-colors"
                     :title="collapsed ? 'Sidebar ausklappen' : 'Sidebar einklappen'"
                 >
                     <template x-if="collapsed">
@@ -33,10 +33,10 @@
         <template x-if="collapsed">
             <button
                 @click="toggle()"
-                class="flex-1 w-full flex items-center justify-center hover:bg-[var(--ui-muted-5)]"
+                class="flex-1 w-full flex items-center justify-center hover:bg-[color:var(--nx-hover)]"
                 title="Sidebar ausklappen"
             >
-                <div class="text-[var(--ui-muted)] text-sm font-semibold tracking-wide -rotate-90 origin-center select-none whitespace-nowrap">
+                <div class="text-[color:var(--nx-muted)] text-sm font-semibold tracking-wide -rotate-90 origin-center select-none whitespace-nowrap">
                     {{ strtoupper(explode('.', request()->route()?->getName())[0] ?? 'APP') }}
                 </div>
             </button>
@@ -49,8 +49,8 @@
             @mousedown.prevent="startResize($event)"
             class="absolute top-0 right-0 w-1 h-full cursor-ew-resize group/resize z-20"
         >
-            <div class="absolute inset-y-0 right-0 w-px bg-transparent group-hover/resize:bg-[var(--ui-primary)]/40 transition"></div>
-            <div class="absolute top-1/2 -translate-y-1/2 right-0 h-8 w-1 rounded-full bg-transparent group-hover/resize:bg-[var(--ui-primary)]/30 transition"></div>
+            <div class="absolute inset-y-0 right-0 w-px bg-transparent group-hover/resize:bg-[color:var(--nx-line-strong)] transition"></div>
+            <div class="absolute top-1/2 -translate-y-1/2 right-0 h-8 w-1 rounded-full bg-transparent group-hover/resize:bg-[color:var(--nx-line-strong)] transition"></div>
         </div>
     </aside>
 </div>
