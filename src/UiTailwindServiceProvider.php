@@ -92,9 +92,9 @@ class UiTailwindServiceProvider extends ServiceProvider
         Blade::component('ui-tailwind::components.status-toggle', 'ui-status-toggle');
 
         // ===== nx — festes Notion-Design-System (opt-in pro Modul) =====
-        // Anonyme Komponenten aus resources/views/components-nx/ → <x-nx-*>.
-        // Additiv neben den bestehenden x-ui-*; nichts Altes wird angefasst.
-        Blade::anonymousComponentPath(__DIR__ . '/../resources/views/components-nx', 'nx');
+        // Explizit registriert (wie alle x-ui-*), damit die Aufloesung garantiert
+        // ist. Neue nx-Komponenten hier ergaenzen.
+        Blade::component('ui-tailwind::components-nx.card', 'nx-card');
     }
 
     public function register(): void
