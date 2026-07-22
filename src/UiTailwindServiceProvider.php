@@ -107,6 +107,7 @@ class UiTailwindServiceProvider extends ServiceProvider
         Blade::component('ui-tailwind::components-nx.table-body', 'nx-table-body');
         Blade::component('ui-tailwind::components-nx.table-row', 'nx-table-row');
         Blade::component('ui-tailwind::components-nx.table-cell', 'nx-table-cell');
+        Blade::component('ui-tailwind::components-nx.modal', 'nx-modal');
     }
 
     public function register(): void
