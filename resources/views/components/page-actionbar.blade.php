@@ -1,4 +1,19 @@
-{{-- nx: ruhige Actionbar — warmer Grund, Hairline statt Border (übergleich) --}}
+{{--
+    nx Actionbar = Seitenkopf-NAVIGATION (ruhig, Hairline, übergleich). Drei Zonen:
+
+      • Links (Nav):   Breadcrumb — die Navigation. Truncatet responsive.
+      • left-Slot:     Inline-Controls neben der Nav (View-Umschalter, Filter, Nav-Dropdowns).
+      • Rechts (Slot): SEITEN-Aktionen. Konvention:
+                         – genau EINE klare Aktion  → sichtbarer <x-nx-button>
+                         – ZWEI oder mehr Aktionen  → EIN <x-nx-dropdown label="Aktionen">
+                       Keine Content-/Bulk-Aktionen hier (die gehören in eine Toolbar im Content).
+
+    <x-ui-page-actionbar :breadcrumbs="[...]">
+        <x-slot name="left"> … Filter/View-Switch … </x-slot>
+        <x-nx-button variant="primary" wire:click="…">Anlegen</x-nx-button>   {{-- 1 Aktion --}}
+        {{-- oder ab 2 Aktionen: <x-nx-dropdown label="Aktionen"> … </x-nx-dropdown> --}}
+    </x-ui-page-actionbar>
+--}}
 @props([
     'breadcrumbs' => [],
 ])
