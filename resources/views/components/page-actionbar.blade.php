@@ -19,7 +19,7 @@
     'breadcrumbs' => [],
 ])
 
-<div class="shrink-0 z-30 px-4 h-11 bg-[color:var(--nx-surface)] border-b border-[color:var(--nx-line)]">
+<div class="relative shrink-0 z-30 px-4 h-11 bg-[color:var(--nx-surface)] border-b border-[color:var(--nx-line)]">
     <div class="h-full flex items-center gap-3">
         <!-- Links: Breadcrumbs + Actions (flexibel, schrumpft/kürzt) -->
         <div class="flex items-center gap-2 min-w-0 flex-1">
