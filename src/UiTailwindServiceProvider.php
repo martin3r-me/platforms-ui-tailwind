@@ -101,6 +101,12 @@ class UiTailwindServiceProvider extends ServiceProvider
         Blade::component('ui-tailwind::components-nx.dropdown', 'nx-dropdown');
         Blade::component('ui-tailwind::components-nx.dropdown-item', 'nx-dropdown-item');
         Blade::component('ui-tailwind::components-nx.dropdown-divider', 'nx-dropdown-divider');
+        Blade::component('ui-tailwind::components-nx.table', 'nx-table');
+        Blade::component('ui-tailwind::components-nx.table-header', 'nx-table-header');
+        Blade::component('ui-tailwind::components-nx.table-header-cell', 'nx-table-header-cell');
+        Blade::component('ui-tailwind::components-nx.table-body', 'nx-table-body');
+        Blade::component('ui-tailwind::components-nx.table-row', 'nx-table-row');
+        Blade::component('ui-tailwind::components-nx.table-cell', 'nx-table-cell');
     }
 
     public function register(): void
