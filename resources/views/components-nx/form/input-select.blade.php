@@ -50,8 +50,13 @@
         @endif
         @foreach ($options as $opt)
             @php
-                $ov = is_array($opt) ? ($opt[$optionValue] ?? null) : $opt;
-                $ol = is_array($opt) ? ($opt[$optionLabel] ?? $ov) : $opt;
+                // Optionen können Arrays, Eloquent-Models/Objekte ODER Skalare sein.
+                if (is_array($opt) || is_object($opt)) {
+                    $ov = data_get($opt, $optionValue);
+                    $ol = data_get($opt, $optionLabel) ?? $ov;
+                } else {
+                    $ov = $ol = $opt;
+                }
             @endphp
             <option value="{{ $ov }}" @selected((string) $current === (string) $ov)>{{ $ol }}</option>
         @endforeach
