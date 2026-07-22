@@ -8,11 +8,12 @@
                          – ZWEI oder mehr Aktionen  → EIN <x-nx-dropdown label="Aktionen">
                        Keine Content-/Bulk-Aktionen hier (die gehören in eine Toolbar im Content).
 
-    <x-ui-page-actionbar :breadcrumbs="[...]">
-        <x-slot name="left"> … Filter/View-Switch … </x-slot>
-        <x-nx-button variant="primary" wire:click="…">Anlegen</x-nx-button>   {{-- 1 Aktion --}}
-        {{-- oder ab 2 Aktionen: <x-nx-dropdown label="Aktionen"> … </x-nx-dropdown> --}}
-    </x-ui-page-actionbar>
+    Beispiel:
+      <x-ui-page-actionbar :breadcrumbs="[...]">
+          <x-slot name="left"> … Filter/View-Switch … </x-slot>
+          1 Aktion:   <x-nx-button variant="primary" wire:click="…">Anlegen</x-nx-button>
+          >=2 Aktion: <x-nx-dropdown label="Aktionen"> … </x-nx-dropdown>
+      </x-ui-page-actionbar>
 --}}
 @props([
     'breadcrumbs' => [],
