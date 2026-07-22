@@ -1,0 +1,62 @@
+{{--
+    nx-input-select — schlichtes natives Select mit Label/Fehler.
+    options: Liste aus ['value'=>…, 'label'=>…] (Schlüssel via optionValue/optionLabel).
+    <x-nx-input-select name="x" label="Status" :options="[...]" nullable nullLabel="Alle" wire:model="x" />
+--}}
+@props([
+    'name' => null,
+    'label' => null,
+    'hint' => null,
+    'options' => [],
+    'nullable' => false,
+    'nullLabel' => '–',
+    'size' => 'md',
+    'errorKey' => null,
+    'required' => false,
+    'disabled' => false,
+    'optionValue' => 'value',
+    'optionLabel' => 'label',
+    'value' => null,
+])
+
+@php
+    $errorKey = $errorKey ?: $name;
+    $hasError = $errorKey ? $errors->has($errorKey) : false;
+    $sizeClass = $size === 'sm' ? 'px-2.5 py-1.5 text-sm' : 'px-3 py-2 text-sm';
+    $current = $name ? old($name, $value) : $value;
+@endphp
+
+<div>
+    @if ($label)
+        <div class="mb-1 flex items-center justify-between gap-2">
+            <label @if ($name) for="{{ $name }}" @endif class="text-xs font-medium text-[color:var(--nx-text)]">
+                {{ $label }}@if ($required)<span class="text-[color:var(--nx-danger)]"> *</span>@endif
+            </label>
+            @if ($hint)<span class="text-xs text-[color:var(--nx-muted)]">{{ $hint }}</span>@endif
+        </div>
+    @endif
+    <select
+        @if ($name) id="{{ $name }}" name="{{ $name }}" @endif
+        @if ($required) required @endif
+        @if ($disabled) disabled @endif
+        {{ $attributes->class([
+            'block w-full rounded-[6px] border bg-[color:var(--nx-surface)] text-[color:var(--nx-text)] transition-colors focus:outline-none focus:ring-1 disabled:opacity-50',
+            'border-[color:var(--nx-line-strong)] focus:border-[color:var(--nx-accent)] focus:ring-[color:var(--nx-accent)]' => ! $hasError,
+            'border-[color:var(--nx-danger)] focus:ring-[color:var(--nx-danger)]' => $hasError,
+            $sizeClass,
+        ]) }}>
+        @if ($nullable)
+            <option value="">{{ $nullLabel }}</option>
+        @endif
+        @foreach ($options as $opt)
+            @php
+                $ov = is_array($opt) ? ($opt[$optionValue] ?? null) : $opt;
+                $ol = is_array($opt) ? ($opt[$optionLabel] ?? $ov) : $opt;
+            @endphp
+            <option value="{{ $ov }}" @selected((string) $current === (string) $ov)>{{ $ol }}</option>
+        @endforeach
+    </select>
+    @error($errorKey)
+        <p class="mt-1 text-xs text-[color:var(--nx-danger)]">{{ $message }}</p>
+    @enderror
+</div>

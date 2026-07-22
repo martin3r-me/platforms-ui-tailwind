@@ -53,6 +53,9 @@ Registriert im `UiTailwindServiceProvider` (explizit, wie alle `x-ui-*`).
 | `x-nx-stat` (+`-grid`) | Kennzahl. `label`/`value`/`hint`/`icon`/`accent`/`href`. Grid: `cols` |
 | `x-nx-empty` | Leerzustand. `icon` + Slot + `action`-Slot |
 | `x-nx-callout` | Notion-Callout. `variant` info/success/warning/danger/neutral · `icon` · `title` · `action`-Slot |
+| `x-nx-input-text` / `-number` / `-date` / `-textarea` | Formularfelder. `name`/`label`/`hint`/`size`/`errorKey`/`required`/`placeholder` (+ `min`/`max`/`step`, `rows`). wire:model via $attributes |
+| `x-nx-input-select` | Natives Select. `options` (value/label) · `nullable`/`nullLabel` · `optionValue`/`optionLabel` |
+| `x-nx-input-checkbox` | Checkbox + Label. `disabled`; wire:model via $attributes |
 | `x-nx-bauhaus` | Dekorative generative Grafik. `seed`, `count` |
 
 ## 5. Konventionen (verbindlich)
