@@ -115,6 +115,7 @@ class UiTailwindServiceProvider extends ServiceProvider
         Blade::component('ui-tailwind::components-nx.form.input-text', 'nx-input-text');
         Blade::component('ui-tailwind::components-nx.form.input-number', 'nx-input-number');
         Blade::component('ui-tailwind::components-nx.form.input-date', 'nx-input-date');
+        Blade::component('ui-tailwind::components-nx.form.input-datetime', 'nx-input-datetime');
         Blade::component('ui-tailwind::components-nx.form.input-textarea', 'nx-input-textarea');
         Blade::component('ui-tailwind::components-nx.form.input-select', 'nx-input-select');
         Blade::component('ui-tailwind::components-nx.form.input-checkbox', 'nx-input-checkbox');
