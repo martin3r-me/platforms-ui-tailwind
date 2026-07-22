@@ -65,8 +65,19 @@ Registriert im `UiTailwindServiceProvider` (explizit, wie alle `x-ui-*`).
   `x-nx-dropdown`**. Keine Content-/Bulk-Aktionen rechts.
 - **Modal-Größen:** `sm` Bestätigung/1 Feld · `md` Default Formular/Detail · `lg` mehrspaltig
   · `xl` große Tools. Keine Ad-hoc-Breiten.
-- **Tabellen/Listen:** rahmenlos auf Weiß, Hairline-Zeilen. **Zeile klickbar = Hauptaktion**;
-  Sekundäraktionen als Hover-Icons mit `wire:click.stop`. Header text-forward, keine Icon-Box.
+- **Tabelle vs. Liste vs. Karte** — die Datenform entscheidet, nicht der Geschmack:
+  - **Tabelle** (`x-nx-table`) = *Register/Ledger*: gleichförmige Datensätze, die man **spaltenweise
+    vergleicht/sortiert/filtert**; skalare Felder (Datum/Zahl/Status), keine Medien.
+    → Buchungen, Umsatz, Export, Storno-Anfragen.
+  - **Liste** (`x-nx-card flush` + Hairline-Zeilen) = *Katalog/Entitäten*: Element mit Identität
+    (Bild/Icon, Titel, Beschreibung, mehrere Badges), oft gruppiert; erkennen & handeln statt
+    Spalten vergleichen. → Artikel, Verkaufslisten, Venues.
+  - **Kartenraster** = nur wenn das Bild der Hauptinhalt ist (Galerie).
+  - Schnelltest: „Nach einer Spalte sortieren & Zeilen vergleichen?" → Tabelle. „Bild/Identität
+    je Element, browse zum Wiedererkennen?" → Liste/Karte.
+- **Gemeinsame Grammatik** (Tabelle wie Liste): rahmenlos auf Weiß, Hairline-Zeilen, **Zeile klickbar
+  = Hauptaktion**; Sekundäraktionen als Hover-Icons mit `wire:click.stop`. Header text-forward,
+  keine Icon-Box.
 - **Container-Breite:** `x-ui-page-container width="contained"` (max-w 1200, linksbündig) für
   Dashboards/Listen/Formulare; `full` für Kanban/Canvas/breite Tabellen.
 - **Farbe:** Chrome neutral. Im Inhalt nur bedeutungstragend (Status → Badge, Hinweis/Attention
