@@ -98,6 +98,9 @@ class UiTailwindServiceProvider extends ServiceProvider
         Blade::component('ui-tailwind::components-nx.bauhaus', 'nx-bauhaus');
         Blade::component('ui-tailwind::components-nx.button', 'nx-button');
         Blade::component('ui-tailwind::components-nx.badge', 'nx-badge');
+        Blade::component('ui-tailwind::components-nx.dropdown', 'nx-dropdown');
+        Blade::component('ui-tailwind::components-nx.dropdown-item', 'nx-dropdown-item');
+        Blade::component('ui-tailwind::components-nx.dropdown-divider', 'nx-dropdown-divider');
     }
 
     public function register(): void
