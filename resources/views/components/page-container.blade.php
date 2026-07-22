@@ -10,8 +10,10 @@
     'background' => 'bg-[color:var(--nx-surface)]',
 ])
 
-<div class="flex-1 overflow-y-auto overflow-x-hidden {{ $background }} text-[color:var(--nx-text)]">
-    <div class="{{ $padding }} {{ $spacing }} {{ $width === 'contained' ? 'max-w-[1200px]' : 'w-full' }}">
+{{-- data-nx-region: Breite = verfügbarer Platz (ändert sich bei Sidebar-Toggle) – Mess-Signal.
+     data-nx-content: die tatsächliche Content-Kante – für die Ambient-Zone (rechter Rand). --}}
+<div data-nx-region class="flex-1 overflow-y-auto overflow-x-hidden {{ $background }} text-[color:var(--nx-text)]">
+    <div data-nx-content class="{{ $padding }} {{ $spacing }} {{ $width === 'contained' ? 'max-w-[1200px]' : 'w-full' }}">
         {{ $slot }}
     </div>
 </div>
