@@ -8,6 +8,13 @@
         <x-slot name="footer"> … </x-slot>
     </x-nx-modal>
 
+    Standard-Größen (immer eine davon wählen — keine Ad-hoc-Breiten):
+      sm  (~448px) — Bestätigungen, 1 Feld, kurze Auswahl (z.B. Bon-Ziel)
+      md  (~576px) — DEFAULT: Formulare, Detailansichten
+      lg  (~768px) — reichere Inhalte, mehrspaltig
+      xl (~1024px) — große Tools/Tabellen
+    Alle wachsen mit dem Inhalt (max-h 85vh + Scroll), zentriert.
+
       size     : sm | md (default) | lg | xl
       wire:model / :model  : Livewire-Boolean fürs Öffnen
       backdropClosable / escClosable / persistent / hideFooter
