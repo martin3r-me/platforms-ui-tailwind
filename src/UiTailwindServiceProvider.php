@@ -99,6 +99,7 @@ class UiTailwindServiceProvider extends ServiceProvider
         Blade::component('ui-tailwind::components-nx.button', 'nx-button');
         Blade::component('ui-tailwind::components-nx.badge', 'nx-badge');
         Blade::component('ui-tailwind::components-nx.avatar', 'nx-avatar');
+        Blade::component('ui-tailwind::components-nx.property-row', 'nx-property-row');
         Blade::component('ui-tailwind::components-nx.tabs', 'nx-tabs');
         Blade::component('ui-tailwind::components-nx.tab', 'nx-tab');
         Blade::component('ui-tailwind::components-nx.kanban.container', 'nx-kanban-container');
