@@ -6,10 +6,12 @@
 
       variant : neutral (default) | success | danger | warning | info | accent
       dot     : true -> führender Punkt in Textfarbe
+      href    : gesetzt -> Badge wird zum Link (mit Hover-Affordanz)
 --}}
 @props([
     'variant' => 'neutral',
     'dot' => false,
+    'href' => null,
 ])
 
 @php
@@ -21,11 +23,17 @@
         'accent'  => 'text-[color:var(--nx-on-accent)] bg-[color:var(--nx-accent)]',
         default   => 'text-[color:var(--nx-muted)] bg-[color:var(--nx-accent-soft)]',
     };
+    $base = ['inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-xs font-medium', $variantClass, 'transition-opacity hover:opacity-80' => (bool) $href];
 @endphp
 
-<span {{ $attributes->class(['inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-xs font-medium', $variantClass]) }}>
-    @if ($dot)
-        <span class="h-1.5 w-1.5 shrink-0 rounded-full" style="background:currentColor"></span>
-    @endif
-    {{ $slot }}
-</span>
+@if ($href)
+    <a href="{{ $href }}" {{ $attributes->class($base) }}>
+        @if ($dot)<span class="h-1.5 w-1.5 shrink-0 rounded-full" style="background:currentColor"></span>@endif
+        {{ $slot }}
+    </a>
+@else
+    <span {{ $attributes->class($base) }}>
+        @if ($dot)<span class="h-1.5 w-1.5 shrink-0 rounded-full" style="background:currentColor"></span>@endif
+        {{ $slot }}
+    </span>
+@endif
