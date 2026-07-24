@@ -48,12 +48,16 @@
         @if ($nullable)
             <option value="">{{ $nullLabel }}</option>
         @endif
-        @foreach ($options as $opt)
+        @foreach ($options as $key => $opt)
             @php
-                // Optionen können Arrays, Eloquent-Models/Objekte ODER Skalare sein.
+                // Optionen können Arrays, Eloquent-Models/Objekte, assoziative
+                // Arrays (['owner' => 'Owner']) ODER Skalare sein.
                 if (is_array($opt) || is_object($opt)) {
                     $ov = data_get($opt, $optionValue);
                     $ol = data_get($opt, $optionLabel) ?? $ov;
+                } elseif (is_string($key)) {
+                    $ov = $key;
+                    $ol = $opt;
                 } else {
                     $ov = $ol = $opt;
                 }
