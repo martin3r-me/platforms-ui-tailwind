@@ -24,8 +24,7 @@
             </div>
         </div>
 
-        @isset($activity)
-            {{ $activity }}
-        @endisset
+        {{-- Rechte Activity-Sidebar plattformweit gestrichen: der activity-Slot
+             wird bewusst nicht mehr gerendert (Slot-Inhalte in Modulen sind inert). --}}
     </div>
 </div>
