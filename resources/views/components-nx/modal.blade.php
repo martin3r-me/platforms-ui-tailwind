@@ -26,6 +26,7 @@
     'escClosable' => true,
     'persistent' => false,
     'hideFooter' => false,
+    'height' => 'auto',
 ])
 
 @php
@@ -35,6 +36,10 @@
             ? trim(\Illuminate\Support\Str::after($wireModelAttr, 'wire:model='), '"\'')
             : 'modalShow';
     }
+
+    // height: auto (default) wächst mit dem Inhalt bis 85vh; fixed hält eine
+    // stabile Höhe (z.B. für Tab-Dialoge, die sonst je Tab springen).
+    $heightClass = $height === 'fixed' ? 'h-[80vh]' : 'max-h-[85vh]';
 
     $sizeClass = match ($size) {
         'sm' => 'max-w-md',
@@ -57,7 +62,7 @@
         x-transition:leave="ease-in duration-150" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"></div>
 
     {{-- Panel --}}
-    <div class="relative z-[101] flex w-full {{ $sizeClass }} max-h-[85vh] flex-col overflow-hidden rounded-[12px] border border-[color:var(--nx-line)] bg-[color:var(--nx-surface)] text-[color:var(--nx-text)] shadow-[var(--nx-shadow-pop)]"
+    <div class="relative z-[101] flex w-full {{ $sizeClass }} {{ $heightClass }} flex-col overflow-hidden rounded-[12px] border border-[color:var(--nx-line)] bg-[color:var(--nx-surface)] text-[color:var(--nx-text)] shadow-[var(--nx-shadow-pop)]"
         x-transition:enter="ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
         x-transition:leave="ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95">
 
