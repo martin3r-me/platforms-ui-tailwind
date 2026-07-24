@@ -78,6 +78,17 @@
     --nx-danger:        #e03131;
     --nx-warning:       #e8590c;
     --nx-info:          #1971c2;
+    /* Tone-Palette (Notion-artig, gedämpft) — Label-/Spalten-Punkte, Tags,
+       Kategorien. Bedeutung liegt beim Nutzer, nicht im Status. Zentral tunbar. */
+    --nx-tone-rose:     #c15b58;
+    --nx-tone-amber:    #cb7b2e;
+    --nx-tone-emerald:  #4f9d69;
+    --nx-tone-teal:     #3d9797;
+    --nx-tone-sky:      #4a8dbf;
+    --nx-tone-indigo:   #6b6fc4;
+    --nx-tone-violet:   #8b6fc0;
+    --nx-tone-pink:     #c56b9e;
+    --nx-tone-slate:    #8a8a86;
     /* Form */
     --nx-radius-sm:     6px;
     --nx-radius:        8px;
