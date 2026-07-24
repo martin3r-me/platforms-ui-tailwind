@@ -25,7 +25,7 @@
         ? ['@click' => '$refs.navlink.click()', 'style' => 'cursor: pointer;']
         : [];
 
-    $classes = 'kanban-card rounded-[8px] border border-[color:var(--nx-line)] bg-[color:var(--nx-surface)] px-3 py-2.5 transition-colors hover:border-[color:var(--nx-line-strong)]';
+    $classes = 'kanban-card rounded-[8px] border border-[color:var(--nx-line)] bg-[color:var(--nx-surface)] px-3 py-2.5 shadow-[var(--nx-shadow-card)] transition-shadow hover:shadow-[0_2px_8px_rgba(15,15,15,.08),0_1px_2px_rgba(15,15,15,.05)]';
 
     $mergedAttributes = $attributes->merge(
         array_merge(['class' => $classes], $sortableAttributes, $interactiveAttributes)
@@ -36,7 +36,7 @@
     x-data="{ isList: localStorage.getItem('kanbanView') === 'list' }"
     x-init="this.isList = localStorage.getItem('kanbanView') === 'list'"
     @storage-change.window="isList = localStorage.getItem('kanbanView') === 'list'"
-    :class="{ 'rounded-none border-x-0 border-t-0 hover:border-[color:var(--nx-line)]': isList, 'mx-1 my-2': !isList }">
+    :class="{ 'rounded-none border-x-0 border-t-0 shadow-none hover:shadow-none': isList, 'mx-1 my-2': !isList }">
 
     @if(!is_null($title) && $title !== '')
         <div class="mb-1.5">

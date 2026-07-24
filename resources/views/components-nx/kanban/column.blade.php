@@ -1,12 +1,12 @@
 {{--
-    nx-kanban-column — Notion-Spalte: keine Fläche, kein Rahmen. Nur ein
-    ruhiger Header (optionaler Ton-Punkt + Titel + Count) und die flache Liste.
-    API-kompatibel zu x-ui-kanban-column; NEU: tone + count statt col-tone-*-CSS.
+    nx-kanban-column — Notion-Slot: gerundeter Container mit hauchzartem
+    Ton-Wash. Header = Ton-Punkt + Label in weicher Ton-Pille + Count. Die
+    weißen Karten (x-nx-kanban-card) liegen mit weichem Schatten darauf.
 
       title      : Spaltenname
-      tone       : rose|amber|emerald|teal|sky|indigo|violet|pink|slate → Farb-Punkt (--nx-tone-*)
+      tone       : rose|amber|emerald|teal|sky|indigo|violet|pink|slate → Wash + Pille + Punkt
       count      : optionale Anzahl neben dem Titel
-      sortableId : aktiviert Spalten-Drag + Task-Drop-Zone
+      sortableId : Spalten-Drag + Task-Drop-Zone
       scrollable : Body scrollt (default true)
       muted      : gedämpfte Spalte (Backlog/Erledigt)
       footer / headerActions : Slots
@@ -21,6 +21,12 @@
     'count' => null,
 ])
 
+@php
+    $dot    = $tone ? "var(--nx-tone-{$tone})" : 'var(--nx-faint)';
+    $slotBg = $tone ? "color-mix(in srgb, var(--nx-tone-{$tone}) 6%, #ffffff)" : 'var(--nx-bg)';
+    $pillBg = $tone ? "color-mix(in srgb, var(--nx-tone-{$tone}) 16%, #ffffff)" : 'var(--nx-accent-soft)';
+@endphp
+
 <div
     @if($sortableId)
         wire:sortable.item="{{ $sortableId }}"
@@ -32,14 +38,14 @@
     @storage-change.window="isList = localStorage.getItem('kanbanView') === 'list'"
     :style="isList ? 'width:100%;min-width:0' : 'width:19rem;min-width:19rem'"
 >
-    <div class="flex h-full flex-col">
-        {{-- Header: Ton-Punkt + Titel + Count --}}
-        <div class="flex items-center justify-between px-2 py-2 {{ $muted ? 'opacity-70' : '' }}">
-            <div class="flex min-w-0 items-center gap-2">
-                @if($tone)
-                    <span class="h-2 w-2 shrink-0 rounded-full" style="background-color: var(--nx-tone-{{ $tone }})"></span>
-                @endif
-                <span class="truncate text-xs font-semibold uppercase tracking-wide {{ $muted ? 'text-[color:var(--nx-faint)]' : 'text-[color:var(--nx-muted)]' }}">{{ $title }}</span>
+    <div class="flex h-full flex-col rounded-[10px] p-1.5" style="background-color: {{ $slotBg }};">
+        {{-- Header: Ton-Pille (Punkt + Label) + Count --}}
+        <div class="flex items-center justify-between px-1.5 py-1.5 {{ $muted ? 'opacity-80' : '' }}">
+            <div class="flex min-w-0 items-center gap-1.5">
+                <span class="inline-flex min-w-0 items-center gap-1.5 rounded-[6px] px-2 py-0.5" style="background-color: {{ $pillBg }};">
+                    <span class="h-2 w-2 shrink-0 rounded-full" style="background-color: {{ $dot }};"></span>
+                    <span class="truncate text-xs font-medium text-[color:var(--nx-text)]">{{ $title }}</span>
+                </span>
                 @if(!is_null($count))
                     <span class="shrink-0 text-xs text-[color:var(--nx-faint)]">{{ $count }}</span>
                 @endif
@@ -63,14 +69,14 @@
         {{-- Body --}}
         <div
             wire:sortable-group.item-group="{{ $sortableId }}"
-            class="min-h-0 flex-1"
+            class="min-h-0 flex-1 px-0.5"
             :class="{ 'overflow-y-auto': scrollable }"
         >
             {{ $slot }}
         </div>
 
         @if($footer)
-            <div class="px-1 py-2">{{ $footer }}</div>
+            <div class="px-1.5 py-1.5">{{ $footer }}</div>
         @endif
     </div>
 </div>
@@ -78,7 +84,7 @@
 <style>
     /* Spalten-Drag dezent (nx) */
     .kanban-column.wire-sortable-placeholder > div {
-        background: var(--nx-hover);
-        border-radius: 8px;
+        outline: 1px dashed var(--nx-line-strong);
+        outline-offset: -1px;
     }
 </style>

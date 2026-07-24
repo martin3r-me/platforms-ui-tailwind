@@ -94,6 +94,7 @@
     --nx-radius:        8px;
     --nx-radius-lg:     12px;
     --nx-shadow:        none;
+    --nx-shadow-card:   0 1px 2px rgba(15,15,15,.045), 0 2px 6px rgba(15,15,15,.035);  /* Notion: Kachel liegt weich auf */
     --nx-shadow-pop:    0 6px 24px rgba(15,15,15,.10), 0 1px 3px rgba(15,15,15,.06);
     --nx-font:          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
