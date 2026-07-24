@@ -24,7 +24,8 @@
             </div>
         </div>
 
-        {{-- Rechte Activity-Sidebar plattformweit gestrichen: der activity-Slot
-             wird bewusst nicht mehr gerendert (Slot-Inhalte in Modulen sind inert). --}}
+        @isset($activity)
+            {{ $activity }}
+        @endisset
     </div>
 </div>
