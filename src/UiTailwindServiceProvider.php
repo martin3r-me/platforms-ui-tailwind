@@ -118,6 +118,8 @@ class UiTailwindServiceProvider extends ServiceProvider
         Blade::component('ui-tailwind::components-nx.stat-grid', 'nx-stat-grid');
         Blade::component('ui-tailwind::components-nx.empty', 'nx-empty');
         Blade::component('ui-tailwind::components-nx.callout', 'nx-callout');
+        Blade::component('ui-tailwind::components-nx.section', 'nx-section');
+        Blade::component('ui-tailwind::components-nx.list-item', 'nx-list-item');
         Blade::component('ui-tailwind::components-nx.form.input-text', 'nx-input-text');
         Blade::component('ui-tailwind::components-nx.form.input-number', 'nx-input-number');
         Blade::component('ui-tailwind::components-nx.form.input-date', 'nx-input-date');

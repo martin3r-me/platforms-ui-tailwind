@@ -52,6 +52,8 @@ Registriert im `UiTailwindServiceProvider` (explizit, wie alle `x-ui-*`).
 | `x-nx-modal` | Dialog. `size` sm/md/lg/xl · `wire:model` · header/footer-Slots. Wächst mit Inhalt (max-h 85vh) |
 | `x-nx-stat` (+`-grid`) | Kennzahl. `label`/`value`/`hint`/`icon`/`accent`/`href`. Grid: `cols` |
 | `x-nx-empty` | Leerzustand. `icon` + Slot + `action`-Slot |
+| `x-nx-section` | Ruhiger Section-Block: Header (`icon`/`title`/`hint`/`description` + `action`-Slot) über dem Inhalt-Slot |
+| `x-nx-list-item` | Hairline-Zeile (Liste-Grammatik). `icon`/`leading`-Slot · `title`/`subtitle` · `meta` · `href` (Zeile klickbar) · `trailing`-Slot. In `x-nx-card flush` + `divide-y` |
 | `x-nx-callout` | Notion-Callout. `variant` info/success/warning/danger/neutral · `icon` · `title` · `action`-Slot |
 | `x-nx-input-text` / `-number` / `-date` / `-textarea` | Formularfelder. `name`/`label`/`hint`/`size`/`errorKey`/`required`/`placeholder` (+ `min`/`max`/`step`, `rows`). wire:model via $attributes |
 | `x-nx-input-select` | Natives Select. `options` (value/label) · `nullable`/`nullLabel` · `optionValue`/`optionLabel` |
