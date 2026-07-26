@@ -1,10 +1,10 @@
 {{-- nx: weisser Content-Grund + warmer Text.
      Standard-Padding rundum, damit Inhalt nie an Sidebar/Actionbar klebt.
      width:
-       full       -> volle Breite (Kanban, breite Tabellen, Canvas)
-       contained  -> max-w 1200, linksbündig (Normalfall: Dashboards/Formulare/Listen) --}}
+       contained  -> max-w 1200, linksbündig (DEFAULT / Normalfall: Dashboards/Formulare/Listen)
+       full       -> volle Breite — nur bewusst setzen für Kanban, breite Tabellen, Canvas --}}
 @props([
-    'width' => 'full',                 // full | contained
+    'width' => 'contained',            // contained (default) | full
     'padding' => 'px-6 py-6',
     'spacing' => 'space-y-8',
     'background' => 'bg-[color:var(--nx-surface)]',
