@@ -98,4 +98,69 @@
     --nx-shadow-pop:    0 6px 24px rgba(15,15,15,.10), 0 1px 3px rgba(15,15,15,.06);
     --nx-font:          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
+
+/* =======================================================================
+   nx-prose — Notion-artige Typografie für gerendertes Markdown
+   (Str::markdown()-Output). Ersetzt das nicht geladene Tailwind-Typography.
+   Nutzung: <div class="nx-prose">{!! Str::markdown($md) !!}</div>
+   ======================================================================= */
+.nx-prose {
+    color: var(--nx-text);
+    font-size: 14px;
+    line-height: 1.65;
+    word-break: break-word;
+}
+.nx-prose > :first-child { margin-top: 0; }
+.nx-prose > :last-child  { margin-bottom: 0; }
+.nx-prose h1, .nx-prose h2, .nx-prose h3, .nx-prose h4, .nx-prose h5, .nx-prose h6 {
+    color: var(--nx-text);
+    font-weight: 600;
+    line-height: 1.3;
+    margin: 1.6em 0 .55em;
+}
+.nx-prose h1 { font-size: 1.4em; letter-spacing: -.01em; }
+.nx-prose h2 { font-size: 1.2em; letter-spacing: -.01em; }
+.nx-prose h3 { font-size: 1.05em; }
+.nx-prose h4, .nx-prose h5, .nx-prose h6 { font-size: .95em; }
+.nx-prose p { margin: 0 0 .8em; }
+.nx-prose ul, .nx-prose ol { margin: 0 0 .8em; padding-left: 1.4em; }
+.nx-prose ul { list-style: disc; }
+.nx-prose ol { list-style: decimal; }
+.nx-prose li { margin: .2em 0; padding-left: .15em; }
+.nx-prose li::marker { color: var(--nx-faint); }
+.nx-prose ul ul, .nx-prose ol ol, .nx-prose ul ol, .nx-prose ol ul { margin: .2em 0 .3em; }
+.nx-prose strong, .nx-prose b { font-weight: 600; color: var(--nx-text); }
+.nx-prose em, .nx-prose i { font-style: italic; }
+.nx-prose a { color: var(--nx-accent); text-decoration: underline; text-underline-offset: 2px; text-decoration-color: var(--nx-line-strong); }
+.nx-prose a:hover { text-decoration-color: var(--nx-accent); }
+.nx-prose code {
+    font-family: var(--nx-font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+    font-size: .86em;
+    background: var(--nx-bg);
+    border: 1px solid var(--nx-line);
+    border-radius: 4px;
+    padding: .08em .35em;
+}
+.nx-prose pre {
+    background: var(--nx-bg);
+    border: 1px solid var(--nx-line);
+    border-radius: var(--nx-radius-sm);
+    padding: .8em 1em;
+    overflow-x: auto;
+    margin: 0 0 .8em;
+    font-size: .86em;
+    line-height: 1.5;
+}
+.nx-prose pre code { background: none; border: 0; padding: 0; font-size: 1em; }
+.nx-prose blockquote {
+    border-left: 3px solid var(--nx-line-strong);
+    padding: .1em 0 .1em 1em;
+    margin: 0 0 .8em;
+    color: var(--nx-muted);
+}
+.nx-prose hr { border: 0; border-top: 1px solid var(--nx-line); margin: 1.4em 0; }
+.nx-prose table { width: 100%; border-collapse: collapse; margin: 0 0 .8em; font-size: .95em; }
+.nx-prose th, .nx-prose td { border: 1px solid var(--nx-line); padding: .4em .6em; text-align: left; }
+.nx-prose th { background: var(--nx-bg); font-weight: 600; }
+.nx-prose img { max-width: 100%; border-radius: var(--nx-radius-sm); }
 </style>
