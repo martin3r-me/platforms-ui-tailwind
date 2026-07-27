@@ -102,7 +102,7 @@
 /* =======================================================================
    nx-prose — Notion-artige Typografie für gerendertes Markdown
    (Str::markdown()-Output). Ersetzt das nicht geladene Tailwind-Typography.
-   Nutzung: <div class="nx-prose">{!! Str::markdown($md) !!}</div>
+   Nutzung: div.nx-prose um den Str::markdown()-HTML-Output wickeln.
    ======================================================================= */
 .nx-prose {
     color: var(--nx-text);
