@@ -64,7 +64,7 @@ Registriert im `UiTailwindServiceProvider` (explizit, wie alle `x-ui-*`).
 | `x-nx-code` | Code-Block, dunkle Fläche + Copy-Button. `code` · `language?` |
 | `x-nx-applet` | Interaktives Widget im sandboxed iframe (`allow-scripts`, kein same-origin), Auto-Höhe via postMessage. `code` (HTML/JS) |
 | `x-nx-figure` | Bild/Diagramm + optionale Caption. `src` · `alt` · `caption?` |
-| `x-nx-launchpad` | Fullscreen App-Launcher. `modules` (key/title/icon/url/**group**/badge?) · `hotkey` (default 'l' → ⌘/Strg+⇧+L, toggelt) oder Event `open-launchpad`. Kachelfarbe = f(Gruppe) stabil (--nx-tone-*), Icon in Gruppenfarbe, Monogramm-Fallback, client-seitige Suche. In core via `@livewire('core.launchpad')` |
+| `x-nx-launchpad` | Fullscreen App-Launcher. `modules` (key/title/icon/url/**group**/badge?) · `anchors` (neutrale Reihe oben, strukturelle Einstiegspunkte, per Hairline getrennt) · `hotkey` (default 'l' → ⌘/Strg+⇧+L, toggelt) oder Event `open-launchpad`. Kachelfarbe = f(Gruppe) stabil (--nx-tone-*), Anker neutral (Chrome), Icon in Gruppenfarbe, Monogramm-Fallback, client-seitige Suche. In core via `@livewire('core.launchpad')`, Anker aus `config('platform.launchpad.anchors')` |
 
 ## 5. Konventionen (verbindlich)
 

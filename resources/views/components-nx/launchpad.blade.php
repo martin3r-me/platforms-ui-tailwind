@@ -9,7 +9,10 @@
     <x-nx-launchpad :modules="$modules" />
 
     Props:
-      modules : Array von [ 'key','title','icon' (heroicon-Component), 'url', 'badge'? ]
+      modules : Array von [ 'key','title','icon' (heroicon-Component), 'url', 'group', 'badge'? ]
+      anchors : wie modules — strukturelle Einstiegspunkte (Home/Organisation).
+                Werden als NEUTRALE (Chrome) Reihe VOR den farbigen Kategorien
+                gezeigt, durch eine Hairline getrennt.
       hotkey  : Buchstabe (kleingeschrieben) für das Kürzel mit Meta/Strg+Shift
                 (default 'l' → ⌘/Strg + ⇧ + L)
 
@@ -18,6 +21,7 @@
 --}}
 @props([
     'modules' => [],
+    'anchors' => [],
     'hotkey'  => 'l',
 ])
 
@@ -80,6 +84,46 @@
                 x-effect="noResults = !!search && Array.from($refs.grid?.querySelectorAll('a.lp-item') || []).every(a => a.offsetParent === null)"
                 class="mt-8 grid w-full min-h-0 max-w-[1120px] flex-1 grid-cols-3 gap-x-5 gap-y-8 overflow-y-auto sm:grid-cols-4 lg:grid-cols-7"
                 style="align-content: safe center">
+
+                {{-- Anker (neutral/Chrome) — strukturelle Einstiegspunkte, eigene Reihe oben --}}
+                @foreach($anchors as $m)
+                    @php
+                        $title = $m['title'] ?? ucfirst($m['key'] ?? '');
+                        $icon  = $m['icon'] ?? null;
+                        if ($icon && ! \Illuminate\Support\Str::startsWith($icon, 'heroicon')) {
+                            $icon = 'heroicon-o-' . $icon;
+                        }
+                        $url   = $m['url'] ?? '#';
+                        $badge = $m['badge'] ?? null;
+                        $initials = \Illuminate\Support\Str::of($title)
+                            ->explode(' ')->filter()->take(2)
+                            ->map(fn ($w) => mb_strtoupper(mb_substr($w, 0, 1)))->implode('');
+                        if ($initials === '') { $initials = mb_strtoupper(mb_substr($title, 0, 1)); }
+                    @endphp
+                    <a href="{{ $url }}"
+                        data-title="{{ \Illuminate\Support\Str::lower($title) }}"
+                        x-show="!search || $el.dataset.title.includes(search.toLowerCase())"
+                        @click="close()"
+                        class="lp-item group flex flex-col items-center gap-2 rounded-[12px] p-2.5 transition-colors hover:bg-[color:var(--nx-hover)]">
+                        <span class="relative grid h-[60px] w-[60px] place-items-center rounded-[14px] border border-[color:var(--nx-line-strong)] text-[color:var(--nx-text)] shadow-[var(--nx-shadow-card)] transition-transform duration-150 group-hover:-translate-y-0.5"
+                            style="background: var(--nx-accent-soft)">
+                            @if($icon)
+                                <x-dynamic-component :component="$icon" class="h-7 w-7" />
+                            @else
+                                <span class="text-[19px] font-semibold leading-none tracking-tight">{{ $initials }}</span>
+                            @endif
+                            @if($badge)
+                                <span class="absolute -right-1.5 -top-1.5 grid h-5 min-w-[20px] place-items-center rounded-full border-2 border-[color:var(--nx-bg)] bg-[color:var(--nx-danger)] px-1.5 text-[11px] font-semibold text-white">{{ $badge > 99 ? '99+' : $badge }}</span>
+                            @endif
+                        </span>
+                        <span class="max-w-[92px] text-center text-[13px] font-medium leading-tight text-[color:var(--nx-text)]">{{ $title }}</span>
+                    </a>
+                @endforeach
+
+                {{-- Hairline zwischen Ankern und Kategorien (nur ohne Suche) --}}
+                @if(count($anchors))
+                    <div x-show="!search" class="col-span-full h-px bg-[color:var(--nx-line)]"></div>
+                @endif
 
                 @forelse($modules as $m)
                     @php
