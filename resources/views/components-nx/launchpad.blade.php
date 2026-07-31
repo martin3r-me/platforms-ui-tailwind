@@ -6,23 +6,28 @@
     `open-launchpad` (window). Suche filtert client-seitig; Enter öffnet den
     ersten Treffer. Esc / Klick daneben schließt. Das Kürzel toggelt.
 
-    <x-nx-launchpad :modules="$modules" />
+    Aufbau (ohne Suche): Anker (neutral) · Favoriten · Alle Module (farbig).
+    Bei Suche kollabiert alles zu einem flachen Treffer-Raster.
+
+    <x-nx-launchpad :modules="$modules" :anchors="$anchors" :favorites="$favorites" />
 
     Props:
-      modules : Array von [ 'key','title','icon' (heroicon-Component), 'url', 'group', 'badge'? ]
-      anchors : wie modules — strukturelle Einstiegspunkte (Home/Organisation).
-                Werden als NEUTRALE (Chrome) Reihe VOR den farbigen Kategorien
-                gezeigt, durch eine Hairline getrennt.
-      hotkey  : Buchstabe (kleingeschrieben) für das Kürzel mit Meta/Strg+Shift
-                (default 'l' → ⌘/Strg + ⇧ + L)
+      modules   : Array von [ 'key','title','icon' (heroicon), 'url', 'group', 'badge'? ]
+      anchors   : wie modules — strukturelle Einstiegspunkte (Home/Organisation),
+                  NEUTRALE (Chrome) Reihe oben, per Hairline getrennt.
+      favorites : wie modules — meistgenutzte Module (ModuleUsageCount). Farbig,
+                  eigene Zeile unter den Ankern; bei Suche ausgeblendet.
+      hotkey    : Buchstabe (kleingeschrieben) fürs Kürzel mit Meta/Strg+Shift
+                  (default 'l' → ⌘/Strg + ⇧ + L)
 
     Programmatisch öffnen (z.B. aus einem Button):
       $dispatch('open-launchpad')  bzw.  window.dispatchEvent(new Event('open-launchpad'))
 --}}
 @props([
-    'modules' => [],
-    'anchors' => [],
-    'hotkey'  => 'l',
+    'modules'   => [],
+    'anchors'   => [],
+    'favorites' => [],
+    'hotkey'    => 'l',
 ])
 
 @php
@@ -38,6 +43,8 @@
         'admin'    => 'slate',
         'other'    => 'indigo',
     ];
+
+    $labelClass = 'col-span-full px-1 text-[11px] font-semibold uppercase tracking-wide text-[color:var(--nx-faint)]';
 @endphp
 
 <div
@@ -79,7 +86,7 @@
                     class="w-full rounded-[8px] border border-[color:var(--nx-line-strong)] bg-[color:var(--nx-surface)] px-4 py-2.5 text-[15px] text-[color:var(--nx-text)] placeholder-[color:var(--nx-faint)] shadow-[var(--nx-shadow-card)] focus:border-[color:var(--nx-accent)] focus:outline-none focus:ring-2 focus:ring-[color:var(--nx-accent-soft)]" />
             </div>
 
-            {{-- Kachel-Raster --}}
+            {{-- Raster --}}
             <div x-ref="grid"
                 x-effect="noResults = !!search && Array.from($refs.grid?.querySelectorAll('a.lp-item') || []).every(a => a.offsetParent === null)"
                 class="mt-8 grid w-full min-h-0 max-w-[1120px] flex-1 grid-cols-3 gap-x-5 gap-y-8 overflow-y-auto sm:grid-cols-4 lg:grid-cols-7"
@@ -87,81 +94,24 @@
 
                 {{-- Anker (neutral/Chrome) — strukturelle Einstiegspunkte, eigene Reihe oben --}}
                 @foreach($anchors as $m)
-                    @php
-                        $title = $m['title'] ?? ucfirst($m['key'] ?? '');
-                        $icon  = $m['icon'] ?? null;
-                        if ($icon && ! \Illuminate\Support\Str::startsWith($icon, 'heroicon')) {
-                            $icon = 'heroicon-o-' . $icon;
-                        }
-                        $url   = $m['url'] ?? '#';
-                        $badge = $m['badge'] ?? null;
-                        $initials = \Illuminate\Support\Str::of($title)
-                            ->explode(' ')->filter()->take(2)
-                            ->map(fn ($w) => mb_strtoupper(mb_substr($w, 0, 1)))->implode('');
-                        if ($initials === '') { $initials = mb_strtoupper(mb_substr($title, 0, 1)); }
-                    @endphp
-                    <a href="{{ $url }}"
-                        data-title="{{ \Illuminate\Support\Str::lower($title) }}"
-                        x-show="!search || $el.dataset.title.includes(search.toLowerCase())"
-                        @click="close()"
-                        class="lp-item group flex flex-col items-center gap-2 rounded-[12px] p-2.5 transition-colors hover:bg-[color:var(--nx-hover)]">
-                        <span class="relative grid h-[60px] w-[60px] place-items-center rounded-[14px] border border-[color:var(--nx-line-strong)] text-[color:var(--nx-text)] shadow-[var(--nx-shadow-card)] transition-transform duration-150 group-hover:-translate-y-0.5"
-                            style="background: var(--nx-accent-soft)">
-                            @if($icon)
-                                <x-dynamic-component :component="$icon" class="h-7 w-7" />
-                            @else
-                                <span class="text-[19px] font-semibold leading-none tracking-tight">{{ $initials }}</span>
-                            @endif
-                            @if($badge)
-                                <span class="absolute -right-1.5 -top-1.5 grid h-5 min-w-[20px] place-items-center rounded-full border-2 border-[color:var(--nx-bg)] bg-[color:var(--nx-danger)] px-1.5 text-[11px] font-semibold text-white">{{ $badge > 99 ? '99+' : $badge }}</span>
-                            @endif
-                        </span>
-                        <span class="max-w-[92px] text-center text-[13px] font-medium leading-tight text-[color:var(--nx-text)]">{{ $title }}</span>
-                    </a>
+                    @include('ui-tailwind::components-nx.launchpad._tile', ['m' => $m, 'groupTones' => $groupTones, 'neutral' => true])
                 @endforeach
-
-                {{-- Hairline zwischen Ankern und Kategorien (nur ohne Suche) --}}
                 @if(count($anchors))
                     <div x-show="!search" class="col-span-full h-px bg-[color:var(--nx-line)]"></div>
                 @endif
 
+                {{-- Favoriten (meistgenutzt) — farbig, nur ohne Suche --}}
+                @if(count($favorites))
+                    <div x-show="!search" class="{{ $labelClass }} -mb-2">Favoriten</div>
+                    @foreach($favorites as $m)
+                        @include('ui-tailwind::components-nx.launchpad._tile', ['m' => $m, 'groupTones' => $groupTones, 'show' => '!search'])
+                    @endforeach
+                    <div x-show="!search" class="{{ $labelClass }} -mb-2">Alle Module</div>
+                @endif
+
+                {{-- Alle Module (farbig nach Gruppe) --}}
                 @forelse($modules as $m)
-                    @php
-                        $title = $m['title'] ?? ucfirst($m['key'] ?? '');
-                        $icon  = $m['icon'] ?? null;
-                        if ($icon && ! \Illuminate\Support\Str::startsWith($icon, 'heroicon')) {
-                            $icon = 'heroicon-o-' . $icon;
-                        }
-                        $url   = $m['url'] ?? '#';
-                        $badge = $m['badge'] ?? null;
-                        $group = $m['group'] ?? 'other';
-                        $tone  = $groupTones[$group] ?? 'slate';
-                        $tint  = "color-mix(in srgb, var(--nx-tone-{$tone}) 15%, #ffffff)";
-                        $mark  = "var(--nx-tone-{$tone})";
-                        // Monogramm-Fallback (1–2 Initialen) für Module ohne Icon.
-                        $initials = \Illuminate\Support\Str::of($title)
-                            ->explode(' ')->filter()->take(2)
-                            ->map(fn ($w) => mb_strtoupper(mb_substr($w, 0, 1)))->implode('');
-                        if ($initials === '') { $initials = mb_strtoupper(mb_substr($title, 0, 1)); }
-                    @endphp
-                    <a href="{{ $url }}"
-                        data-title="{{ \Illuminate\Support\Str::lower($title) }}"
-                        x-show="!search || $el.dataset.title.includes(search.toLowerCase())"
-                        @click="close()"
-                        class="lp-item group flex flex-col items-center gap-2 rounded-[12px] p-2.5 transition-colors hover:bg-[color:var(--nx-hover)]">
-                        <span class="relative grid h-[60px] w-[60px] place-items-center rounded-[14px] border border-[color:var(--nx-line)] shadow-[var(--nx-shadow-card)] transition-transform duration-150 group-hover:-translate-y-0.5"
-                            style="background: {{ $tint }}; color: {{ $mark }}">
-                            @if($icon)
-                                <x-dynamic-component :component="$icon" class="h-7 w-7" />
-                            @else
-                                <span class="text-[19px] font-semibold leading-none tracking-tight">{{ $initials }}</span>
-                            @endif
-                            @if($badge)
-                                <span class="absolute -right-1.5 -top-1.5 grid h-5 min-w-[20px] place-items-center rounded-full border-2 border-[color:var(--nx-bg)] bg-[color:var(--nx-danger)] px-1.5 text-[11px] font-semibold text-white">{{ $badge > 99 ? '99+' : $badge }}</span>
-                            @endif
-                        </span>
-                        <span class="max-w-[92px] text-center text-[13px] font-medium leading-tight text-[color:var(--nx-text)]">{{ $title }}</span>
-                    </a>
+                    @include('ui-tailwind::components-nx.launchpad._tile', ['m' => $m, 'groupTones' => $groupTones])
                 @empty
                     <div class="col-span-full py-10 text-center text-sm text-[color:var(--nx-muted)]">Keine Module verfügbar</div>
                 @endforelse
