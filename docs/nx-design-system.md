@@ -59,7 +59,7 @@ Registriert im `UiTailwindServiceProvider` (explizit, wie alle `x-ui-*`).
 | `x-nx-input-select` | Natives Select. `options` (value/label) · `nullable`/`nullLabel` · `optionValue`/`optionLabel` |
 | `x-nx-input-checkbox` | Checkbox + Label. `disabled`; wire:model via $attributes |
 | `x-nx-bauhaus` | Dekorative generative Grafik. `seed`, `count` |
-| `x-nx-launchpad` | Fullscreen App-Launcher. `modules` (key/title/icon/url/badge?) · `hotkey` (default 'l' → ⌘/Strg+⇧+L, toggelt) oder Event `open-launchpad`; client-seitige Suche. In core via `@livewire('core.launchpad')` |
+| `x-nx-launchpad` | Fullscreen App-Launcher. `modules` (key/title/icon/url/**group**/badge?) · `hotkey` (default 'l' → ⌘/Strg+⇧+L, toggelt) oder Event `open-launchpad`. Kachelfarbe = f(Gruppe) stabil (--nx-tone-*), Icon in Gruppenfarbe, Monogramm-Fallback, client-seitige Suche. In core via `@livewire('core.launchpad')` |
 
 ## 5. Konventionen (verbindlich)
 
