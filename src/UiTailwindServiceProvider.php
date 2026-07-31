@@ -129,6 +129,13 @@ class UiTailwindServiceProvider extends ServiceProvider
         Blade::component('ui-tailwind::components-nx.form.input-textarea', 'nx-input-textarea');
         Blade::component('ui-tailwind::components-nx.form.input-select', 'nx-input-select');
         Blade::component('ui-tailwind::components-nx.form.input-checkbox', 'nx-input-checkbox');
+
+        // Content-Rendering: Block-Liste (Core-ContentParser) → nx-Bausteine.
+        Blade::component('ui-tailwind::components-nx.content', 'nx-content');
+        Blade::component('ui-tailwind::components-nx.prose', 'nx-prose');
+        Blade::component('ui-tailwind::components-nx.code', 'nx-code');
+        Blade::component('ui-tailwind::components-nx.applet', 'nx-applet');
+        Blade::component('ui-tailwind::components-nx.figure', 'nx-figure');
     }
 
     public function register(): void

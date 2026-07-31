@@ -59,6 +59,11 @@ Registriert im `UiTailwindServiceProvider` (explizit, wie alle `x-ui-*`).
 | `x-nx-input-select` | Natives Select. `options` (value/label) · `nullable`/`nullLabel` · `optionValue`/`optionLabel` |
 | `x-nx-input-checkbox` | Checkbox + Label. `disabled`; wire:model via $attributes |
 | `x-nx-bauhaus` | Dekorative generative Grafik. `seed`, `count` |
+| `x-nx-content` | Rendert eine Block-Liste des Core-`ContentParser` (`:blocks`). Text-Blöcke im `.nx-prose`-Kontext, Rich-Blöcke → callout/code/applet/figure. |
+| `x-nx-prose` | Typografie-Wrapper (`.nx-prose`) um beliebiges HTML (Markdown-Output, inline_html). |
+| `x-nx-code` | Code-Block, dunkle Fläche + Copy-Button. `code` · `language?` |
+| `x-nx-applet` | Interaktives Widget im sandboxed iframe (`allow-scripts`, kein same-origin), Auto-Höhe via postMessage. `code` (HTML/JS) |
+| `x-nx-figure` | Bild/Diagramm + optionale Caption. `src` · `alt` · `caption?` |
 | `x-nx-launchpad` | Fullscreen App-Launcher. `modules` (key/title/icon/url/**group**/badge?) · `hotkey` (default 'l' → ⌘/Strg+⇧+L, toggelt) oder Event `open-launchpad`. Kachelfarbe = f(Gruppe) stabil (--nx-tone-*), Icon in Gruppenfarbe, Monogramm-Fallback, client-seitige Suche. In core via `@livewire('core.launchpad')` |
 
 ## 5. Konventionen (verbindlich)
