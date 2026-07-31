@@ -1,26 +1,24 @@
 {{--
     nx-launchpad — Vollflächiger App-Launcher (Notion-Style).
 
-    Ein ruhiger Fullscreen-Overlay mit Kachel-Raster aller Module des Users,
-    ausgelöst per Hot-Corner (Maus in eine Bildschirmecke, kurz halten) oder
-    per Event `open-launchpad` (window). Suche filtert client-seitig; Enter
-    öffnet den ersten Treffer. Esc / Klick daneben schließt.
+    Ein ruhiger Fullscreen-Overlay mit Kachel-Raster aller Module des Users.
+    Ausgelöst per Tastenkürzel (default ⌘/Strg + ⇧ + L) oder per Event
+    `open-launchpad` (window). Suche filtert client-seitig; Enter öffnet den
+    ersten Treffer. Esc / Klick daneben schließt. Das Kürzel toggelt.
 
     <x-nx-launchpad :modules="$modules" />
 
     Props:
       modules : Array von [ 'key','title','icon' (heroicon-Component), 'url', 'badge'? ]
-      corners : aktive Ecken — Teilmenge von
-                ['top-left','top-right','bottom-left','bottom-right'] (default: bottom-left)
-      dwell   : Verweildauer in ms, bis eine Ecke auslöst (default 380)
+      hotkey  : Buchstabe (kleingeschrieben) für das Kürzel mit Meta/Strg+Shift
+                (default 'l' → ⌘/Strg + ⇧ + L)
 
     Programmatisch öffnen (z.B. aus einem Button):
       $dispatch('open-launchpad')  bzw.  window.dispatchEvent(new Event('open-launchpad'))
 --}}
 @props([
     'modules' => [],
-    'corners' => ['bottom-left'],
-    'dwell'   => 380,
+    'hotkey'  => 'l',
 ])
 
 @php
@@ -32,59 +30,25 @@
     x-data="{
         open: false,
         search: '',
-        arming: null,
         noResults: false,
-        corners: @js(array_values($corners)),
-        dwell: {{ (int) $dwell }},
-        threshold: 6,
-        _timer: null,
+        hotkey: @js(strtolower($hotkey)),
 
-        cornerAt(x, y) {
-            const w = window.innerWidth, h = window.innerHeight, t = this.threshold;
-            if (y <= t && x <= t) return 'top-left';
-            if (y <= t && x >= w - t) return 'top-right';
-            if (y >= h - t && x <= t) return 'bottom-left';
-            if (y >= h - t && x >= w - t) return 'bottom-right';
-            return null;
-        },
-        onMove(e) {
-            if (this.open) return;
-            const c = this.cornerAt(e.clientX, e.clientY);
-            if (c && this.corners.includes(c)) {
-                if (this.arming !== c) {
-                    this.arming = c;
-                    clearTimeout(this._timer);
-                    this._timer = setTimeout(() => this.openPad(), this.dwell);
-                }
-            } else if (this.arming) {
-                this.arming = null;
-                clearTimeout(this._timer);
+        onKey(e) {
+            if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key.toLowerCase() === this.hotkey) {
+                e.preventDefault();
+                this.open ? this.close() : this.openPad();
             }
         },
         openPad() {
-            this.arming = null;
-            clearTimeout(this._timer);
             this.open = true;
             this.$nextTick(() => this.$refs.search?.focus());
         },
         close() { this.open = false; this.search = ''; },
     }"
-    @mousemove.window="onMove($event)"
+    @keydown.window="onKey($event)"
     @keydown.escape.window="close()"
     @open-launchpad.window="openPad()"
 >
-    {{-- Hot-Corner-Indikator (füllt sich während des Verweilens) --}}
-    <div x-show="arming" x-cloak
-        class="pointer-events-none fixed z-[94] h-11 w-11 rounded-[12px] border-2 border-[color:var(--nx-accent)]"
-        style="background: var(--nx-accent-soft)"
-        :class="{
-            'top-3 left-3': arming === 'top-left',
-            'top-3 right-3': arming === 'top-right',
-            'bottom-3 left-3': arming === 'bottom-left',
-            'bottom-3 right-3': arming === 'bottom-right',
-        }"
-        x-transition:enter="ease-out duration-150" x-transition:enter-start="opacity-0 scale-90" x-transition:enter-end="opacity-100 scale-100"></div>
-
     {{-- Overlay --}}
     <template x-teleport="body">
         <div x-show="open" x-cloak
@@ -147,7 +111,7 @@
             </div>
 
             <div class="mt-auto pt-4 text-[12px] text-[color:var(--nx-faint)]">
-                <span>Esc zum Schließen</span>
+                <span>⌘/Strg + ⇧ + {{ strtoupper($hotkey) }} öffnet · Esc schließt</span>
             </div>
         </div>
     </template>
