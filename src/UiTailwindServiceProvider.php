@@ -63,6 +63,10 @@ class UiTailwindServiceProvider extends ServiceProvider
         Blade::component('ui-tailwind::components.stats-grid', 'ui-stats-grid');
         Blade::component('ui-tailwind::components.detail-stats-grid', 'ui-detail-stats-grid');
         Blade::component('ui-tailwind::components.panel', 'ui-panel');
+        Blade::component('ui-tailwind::components.stat-tiles', 'ui-stat-tiles');
+        Blade::component('ui-tailwind::components.detail-header', 'ui-detail-header');
+        Blade::component('ui-tailwind::components.sticky-panel', 'ui-sticky-panel');
+        Blade::component('ui-tailwind::components.scrollspy-nav', 'ui-scrollspy-nav');
         Blade::component('ui-tailwind::components.form-grid', 'ui-form-grid');
         Blade::component('ui-tailwind::components.form.container', 'ui-form-container');
         Blade::component('ui-tailwind::components.tasks-info-sidebar', 'ui-tasks-info-sidebar');
@@ -95,6 +99,7 @@ class UiTailwindServiceProvider extends ServiceProvider
         // Explizit registriert (wie alle x-ui-*), damit die Aufloesung garantiert
         // ist. Neue nx-Komponenten hier ergaenzen.
         Blade::component('ui-tailwind::components-nx.card', 'nx-card');
+        Blade::component('ui-tailwind::components-nx.panel', 'nx-panel');
         Blade::component('ui-tailwind::components-nx.bauhaus', 'nx-bauhaus');
         Blade::component('ui-tailwind::components-nx.button', 'nx-button');
         Blade::component('ui-tailwind::components-nx.badge', 'nx-badge');
