@@ -30,6 +30,16 @@
                 {{ $slot ?? '' }}
             </nav>
         </template>
+        @php
+            // Eingeklappt: Anzeige-Titel des Moduls (aus der Registry), nicht der Route-Key.
+            // So steht hier „ZAHLENWERK" statt „FORECAST". Fällt generisch auf den Key zurück.
+            $__routeKey = explode('.', request()->route()?->getName())[0] ?? null;
+            $__collapsedLabel = $__routeKey ?: 'APP';
+            if ($__routeKey && class_exists(\Platform\Core\PlatformCore::class)) {
+                $__mod = \Platform\Core\PlatformCore::getModule($__routeKey);
+                $__collapsedLabel = (is_array($__mod) ? ($__mod['title'] ?? null) : null) ?: $__routeKey;
+            }
+        @endphp
         <template x-if="collapsed">
             <button
                 @click="toggle()"
@@ -37,7 +47,7 @@
                 title="Sidebar ausklappen"
             >
                 <div class="text-[color:var(--nx-muted)] text-sm font-semibold tracking-wide -rotate-90 origin-center select-none whitespace-nowrap">
-                    {{ strtoupper(explode('.', request()->route()?->getName())[0] ?? 'APP') }}
+                    {{ strtoupper($__collapsedLabel) }}
                 </div>
             </button>
         </template>
