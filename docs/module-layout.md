@@ -118,6 +118,8 @@ protected function pageContextOptions(): array   // optional, nur Abweichungen
 - **Kein Trait** auf Konfigurationsseiten (Typen, Prompts, Definitionen) und in eingebetteten
   Teil-Komponenten — die würden den Kontext der umgebenden Seite überschreiben.
 - Eigenes `rendered()` in der Komponente → dort `$this->dispatchPageContext()` aufrufen.
+- Beim Laden liest das Panel den Kontext direkt im selben Request (`PageContextState`, Seite
+  wird vor dem Layout gerendert) — es steht sofort im ersten HTML; das Event bedient nur spätere Updates.
 
 ## 5. Sonderfall `home`
 
