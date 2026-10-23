@@ -98,8 +98,11 @@ protected function pageContextOptions(): array   // optional, nur Abweichungen
 - **Keine Einzel-Events mehr von Hand** (`comms`, `terminal:app:*`, `organization`, `keyresult`,
   `extrafields`). Der Trait sendet sie übergangsweise selbst mit, bis Terminal & Modals auf
   `page-context` hören — danach fallen sie weg.
-- **Jede Detailseite** (Komponente, die in `mount()` ein Modell bekommt) nutzt den Trait —
-  sonst bleibt der Kontext der vorherigen Seite stehen. Listen/Dashboards ebenfalls (Reset).
+- **Jede Detailseite** (Seite über EIN Inhalts-Objekt) nutzt den Trait — sonst hat sie weder
+  Terminal-Kontext noch Kontext-Panel. Listen/Dashboards brauchen nichts: Terminal und Panel
+  werden bei jedem Seitenwechsel neu gemountet und starten ohne Kontext.
+- **Kein Trait** auf Konfigurationsseiten (Typen, Prompts, Definitionen) und in eingebetteten
+  Teil-Komponenten — die würden den Kontext der umgebenden Seite überschreiben.
 - Eigenes `rendered()` in der Komponente → dort `$this->dispatchPageContext()` aufrufen.
 
 ## 5. Sonderfall `home`
