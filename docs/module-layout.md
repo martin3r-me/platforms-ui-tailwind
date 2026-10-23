@@ -58,7 +58,7 @@ entschieden, nicht pauschal gelöscht.
 - Nur auf **Detailseiten** (ein Datensatz im Mittelpunkt) — nicht auf Listen, Dashboards, Boards.
 - Gleiche Reiter überall, sichtbar je nachdem, was das Modell kann:
   - **Organisation** — verknüpfte Einheiten (Entity-Links), verknüpfen / lösen per Suche.
-    Erscheint automatisch für jedes Modell mit `HasEntityLinks`. Ersetzt das Anhängen
+    Erscheint an jedem Modell (Dimension-Links gehen über die Morph-Map). Ersetzt das Anhängen
     über das Terminal als Standardweg (Terminal bleibt der schnelle Weg).
     **Nicht im Modul `organization`** — dort *ist* der Datensatz die Einheit, an die man hängt;
     was daran hängt, zeigt die Detailseite selbst.
@@ -106,7 +106,8 @@ protected function pageContextOptions(): array   // optional, nur Abweichungen
 - **Apps/Reiter werden aus dem Modell abgeleitet**, nicht pro Seite verdrahtet:
   `LogsActivity` → Aktivität · `HasTags` → Tags · `HasExtraFields` → Zusatzfelder
   (bei `InheritsExtraFields` am Eltern-Modell) · `HasTimeEntries` → Zeiten ·
-  `HasKeyResultAncestors` → OKR · `HasEntityLinks` → Organisation · Dateien immer.
+  `HasKeyResultAncestors` → OKR · Dateien immer. Verknüpfungen (Organisation, Dimension-Links)
+  an jedem Modell außer organization-Modellen.
   Abweichungen über `'apps' => ['files' => false]`.
 - **Keine Einzel-Events mehr von Hand** (`comms`, `terminal:app:*`, `organization`, `keyresult`,
   `extrafields`). Der Trait sendet sie übergangsweise selbst mit, bis Terminal & Modals auf
@@ -140,7 +141,7 @@ protected function pageContextOptions(): array   // optional, nur Abweichungen
 ## 7. Reihenfolge der Umsetzung
 
 0. `HasPageContext` in den Core, Pilot: Planner-Projekt + -Task. ✅
-1. Kontext-Panel im Core bauen (zuerst Reiter Organisation + Aktivität), Prototyp an `organization`.
+1. Kontext-Panel im Core (`core.context-panel`) — Verknüpfungen, Zeit, Aktivität, Dateien, Tags, OKR, Felder. ✅
 2. Hauptsidebar-Gerüst in den Core (Module liefern nur Daten), `integrations` als Referenz.
 3. Kernmodule nachziehen: `planner`, `crm`, dann `okr`, `forecast`, `sales`, `infra`, `seo`, `brands`.
 4. `home` nach § 5.
