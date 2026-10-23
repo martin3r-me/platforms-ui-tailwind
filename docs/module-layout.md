@@ -58,12 +58,49 @@ entschieden, nicht pauschal gelöscht.
 - Nur auf **Detailseiten** (ein Datensatz im Mittelpunkt) — nicht auf Listen, Dashboards, Boards.
 - Gleiche Reiter überall, sichtbar je nachdem, was das Modell kann:
   - **Organisation** — verknüpfte Einheiten (Entity-Links), verknüpfen / lösen per Suche.
-    Erscheint automatisch für jedes Modell in der EntityLinkRegistry. Ersetzt das Anhängen
+    Erscheint automatisch für jedes Modell mit `HasEntityLinks`. Ersetzt das Anhängen
     über das Terminal als Standardweg (Terminal bleibt der schnelle Weg).
+    **Nicht im Modul `organization`** — dort *ist* der Datensatz die Einheit, an die man hängt;
+    was daran hängt, zeigt die Detailseite selbst.
   - **Aktivität** — echtes Activity-Log.
   - **Notizen / Tags / Zusatzfelder** — über die Querschnitts-Traits (HasNotes, HasTags, HasExtraFields).
-- Das Modul liefert nur den Datensatz („das ist mein Kontext-Modell"), kein eigenes Blade.
+- Das Modul liefert nur den Datensatz („das ist mein Kontext-Modell"), kein eigenes Blade — über
+  das Event `page-context` (§ 4a).
 - **Keine Platzhalter-Panels** („Keine Aktivitäten verfügbar") — gibt es nichts, gibt es kein Panel.
+
+## 4a. Seitenkontext: `HasPageContext`
+
+**Wann ein Kontext-Panel da ist, entscheidet ein einziges Event:** Steht ein konkretes Modell
+hinter der Seite, sendet sie `page-context` mit Modell → Panel (und Terminal-Kontext) da.
+Ohne Modell (Liste/Dashboard) sendet sie den Reset → Panel weg.
+
+Jede Seite nutzt dafür den Core-Trait `Platform\Core\Livewire\Concerns\HasPageContext`:
+
+```php
+use HasPageContext;
+
+protected function pageContext(): ?Model
+{
+    return $this->project;          // null = Liste/Dashboard
+}
+
+protected function pageContextOptions(): array   // optional, nur Abweichungen
+{
+    return ['url' => route('planner.projects.show', $this->project), 'source' => 'planner.project.view'];
+}
+```
+
+- **Apps/Reiter werden aus dem Modell abgeleitet**, nicht pro Seite verdrahtet:
+  `LogsActivity` → Aktivität · `HasTags` → Tags · `HasExtraFields` → Zusatzfelder
+  (bei `InheritsExtraFields` am Eltern-Modell) · `HasTimeEntries` → Zeiten ·
+  `HasKeyResultAncestors` → OKR · `HasEntityLinks` → Organisation · Dateien immer.
+  Abweichungen über `'apps' => ['files' => false]`.
+- **Keine Einzel-Events mehr von Hand** (`comms`, `terminal:app:*`, `organization`, `keyresult`,
+  `extrafields`). Der Trait sendet sie übergangsweise selbst mit, bis Terminal & Modals auf
+  `page-context` hören — danach fallen sie weg.
+- **Jede Detailseite** (Komponente, die in `mount()` ein Modell bekommt) nutzt den Trait —
+  sonst bleibt der Kontext der vorherigen Seite stehen. Listen/Dashboards ebenfalls (Reset).
+- Eigenes `rendered()` in der Komponente → dort `$this->dispatchPageContext()` aufrufen.
 
 ## 5. Sonderfall `home`
 
@@ -86,6 +123,7 @@ entschieden, nicht pauschal gelöscht.
 
 ## 7. Reihenfolge der Umsetzung
 
+0. `HasPageContext` in den Core, Pilot: Planner-Projekt + -Task. ✅
 1. Kontext-Panel im Core bauen (zuerst Reiter Organisation + Aktivität), Prototyp an `organization`.
 2. Hauptsidebar-Gerüst in den Core (Module liefern nur Daten), `integrations` als Referenz.
 3. Kernmodule nachziehen: `planner`, `crm`, dann `okr`, `forecast`, `sales`, `infra`, `seo`, `brands`.
