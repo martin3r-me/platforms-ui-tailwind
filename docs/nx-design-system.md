@@ -68,6 +68,8 @@ Registriert im `UiTailwindServiceProvider` (explizit, wie alle `x-ui-*`).
 
 ## 5. Konventionen (verbindlich)
 
+- **Modul-Layout** (Hauptsidebar · Seite · Kontext-Panel, keine linken inneren Sidebars):
+  siehe [module-layout.md](module-layout.md).
 - **Actionbar** = Seitenkopf-Navigation. Links Breadcrumb (Nav), `left`-Slot Inline-Controls
   (Filter/View-Switch), rechts Aktionen: **genau 1 → sichtbarer `x-nx-button`, ≥2 → ein
   `x-nx-dropdown`**. Keine Content-/Bulk-Aktionen rechts.

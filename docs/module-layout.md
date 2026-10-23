@@ -1,0 +1,92 @@
+# Modul-Layout (Hauptsidebar · Seite · Kontext-Panel)
+
+Verbindlicher Grundaufbau jedes Moduls — Ergänzung zu [nx-design-system.md](nx-design-system.md).
+Ziel: Menschen gewöhnen sich an **Positionen**, nicht an Inhalte. Darum ist die Hülle überall
+gleich; nur die Daten darin wechseln.
+
+> **Status (2026-10-23):** Zielbild, beschlossen. Umsetzung beginnt mit den Kernmodulen (s. u.).
+> `integrations` entspricht bei der Hauptsidebar bereits der Vorlage.
+
+---
+
+## 1. Geltungsbereich
+
+Gilt verbindlich für die **Kernmodule**: `organization`, `planner`, `okr`, `forecast`, `sales`,
+`infra`, `crm`, `seo`, `brands`, `integrations` — sowie `home` als Sonderfall (§ 5).
+Alle anderen Module bleiben vorerst, wie sie sind.
+
+## 2. Drei Flächen, je eine Aufgabe
+
+| Fläche | Aufgabe | Frage, die sie beantwortet |
+|---|---|---|
+| **Hauptsidebar** (links, Modul-Sidebar) | Navigation | *Wohin gehe ich?* |
+| **Seite** (Actionbar + Inhalt) | Arbeit am Gegenstand | *Was sehe / tue ich hier?* |
+| **Kontext-Panel** (rechts, nur Detailseiten) | Querschnitt am Datensatz | *Woran hängt das, was ist passiert?* |
+
+Keine Fläche übernimmt die Aufgabe einer anderen: Bearbeitung eines einzelnen Datensatzes
+gehört **nicht** in die Hauptsidebar, Navigation **nicht** ins Kontext-Panel.
+
+## 3. Hauptsidebar — immer derselbe Aufbau
+
+Von oben nach unten, feste Reihenfolge:
+
+1. **Kopf** — Modulname.
+2. **Seiten des Moduls** — immer vorhanden, immer an derselben Stelle, aktive Seite markiert.
+3. **Berechtigte Navigation** — das, was *ich* sehen darf: Einheiten-Baum, meine Projekte,
+   verbundene Anbieter … (authz-geführt).
+4. *(optional)* **Kontextliste** — z. B. „Für mich freigegeben".
+
+Regeln:
+- **Hat ein Modul keine berechtigte Navigation, entfällt Abschnitt 3 ersatzlos** — kein leerer
+  Block, kein „hier ist nichts". Weil 1–2 oben stabil bleiben, bricht das die Gewöhnung nicht.
+- **Ausnahme:** Ist das Modul fachlich an die Organisation gebunden, der User hat aber keine
+  Rechte, steht ein Hinweis („Dir sind keine Einheiten freigegeben") — dort *bedeutet* das Fehlen etwas.
+- Eingeklappt: nur Icons; Status-Marker (z. B. Fehlerpunkt) bleiben sichtbar.
+- Bausteine: `x-ui-sidebar-list` (`label`), `x-ui-sidebar-item` (`href`/`active` bzw. `type="button"`, `trailing`-Slot).
+
+## 4. Seite und Kontext-Panel
+
+**Keine linken inneren Sidebars** (`x-ui-page-sidebar` links). Deren Inhalte wandern:
+- Navigation → Hauptsidebar (§ 3)
+- Filter / View-Switch → Actionbar, `left`-Slot
+- „Übersicht" / Kennzahlen → in die Seite (Kopf, `x-nx-stat-grid`)
+
+Bestehende linke Sidebars mit echtem Inhalt (z. B. Planner-Projekt-Dashboard) werden **einzeln**
+entschieden, nicht pauschal gelöscht.
+
+**Rechts gibt es genau ein Panel: das Kontext-Panel.** Es kommt aus dem **Core**, nicht aus dem Modul.
+- Nur auf **Detailseiten** (ein Datensatz im Mittelpunkt) — nicht auf Listen, Dashboards, Boards.
+- Gleiche Reiter überall, sichtbar je nachdem, was das Modell kann:
+  - **Organisation** — verknüpfte Einheiten (Entity-Links), verknüpfen / lösen per Suche.
+    Erscheint automatisch für jedes Modell in der EntityLinkRegistry. Ersetzt das Anhängen
+    über das Terminal als Standardweg (Terminal bleibt der schnelle Weg).
+  - **Aktivität** — echtes Activity-Log.
+  - **Notizen / Tags / Zusatzfelder** — über die Querschnitts-Traits (HasNotes, HasTags, HasExtraFields).
+- Das Modul liefert nur den Datensatz („das ist mein Kontext-Modell"), kein eigenes Blade.
+- **Keine Platzhalter-Panels** („Keine Aktivitäten verfügbar") — gibt es nichts, gibt es kein Panel.
+
+## 5. Sonderfall `home`
+
+`home` geht von der **Person** aus, nicht von einem Fachobjekt; es sammelt aus anderen Modulen
+(Mein Tag, Aufgaben, Agenda, Kalender, Zeiten, Ziele, Inbox, Notizen, Benachrichtigungen).
+
+- **Hauptsidebar: gleiche Form, anderer Inhalt.** Oben die home-Seiten; Abschnitt 3 ist
+  **„Meine Module"** (berechtigt, auf Modulebene).
+- **Kein Kontext-Panel.** `home` zeigt und verlinkt; bearbeitet wird im Herkunftsmodul —
+  dort hängt das Kontext-Panel.
+- Die inneren Sidebars von `home` werden einzeln aufgelöst nach § 4 (Filter → Actionbar,
+  Zusammenfassung → Seite).
+
+## 6. Zwei Modul-Arten, eine Hülle
+
+| | Hauptsidebar Abschnitt 3 | Kontext-Panel |
+|---|---|---|
+| **Fachmodul** | berechtigte Navigation (falls vorhanden) | ja, auf Detailseiten |
+| **home** | Meine Module | nein |
+
+## 7. Reihenfolge der Umsetzung
+
+1. Kontext-Panel im Core bauen (zuerst Reiter Organisation + Aktivität), Prototyp an `organization`.
+2. Hauptsidebar-Gerüst in den Core (Module liefern nur Daten), `integrations` als Referenz.
+3. Kernmodule nachziehen: `planner`, `crm`, dann `okr`, `forecast`, `sales`, `infra`, `seo`, `brands`.
+4. `home` nach § 5.
