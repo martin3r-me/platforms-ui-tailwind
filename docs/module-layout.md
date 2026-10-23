@@ -68,6 +68,19 @@ entschieden, nicht pauschal gelöscht.
   das Event `page-context` (§ 4a).
 - **Keine Platzhalter-Panels** („Keine Aktivitäten verfügbar") — gibt es nichts, gibt es kein Panel.
 
+### Kontext-Panel ersetzt das Terminal (beschlossen 2026-10-23)
+
+- **Rechte Sidebar, volle Höhe**, ~400 px, per Ziehen verstellbar (pro User gemerkt).
+  ≥ ~1500 px offen; Laptop: eingeklappt als Icon-Leiste (Punkt = hat Inhalt), Klick öffnet als
+  Overlay; Mobil: Sheet/Vollbild. Kanban/Canvas starten eingeklappt. Ohne `page-context` keine Leiste.
+- **Inhalt = die kontextbezogenen Terminal-Apps:** Verknüpfungen (Organisation, Dimension-Links),
+  Zeit, Aktivität, Dateien, Tags, Zusatzfelder, OKR, Comms.
+- **Technik:** Das Panel ist eine zweite Hülle über dem vorhandenen `TerminalAppRegistry`
+  (`Platform\Core\Terminal\Contracts\TerminalApp`) — Apps werden nicht neu gebaut. Verfügbarkeit
+  über `isAvailable(TerminalContext)`, gespeist aus den `apps` von `page-context`.
+- **Terminal entfällt:** Chat fliegt raus, Agenda wandert nach `home`. Übergang: Apps erscheinen
+  zuerst im Panel, dann werden sie im Terminal ausgeblendet; zuletzt wird das Terminal entfernt.
+
 ## 4a. Seitenkontext: `HasPageContext`
 
 **Wann ein Kontext-Panel da ist, entscheidet ein einziges Event:** Steht ein konkretes Modell
