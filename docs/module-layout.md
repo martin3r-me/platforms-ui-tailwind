@@ -68,9 +68,16 @@ entschieden, nicht pauschal gelöscht.
   das Event `page-context` (§ 4a).
 - **Keine Platzhalter-Panels** („Keine Aktivitäten verfügbar") — gibt es nichts, gibt es kein Panel.
 
+**Keine rechten inneren Sidebars** (`activity`-Slot von `x-ui-page`). In den Kernmodulen aufgelöst
+(2026-10-24): Platzhalter gelöscht · Datensatz-Timelines → Reiter Aktivität · echte Inhalte
+(Kennzahlen, Bewegung, Team-Verteilung) → in die Seite · Auswahl-Details → `x-nx-modal` ·
+Listen (home-Eingang) → Spalte im Seiteninhalt. `x-ui-page` rendert den Slot nur noch für Nicht-Kernmodule.
+
 ### Kontext-Panel ersetzt das Terminal (beschlossen 2026-10-23)
 
 - **Rechte Sidebar, volle Höhe**, ~400 px, per Ziehen verstellbar (pro User gemerkt).
+  Kopf wie die Hauptsidebar: 44-px-Klappzeile (Doppelpfeil `w-5`, fluchtet mit der Navbar), Pfeil
+  links an der Stelle des eingeklappten Knopfs, daneben der Datensatz; darunter die Reiter.
   ≥ ~1500 px offen; Laptop: eingeklappt als Icon-Leiste (Punkt = hat Inhalt), Klick öffnet als
   Overlay; Mobil: Sheet/Vollbild. Kanban/Canvas starten eingeklappt. Ohne `page-context` bleibt nur
   die schmale Leiste mit dem **Algedonic-Signal** unten (überall erreichbar; Mobil kleiner schwebender Knopf).
