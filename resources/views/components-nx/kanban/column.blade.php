@@ -7,6 +7,7 @@
       tone       : rose|amber|emerald|teal|sky|indigo|violet|pink|slate → Wash + Pille + Punkt
       count      : optionale Anzahl neben dem Titel
       sortableId : Spalten-Drag + Task-Drop-Zone
+      itemGroup  : nur Drop-Zone (ohne Spalten-Drag), z. B. 'backlog'/'done' — sonst = sortableId
       scrollable : Body scrollt (default true)
       muted      : gedämpfte Spalte (Backlog/Erledigt)
       footer / headerActions : Slots
@@ -19,6 +20,7 @@
     'muted' => false,
     'tone' => null,
     'count' => null,
+    'itemGroup' => null,
 ])
 
 @php
@@ -68,7 +70,7 @@
 
         {{-- Body --}}
         <div
-            wire:sortable-group.item-group="{{ $sortableId }}"
+            wire:sortable-group.item-group="{{ $itemGroup ?? $sortableId }}"
             class="min-h-0 flex-1 px-0.5"
             :class="{ 'overflow-y-auto': scrollable }"
         >
