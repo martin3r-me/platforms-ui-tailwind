@@ -72,7 +72,10 @@ entschieden, nicht pauschal gelöscht.
 
 - **Rechte Sidebar, volle Höhe**, ~400 px, per Ziehen verstellbar (pro User gemerkt).
   ≥ ~1500 px offen; Laptop: eingeklappt als Icon-Leiste (Punkt = hat Inhalt), Klick öffnet als
-  Overlay; Mobil: Sheet/Vollbild. Kanban/Canvas starten eingeklappt. Ohne `page-context` keine Leiste.
+  Overlay; Mobil: Sheet/Vollbild. Kanban/Canvas starten eingeklappt. Ohne `page-context` bleibt nur
+  die schmale Leiste mit dem **Algedonic-Signal** unten (überall erreichbar; Mobil kleiner schwebender Knopf).
+- **Algedonic-Signal** sitzt unten in der rechten Leiste bzw. im Panel-Fuß (nicht mehr im Terminal) und öffnet
+  als Schublade von rechts; auf einer Einheit ist sie vorausgewählt.
 - **Inhalt = die kontextbezogenen Terminal-Apps:** Verknüpfungen (Organisation, Dimension-Links),
   Zeit, Aktivität, Dateien, Tags, Zusatzfelder, OKR, Comms.
 - **Technik:** Das Panel ist eine zweite Hülle über dem vorhandenen `TerminalAppRegistry`
