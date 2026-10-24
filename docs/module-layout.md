@@ -77,11 +77,12 @@ entschieden, nicht pauschal gelöscht.
 - **Algedonic-Signal** sitzt unten in der rechten Leiste bzw. im Panel-Fuß (nicht mehr im Terminal) und öffnet
   als Schublade von rechts; auf einer Einheit ist sie vorausgewählt.
 - **Inhalt = die kontextbezogenen Terminal-Apps:** Verknüpfungen (Organisation, Dimension-Links),
-  Zeit, Aktivität, Dateien, Tags, Zusatzfelder, OKR, Comms.
+  Zeit, Aktivität, Dateien, Tags, Zusatzfelder, OKR, Agenda (Reiter kommt aus `home`), Comms.
 - **Technik:** Das Panel ist eine zweite Hülle über dem vorhandenen `TerminalAppRegistry`
   (`Platform\Core\Terminal\Contracts\TerminalApp`) — Apps werden nicht neu gebaut. Verfügbarkeit
   über `isAvailable(TerminalContext)`, gespeist aus den `apps` von `page-context`.
-- **Terminal entfällt:** Chat fliegt raus, Agenda wandert nach `home`. Übergang: Apps erscheinen
+- **Terminal entfällt:** Chat ist raus (2026-10-24). Agenda lebt in `home` (Boards unter `home.agenda`,
+  Reiter „Agenda“ im Panel, MCP-Tools `home.agendas.*`); das Terminal hat nur noch Comms + Feature-Request. Übergang: Apps erscheinen
   zuerst im Panel, dann werden sie im Terminal ausgeblendet; zuletzt wird das Terminal entfernt.
 
 ## 4a. Seitenkontext: `HasPageContext`
