@@ -111,6 +111,7 @@ class UiTailwindServiceProvider extends ServiceProvider
         Blade::component('ui-tailwind::components-nx.kanban.container', 'nx-kanban-container');
         Blade::component('ui-tailwind::components-nx.kanban.column', 'nx-kanban-column');
         Blade::component('ui-tailwind::components-nx.kanban.card', 'nx-kanban-card');
+        Blade::component('ui-tailwind::components-nx.kanban.collapsed', 'nx-kanban-collapsed');
         Blade::component('ui-tailwind::components-nx.dropdown', 'nx-dropdown');
         Blade::component('ui-tailwind::components-nx.dropdown-item', 'nx-dropdown-item');
         Blade::component('ui-tailwind::components-nx.dropdown-divider', 'nx-dropdown-divider');
