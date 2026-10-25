@@ -102,7 +102,7 @@
                     @endif
 
                     <!-- Body -->
-                    <div class="flex-1 overflow-y-auto p-6">
+                    <div class="flex-1 overflow-y-auto p-6" style="overscroll-behavior: contain;">
                         {{ $slot }}
                     </div>
 
@@ -136,7 +136,7 @@
                     @endif
 
                     <!-- Body -->
-                    <div class="flex-1 overflow-y-auto p-6 min-h-0">
+                    <div class="flex-1 overflow-y-auto p-6 min-h-0" style="overscroll-behavior: contain;">
                         {{ $slot }}
                     </div>
 

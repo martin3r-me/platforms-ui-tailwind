@@ -50,6 +50,7 @@
         <div 
             wire:sortable-group.item-group="{{ $sortableId }}" 
             class="flex-1 min-h-0"
+            style="overscroll-behavior: contain;"
             :class="{ '': isList, 'px-1.5 py-2': !isList, 'overflow-y-auto': scrollable }"
         >
             {{ $slot }}

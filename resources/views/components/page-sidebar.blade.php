@@ -140,7 +140,7 @@
             </div>
         @endif
 
-        <div class="flex-1 overflow-y-auto overflow-x-hidden">
+        <div class="flex-1 overflow-y-auto overflow-x-hidden" style="overscroll-behavior: contain;">
             {{ $slot }}
         </div>
     </div>

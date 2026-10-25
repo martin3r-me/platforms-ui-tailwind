@@ -28,12 +28,12 @@
     </div>
 
     <!-- Board View -->
-    <div x-show="view === 'board'" class="h-full w-full flex gap-4 overflow-x-auto overflow-y-hidden p-2" wire:sortable="{{ $sortable }}" wire:sortable-group="{{ $sortableGroup }}">
+    <div x-show="view === 'board'" class="h-full w-full flex gap-4 overflow-x-auto overflow-y-hidden p-2" style="overscroll-behavior-x: contain;" wire:sortable="{{ $sortable }}" wire:sortable-group="{{ $sortableGroup }}">
         {{ $slot }}
     </div>
 
     <!-- List View -->
-    <div x-show="view === 'list'" class="h-full w-full overflow-y-auto p-2 md:p-4" wire:sortable="{{ $sortable }}" wire:sortable-group="{{ $sortableGroup }}">
+    <div x-show="view === 'list'" class="h-full w-full overflow-y-auto p-2 md:p-4" style="overscroll-behavior: contain;" wire:sortable="{{ $sortable }}" wire:sortable-group="{{ $sortableGroup }}">
         <div class="space-y-4 md:space-y-6 w-full">
             {{ $slot }}
         </div>

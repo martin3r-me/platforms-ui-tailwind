@@ -17,7 +17,7 @@
         </div>
 
         <!-- Content -->
-        <div class="flex-1 overflow-y-auto p-2 flex flex-col gap-2">
+        <div class="flex-1 overflow-y-auto p-2 flex flex-col gap-2" style="overscroll-behavior: contain;">
             {{ $slot ?? '' }}
         </div>
     </aside>

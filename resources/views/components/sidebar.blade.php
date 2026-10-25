@@ -26,7 +26,7 @@
 
         <!-- Modul-spezifische Sidebar-Inhalte -->
         <template x-if="!collapsed">
-            <nav class="flex-1 overflow-y-auto p-3 flex flex-col gap-2">
+            <nav class="flex-1 overflow-y-auto p-3 flex flex-col gap-2" style="overscroll-behavior: contain;">
                 {{ $slot ?? '' }}
             </nav>
         </template>

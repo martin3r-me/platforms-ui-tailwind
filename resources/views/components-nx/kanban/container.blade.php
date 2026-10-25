@@ -36,12 +36,12 @@
     </div>
 
     {{-- Board-Ansicht --}}
-    <div x-show="view === 'board'" class="flex h-full w-full gap-5 overflow-x-auto overflow-y-hidden px-4 py-3" wire:sortable="{{ $sortable }}" wire:sortable-group="{{ $sortableGroup }}">
+    <div x-show="view === 'board'" class="flex h-full w-full gap-5 overflow-x-auto overflow-y-hidden px-4 py-3" style="overscroll-behavior-x: contain;" wire:sortable="{{ $sortable }}" wire:sortable-group="{{ $sortableGroup }}">
         {{ $slot }}
     </div>
 
     {{-- Listen-Ansicht --}}
-    <div x-show="view === 'list'" class="h-full w-full overflow-y-auto p-2 md:p-4" wire:sortable="{{ $sortable }}" wire:sortable-group="{{ $sortableGroup }}">
+    <div x-show="view === 'list'" class="h-full w-full overflow-y-auto p-2 md:p-4" style="overscroll-behavior: contain;" wire:sortable="{{ $sortable }}" wire:sortable-group="{{ $sortableGroup }}">
         <div class="w-full space-y-4 md:space-y-6">
             {{ $slot }}
         </div>
