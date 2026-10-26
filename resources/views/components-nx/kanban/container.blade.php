@@ -36,7 +36,19 @@
     </div>
 
     {{-- Board-Ansicht --}}
-    <div x-show="view === 'board'" class="flex h-full w-full gap-5 overflow-x-auto overflow-y-hidden px-4 py-3" style="overscroll-behavior-x: contain;" wire:sortable="{{ $sortable }}" wire:sortable-group="{{ $sortableGroup }}">
+    <div x-show="view === 'board'" class="flex h-full w-full gap-5 overflow-x-auto overflow-y-hidden px-4 py-3" style="overscroll-behavior-x: contain;"
+        @wheel="
+            if (!$event.deltaY) return;
+            const col = $event.target.closest('.overflow-y-auto');
+            if (col && col.scrollHeight > col.clientHeight) {
+                const up = $event.deltaY < 0;
+                const atTop = col.scrollTop <= 0;
+                const atBottom = Math.ceil(col.scrollTop + col.clientHeight) >= col.scrollHeight;
+                if ((up && !atTop) || (!up && !atBottom)) return;
+            }
+            if ($el.scrollWidth > $el.clientWidth) { $el.scrollLeft += $event.deltaY; $event.preventDefault(); }
+        "
+        wire:sortable="{{ $sortable }}" wire:sortable-group="{{ $sortableGroup }}">
         {{ $slot }}
     </div>
 
